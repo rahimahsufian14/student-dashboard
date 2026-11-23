@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Registration Key-In & Dashboard System</title>
+  <title>Sistem Pendaftaran Pelajar & Rekod Yuran</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans">
@@ -13,20 +13,20 @@
     <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4">
       <div>
         <div class="flex items-center gap-2">
-          <h1 class="text-xl font-bold tracking-tight">EduTrack Key-In & Record System</h1>
-          <span id="roleBadge" class="text-xs bg-emerald-600 px-2 py-0.5 rounded font-semibold">ADMIN MODE</span>
+          <h1 class="text-xl font-bold tracking-tight">Sistem Pendaftaran Pelajar & Rekod Yuran</h1>
+          <span class="text-xs bg-emerald-600 px-2 py-0.5 rounded font-semibold">ADMIN SYSTEM</span>
         </div>
-        <p class="text-xs text-slate-400">Real-Time Cloud Registration & Payment Ledger</p>
+        <p class="text-xs text-slate-400">Pengurusan Pendaftaran Rasmi & Baki Yuran Pelatih</p>
       </div>
-      <div id="adminControls" class="flex flex-wrap gap-2">
-        <button onclick="copyLeaderLink()" class="bg-indigo-600 hover:bg-indigo-500 px-3 py-2 rounded-lg text-xs font-semibold">
-          🔗 Copy Leader Key-In Link
-        </button>
+      <div class="flex flex-wrap gap-2">
         <button onclick="toggleKeyInPanel()" id="togglePanelBtn" class="bg-emerald-600 hover:bg-emerald-500 px-3 py-2 rounded-lg text-xs font-semibold">
-          ⌨️ Hide Key-In Panel
+          ⌨️ Sembunyi Borang Key-In
+        </button>
+        <button onclick="exportCSV()" class="bg-indigo-600 hover:bg-indigo-500 px-3 py-2 rounded-lg text-xs font-semibold">
+          ⬇ Export Excel (CSV)
         </button>
         <button onclick="fetchStudents()" class="bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-lg text-xs font-medium">
-          ↻ Sync
+          ↻ Refresh Data
         </button>
       </div>
     </div>
@@ -34,22 +34,22 @@
 
   <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
 
-    <!-- KPI Cards (Hidden in Leader Key-In Mode) -->
-    <div id="kpiSection" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <!-- KPI Summary Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-        <p class="text-xs font-semibold uppercase text-slate-500">Total Registered</p>
+        <p class="text-xs font-semibold uppercase text-slate-500">Jumlah Pelajar Berdaftar</p>
         <p id="kpiStudents" class="text-2xl font-bold mt-1">0</p>
       </div>
       <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-        <p class="text-xs font-semibold uppercase text-slate-500">Total Fees Expected</p>
+        <p class="text-xs font-semibold uppercase text-slate-500">Jumlah Yuran Sepatutnya</p>
         <p id="kpiTotalFee" class="text-2xl font-bold text-slate-800 mt-1">RM 0.00</p>
       </div>
       <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-        <p class="text-xs font-semibold uppercase text-slate-500">Total Collected</p>
+        <p class="text-xs font-semibold uppercase text-slate-500">Jumlah Yuran Diterima</p>
         <p id="kpiCollected" class="text-2xl font-bold text-emerald-600 mt-1">RM 0.00</p>
       </div>
       <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-        <p class="text-xs font-semibold uppercase text-slate-500">Outstanding Balance</p>
+        <p class="text-xs font-semibold uppercase text-slate-500">Jumlah Baki Tertunggak</p>
         <p id="kpiBalance" class="text-2xl font-bold text-rose-600 mt-1">RM 0.00</p>
       </div>
     </div>
@@ -58,13 +58,13 @@
     <section id="keyInPanel" class="bg-white rounded-xl border-2 border-emerald-500/30 shadow-md p-5">
       <div class="flex flex-wrap justify-between items-center border-b pb-3 mb-4 gap-2">
         <div>
-          <h2 class="text-base font-bold text-slate-900">⌨️ Fast Student Key-In Form</h2>
-          <p class="text-xs text-slate-500">Fill in details below and press <strong>Save & Next</strong> to immediately record into the database.</p>
+          <h2 class="text-base font-bold text-slate-900">⌨️ Borang Key-In Pendaftaran Pelajar</h2>
+          <p class="text-xs text-slate-500">Masukkan butiran pelajar yang sah mendaftar dan tekan <strong>Simpan & Seterusnya</strong>.</p>
         </div>
         <div class="flex items-center gap-2 text-xs">
           <label class="flex items-center gap-1.5 cursor-pointer bg-slate-100 px-3 py-1.5 rounded-lg">
             <input type="checkbox" id="keepBatchDefaults" checked class="accent-emerald-600" />
-            <span>Keep Program, Intake & EA for next entry</span>
+            <span>Kekalkan Program, Intake & PIC untuk pelajar seterusnya</span>
           </label>
         </div>
       </div>
@@ -74,27 +74,27 @@
 
       <form id="keyInForm" onsubmit="submitRegistration(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
         <div class="lg:col-span-2">
-          <label class="text-xs font-bold uppercase text-slate-600">1. Student Full Name (Nama Pelatih) *</label>
-          <input required id="inputFullName" name="FullName" placeholder="e.g. Ahmad Bin Ali" class="w-full border border-slate-300 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 rounded-lg p-2 mt-1" />
+          <label class="text-xs font-bold uppercase text-slate-600">1. Nama Penuh Pelatih *</label>
+          <input required id="inputFullName" name="FullName" placeholder="cth. Ahmad Bin Ali" class="w-full border border-slate-300 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="text-xs font-bold uppercase text-slate-600">2. Student Phone *</label>
+          <label class="text-xs font-bold uppercase text-slate-600">2. No. Telefon Pelajar *</label>
           <input required name="StudentPhone" placeholder="0123456789" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="text-xs font-bold uppercase text-slate-600">3. Father's Phone *</label>
+          <label class="text-xs font-bold uppercase text-slate-600">3. No. Telefon Bapa *</label>
           <input required name="FatherPhone" placeholder="0198765432" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="text-xs font-bold uppercase text-slate-600">4. Mother's / Guardian Phone *</label>
+          <label class="text-xs font-bold uppercase text-slate-600">4. No. Telefon Ibu / Penjaga *</label>
           <input required name="MotherPhone" placeholder="0176543210" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="text-xs font-bold uppercase text-slate-600">5. Accredited Center (Pusat Bertauliah) *</label>
-          <input required id="inputCenter" name="Center" placeholder="e.g. Kolej Kemahiran KL" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
+          <label class="text-xs font-bold uppercase text-slate-600">5. Pusat Bertauliah *</label>
+          <input required id="inputCenter" name="Center" placeholder="cth. Kolej Kemahiran KL" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="text-xs font-bold uppercase text-slate-600">6. Chosen Program *</label>
+          <label class="text-xs font-bold uppercase text-slate-600">6. Program Pilihan *</label>
           <select required id="inputProgram" name="Program" class="w-full border border-slate-300 rounded-lg p-2 mt-1">
             <option value="TVET">TVET</option>
             <option value="Smart Tahfiz">Smart Tahfiz</option>
@@ -103,7 +103,7 @@
           </select>
         </div>
         <div>
-          <label class="text-xs font-bold uppercase text-slate-600">7. Intake Month *</label>
+          <label class="text-xs font-bold uppercase text-slate-600">7. Bulan Pengambilan (Intake) *</label>
           <select required id="inputIntake" name="IntakeMonth" class="w-full border border-slate-300 rounded-lg p-2 mt-1">
             <option>January</option><option>February</option><option>March</option>
             <option>April</option><option>May</option><option>June</option>
@@ -112,70 +112,70 @@
           </select>
         </div>
         <div>
-          <label class="text-xs font-bold uppercase text-slate-600">8. Registration Date *</label>
+          <label class="text-xs font-bold uppercase text-slate-600">8. Tarikh Pendaftaran *</label>
           <input required type="date" id="inputRegDate" name="RegDate" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="text-xs font-bold uppercase text-slate-600">9. Team Leader (EA) *</label>
-          <input required id="inputEA" name="EA" placeholder="e.g. Cik Nadhirah" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
+          <label class="text-xs font-bold uppercase text-slate-600">9. Nama EA (Education Advisor) *</label>
+          <input required id="inputEA" name="EA" placeholder="cth. Cik Nadhirah" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="text-xs font-bold uppercase text-slate-600">10. Manager (Pengurus) *</label>
-          <input required id="inputManager" name="Manager" placeholder="e.g. En. Hafiz" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
+          <label class="text-xs font-bold uppercase text-slate-600">10. Nama Pengurus (Manager) *</label>
+          <input required id="inputManager" name="Manager" placeholder="cth. En. Hafiz" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="text-xs font-bold uppercase text-slate-600">11. Mailing Address</label>
+          <label class="text-xs font-bold uppercase text-slate-600">11. Alamat Surat-Menyurat</label>
           <input name="Address" placeholder="No. 12, Jalan Merdeka, KL" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
 
         <!-- Fee Key-In Row with Live Auto-Balance -->
         <div class="lg:col-span-4 bg-slate-50 p-3 rounded-lg border border-slate-200 grid grid-cols-1 sm:grid-cols-4 gap-3 items-end">
           <div>
-            <label class="text-xs font-bold uppercase text-slate-600">Total Fee (RM) *</label>
+            <label class="text-xs font-bold uppercase text-slate-600">Yuran Pendaftaran (RM) *</label>
             <input required type="number" step="0.01" id="inputTotalFee" name="TotalFee" value="1600" oninput="calcLiveBalance()" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white" />
           </div>
           <div>
-            <label class="text-xs font-bold uppercase text-slate-600">Amount Paid (RM) *</label>
+            <label class="text-xs font-bold uppercase text-slate-600">Jumlah Dibayar (RM) *</label>
             <input required type="number" step="0.01" id="inputAmountPaid" name="AmountPaid" value="1000" oninput="calcLiveBalance()" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white" />
           </div>
           <div class="p-2 bg-white border border-slate-200 rounded-lg">
-            <span class="text-xs text-slate-500 block">Auto-Calculated Balance:</span>
+            <span class="text-xs text-slate-500 block">Baki Tertunggak (Auto):</span>
             <span id="liveBalancePreview" class="text-base font-bold text-rose-600">RM 600.00</span>
           </div>
-          <div class="flex gap-2">
+          <div>
             <button type="submit" id="submitBtn" class="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg shadow">
-              ✓ Save & Key-In Next
+              ✓ Simpan & Seterusnya
             </button>
           </div>
         </div>
       </form>
     </section>
 
-    <!-- ADMIN DASHBOARD TABLE & FILTERS (Hidden in Leader Key-In Mode) -->
-    <div id="adminDatabaseSection" class="space-y-4">
+    <!-- FILTERS & MASTER RECORD TABLE -->
+    <div class="space-y-4">
       <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-5 gap-3">
-        <input type="text" id="filterSearch" oninput="applyFilters()" placeholder="Search student or center..." class="border rounded-lg px-3 py-2 text-sm" />
+        <input type="text" id="filterSearch" oninput="applyFilters()" placeholder="Cari nama pelajar atau pusat..." class="border rounded-lg px-3 py-2 text-sm" />
         <select id="filterProgram" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
-          <option value="">All Programs</option>
+          <option value="">Semua Program</option>
           <option value="TVET">TVET</option>
           <option value="Smart Tahfiz">Smart Tahfiz</option>
           <option value="Automotive">Automotive</option>
           <option value="Electrical">Electrical</option>
         </select>
         <select id="filterIntake" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
-          <option value="">All Intake Months</option>
+          <option value="">Semua Bulan Pengambilan</option>
           <option>January</option><option>February</option><option>March</option>
           <option>April</option><option>May</option><option>June</option>
           <option>July</option><option>August</option><option>September</option>
           <option>October</option><option>November</option><option>December</option>
         </select>
         <select id="filterEA" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
-          <option value="">All Team Leaders (EA)</option>
+          <option value="">Semua EA</option>
         </select>
         <select id="filterStatus" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
-          <option value="">All Payment Status</option>
-          <option value="Paid">Fully Paid</option>
-          <option value="Outstanding">Has Balance</option>
+          <option value="">Semua Status Bayaran</option>
+          <option value="Paid">Selesai Bayar (Paid)</option>
+          <option value="Outstanding">Ada Baki Tertunggak</option>
         </select>
       </div>
 
@@ -183,18 +183,18 @@
         <table class="w-full text-left border-collapse text-sm">
           <thead class="bg-slate-100 text-slate-600 uppercase text-xs">
             <tr>
-              <th class="p-3">Student & Contacts</th>
-              <th class="p-3">Program & Center</th>
-              <th class="p-3">Intake & Reg Date</th>
-              <th class="p-3">EA / Manager</th>
-              <th class="p-3 text-right">Fee (RM)</th>
-              <th class="p-3 text-right">Paid (RM)</th>
-              <th class="p-3 text-right">Balance (RM)</th>
-              <th class="p-3">Status & Action</th>
+              <th class="p-3">Pelajar & No. Telefon</th>
+              <th class="p-3">Program & Pusat Bertauliah</th>
+              <th class="p-3">Intake & Tarikh Daftar</th>
+              <th class="p-3">EA / Pengurus</th>
+              <th class="p-3 text-right">Yuran (RM)</th>
+              <th class="p-3 text-right">Dibayar (RM)</th>
+              <th class="p-3 text-right">Baki (RM)</th>
+              <th class="p-3">Status & Tindakan</th>
             </tr>
           </thead>
           <tbody id="tableBody" class="divide-y divide-slate-200">
-            <tr><td colspan="8" class="p-6 text-center text-slate-500">Loading records...</td></tr>
+            <tr><td colspan="8" class="p-6 text-center text-slate-500">Memuatkan data dari Google Sheets...</td></tr>
           </tbody>
         </table>
       </div>
@@ -204,48 +204,36 @@
   <!-- Settle Balance Modal -->
   <div id="payModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
     <div class="bg-white rounded-xl max-w-md w-full p-6 space-y-4">
-      <h2 class="text-lg font-bold">Record Balance Payment</h2>
+      <h2 class="text-lg font-bold">Rekod Bayaran Baki</h2>
       <p id="payStudentInfo" class="text-sm text-slate-600"></p>
       <form onsubmit="submitPayment(event)" class="space-y-3 text-sm">
         <input type="hidden" id="payStudentId" />
         <div>
-          <label class="font-semibold">Amount Paid Now (RM) *</label>
+          <label class="font-semibold">Jumlah Bayaran Diterima (RM) *</label>
           <input required type="number" step="0.01" id="payAmount" class="w-full border rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="font-semibold">Payment Date *</label>
+          <label class="font-semibold">Tarikh Bayaran Baki *</label>
           <input required type="date" id="payDate" class="w-full border rounded-lg p-2 mt-1" />
         </div>
         <div class="flex justify-end gap-2 pt-3">
-          <button type="button" onclick="document.getElementById('payModal').classList.add('hidden')" class="px-4 py-2 border rounded-lg">Cancel</button>
-          <button type="submit" id="payBtn" class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg">Update Balance</button>
+          <button type="button" onclick="document.getElementById('payModal').classList.add('hidden')" class="px-4 py-2 border rounded-lg">Batal</button>
+          <button type="submit" id="payBtn" class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg">Kemaskini Baki</button>
         </div>
       </form>
     </div>
   </div>
 
   <script>
-    // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
+    // PASTE URL GOOGLE APPS SCRIPT (/exec) ANDA DI SINI:
     const API_URL = 'https://script.google.com/macros/s/AKfycbxaejQRcYTkFNIONboMnyS8arvH5xMYi1ZWz9UkC1RiAE7kVSjDLSVelRFqWBmSlYTk/exec';
     let allStudents = [];
-
-    // Check if opened in Leader Key-In Only Mode (?mode=keyin)
-    const urlParams = new URLSearchParams(window.location.search);
-    const isLeaderMode = urlParams.get('mode') === 'keyin';
+    let currentFiltered = [];
 
     window.addEventListener('DOMContentLoaded', () => {
       document.getElementById('inputRegDate').value = new Date().toISOString().split('T')[0];
       calcLiveBalance();
-
-      if (isLeaderMode) {
-        document.getElementById('roleBadge').textContent = 'LEADER KEY-IN PORTAL';
-        document.getElementById('roleBadge').className = 'text-xs bg-indigo-600 px-2 py-0.5 rounded font-semibold';
-        document.getElementById('adminControls').classList.add('hidden');
-        document.getElementById('kpiSection').classList.add('hidden');
-        document.getElementById('adminDatabaseSection').classList.add('hidden');
-      } else {
-        fetchStudents();
-      }
+      fetchStudents();
     });
 
     function calcLiveBalance() {
@@ -261,27 +249,19 @@
       const panel = document.getElementById('keyInPanel');
       const btn = document.getElementById('togglePanelBtn');
       panel.classList.toggle('hidden');
-      btn.textContent = panel.classList.contains('hidden') ? '⌨️ Open Key-In Panel' : '⌨️ Hide Key-In Panel';
-    }
-
-    function copyLeaderLink() {
-      const baseUrl = window.location.href.split('?')[0];
-      const leaderUrl = `${baseUrl}?mode=keyin`;
-      navigator.clipboard.writeText(leaderUrl);
-      alert('Leader Key-In Link copied!\n\nShare this link with Team Leaders (EA) so they can key in students without seeing the master financial dashboard:\n' + leaderUrl);
+      btn.textContent = panel.classList.contains('hidden') ? '⌨️ Buka Borang Key-In' : '⌨️ Sembunyi Borang Key-In';
     }
 
     async function submitRegistration(e) {
       e.preventDefault();
       const btn = document.getElementById('submitBtn');
       btn.disabled = true;
-      btn.textContent = 'Saving to Cloud...';
+      btn.textContent = 'Menyimpan...';
 
       const form = e.target;
       const formData = Object.fromEntries(new FormData(form).entries());
       formData.action = 'create';
 
-      // Save batch defaults if checkbox is ticked
       const keepDefaults = document.getElementById('keepBatchDefaults').checked;
       const savedDefaults = {
         Center: formData.Center,
@@ -297,9 +277,8 @@
       try {
         await fetch(API_URL, { method: 'POST', body: JSON.stringify(formData) });
         
-        // Show confirmation toast
         const toast = document.getElementById('toastMsg');
-        toast.textContent = `✓ Saved "${formData.FullName}" (${formData.Program}) to database! Ready for next student.`;
+        toast.textContent = `✓ Berjaya simpan "${formData.FullName}" (${formData.Program}) ke dalam rekod!`;
         toast.classList.remove('hidden');
         setTimeout(() => toast.classList.add('hidden'), 5000);
 
@@ -315,20 +294,19 @@
           document.getElementById('inputAmountPaid').value = savedDefaults.AmountPaid;
         }
         calcLiveBalance();
-        document.getElementById('inputFullName').focus(); // Auto-focus back to Name field for rapid key-in
-
-        if (!isLeaderMode) fetchStudents();
+        document.getElementById('inputFullName').focus();
+        fetchStudents();
       } catch (err) {
-        alert('Error saving record. Please check your internet connection or API URL.');
+        alert('Ralat semasa menyimpan data. Sila semak sambungan internet atau API URL.');
       }
 
       btn.disabled = false;
-      btn.textContent = '✓ Save & Key-In Next';
+      btn.textContent = '✓ Simpan & Seterusnya';
     }
 
     async function fetchStudents() {
       const tbody = document.getElementById('tableBody');
-      tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-slate-500">Syncing with Google Sheets...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-slate-500">Menyegerak data dengan Google Sheets...</td></tr>';
       try {
         const res = await fetch(API_URL);
         const json = await res.json();
@@ -336,14 +314,14 @@
         populateEADropdown();
         applyFilters();
       } catch (err) {
-        tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-rose-600">Connection error. Check your API_URL.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-rose-600">Ralat sambungan. Pastikan API_URL sudah dimasukkan dengan betul.</td></tr>';
       }
     }
 
     function populateEADropdown() {
       const eaSelect = document.getElementById('filterEA');
       const uniqueEAs = [...new Set(allStudents.map(s => s.EA).filter(Boolean))];
-      eaSelect.innerHTML = '<option value="">All Team Leaders (EA)</option>' +
+      eaSelect.innerHTML = '<option value="">Semua EA</option>' +
         uniqueEAs.map(ea => `<option value="${ea}">${ea}</option>`).join('');
     }
 
@@ -354,7 +332,7 @@
       const ea = document.getElementById('filterEA').value;
       const status = document.getElementById('filterStatus').value;
 
-      const filtered = allStudents.filter(s => {
+      currentFiltered = allStudents.filter(s => {
         const matchSearch = (s.FullName || '').toLowerCase().includes(search) || (s.Center || '').toLowerCase().includes(search);
         const matchProg = !program || s.Program === program;
         const matchIntake = !intake || s.IntakeMonth === intake;
@@ -364,8 +342,8 @@
         return matchSearch && matchProg && matchIntake && matchEA && matchStatus;
       });
 
-      renderTable(filtered);
-      updateKPIs(filtered);
+      renderTable(currentFiltered);
+      updateKPIs(currentFiltered);
     }
 
     function updateKPIs(list) {
@@ -382,7 +360,7 @@
     function renderTable(list) {
       const tbody = document.getElementById('tableBody');
       if (!list.length) {
-        tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-slate-500">No matching student records found.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-slate-500">Tiada rekod pelajar ditemui.</td></tr>';
         return;
       }
 
@@ -395,7 +373,7 @@
           <tr class="hover:bg-slate-50">
             <td class="p-3">
               <div class="font-bold text-slate-900">${s.FullName}</div>
-              <div class="text-xs text-slate-500">S: ${s.StudentPhone} | F: ${s.FatherPhone} | M: ${s.MotherPhone}</div>
+              <div class="text-xs text-slate-500">Pelajar: ${s.StudentPhone} | Bapa: ${s.FatherPhone} | Ibu: ${s.MotherPhone}</div>
             </td>
             <td class="p-3">
               <span class="px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded font-medium text-xs">${s.Program}</span>
@@ -403,7 +381,7 @@
             </td>
             <td class="p-3 text-xs">
               <div class="font-semibold">${s.IntakeMonth}</div>
-              <div class="text-slate-500">Reg: ${regDate}</div>
+              <div class="text-slate-500">Daftar: ${regDate}</div>
             </td>
             <td class="p-3 text-xs">
               <div class="font-semibold">${s.EA}</div>
@@ -414,8 +392,8 @@
             <td class="p-3 text-right font-bold ${bal > 0 ? 'text-rose-600' : 'text-slate-400'}">${bal.toFixed(2)}</td>
             <td class="p-3">
               ${bal > 0
-                ? `<button onclick="openPayModal('${s.ID}', '${s.FullName}', ${bal})" class="bg-amber-500 hover:bg-amber-600 text-white text-xs px-3 py-1.5 rounded font-semibold">Pay Balance</button>`
-                : `<span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded font-semibold">Paid (${paidDate})</span>`
+                ? `<button onclick="openPayModal('${s.ID}', '${s.FullName}', ${bal})" class="bg-amber-500 hover:bg-amber-600 text-white text-xs px-3 py-1.5 rounded font-semibold">Bayar Baki</button>`
+                : `<span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded font-semibold">Selesai (${paidDate})</span>`
               }
             </td>
           </tr>
@@ -425,7 +403,7 @@
 
     function openPayModal(id, name, balance) {
       document.getElementById('payStudentId').value = id;
-      document.getElementById('payStudentInfo').textContent = `Student: ${name} — Remaining Balance: RM ${balance.toFixed(2)}`;
+      document.getElementById('payStudentInfo').textContent = `Pelajar: ${name} — Baki Tertunggak: RM ${balance.toFixed(2)}`;
       document.getElementById('payAmount').value = balance;
       document.getElementById('payDate').value = new Date().toISOString().split('T')[0];
       document.getElementById('payModal').classList.remove('hidden');
@@ -434,7 +412,7 @@
     async function submitPayment(e) {
       e.preventDefault();
       const btn = document.getElementById('payBtn');
-      btn.disabled = true; btn.textContent = 'Updating...';
+      btn.disabled = true; btn.textContent = 'Mengemaskini...';
 
       const payload = {
         action: 'payBalance',
@@ -445,8 +423,25 @@
 
       await fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) });
       document.getElementById('payModal').classList.add('hidden');
-      btn.disabled = false; btn.textContent = 'Update Balance';
+      btn.disabled = false; btn.textContent = 'Kemaskini Baki';
       fetchStudents();
+    }
+
+    function exportCSV() {
+      if (!currentFiltered.length) return alert('Tiada data untuk dieksport.');
+      const headers = ['ID','Nama Pelatih','Tel Pelajar','Tel Bapa','Tel Ibu','Pusat Bertauliah','Program','Tarikh Daftar','Bulan Pengambilan','Alamat','EA','Pengurus','Yuran','Dibayar','Baki','Tarikh Baki Selesai'];
+      const rows = currentFiltered.map(s => [
+        s.ID, s.FullName, s.StudentPhone, s.FatherPhone, s.MotherPhone,
+        s.Center, s.Program, String(s.RegDate).split('T')[0], s.IntakeMonth,
+        s.Address, s.EA, s.Manager, s.TotalFee, s.AmountPaid, s.Balance,
+        s.BalancePaidDate ? String(s.BalancePaidDate).split('T')[0] : ''
+      ]);
+      const csv = [headers, ...rows].map(r => r.map(v => `"${String(v || '').replace(/"/g, '""')}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `Rekod_Pendaftaran_Pelajar_${new Date().toISOString().split('T')[0]}.csv`;
+      link.click();
     }
   </script>
 </body>
