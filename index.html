@@ -10,7 +10,7 @@
 
   <!-- Top Navigation Bar -->
   <header class="bg-slate-900 text-white shadow">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4">
+    <div class="max-w-full mx-auto px-6 py-4 flex flex-wrap justify-between items-center gap-4">
       <div>
         <div class="flex items-center gap-2">
           <h1 class="text-xl font-bold tracking-tight">Sistem Pendaftaran Pelajar & Rekod Yuran</h1>
@@ -32,7 +32,7 @@
     </div>
   </header>
 
-  <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
+  <main class="max-w-full mx-auto px-6 py-6 space-y-6">
 
     <!-- KPI Summary Cards -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -98,17 +98,17 @@
           <select required id="inputProgram" name="Program" class="w-full border border-slate-300 rounded-lg p-2 mt-1">
             <option value="TVET">TVET</option>
             <option value="Smart Tahfiz">Smart Tahfiz</option>
-            <option value="Automotive">Automotive</option>
-            <option value="Electrical">Electrical</option>
+            <option value="Automotive">Automotif</option>
+            <option value="Electrical">Elektrikal</option>
           </select>
         </div>
         <div>
           <label class="text-xs font-bold uppercase text-slate-600">7. Bulan Pengambilan (Intake) *</label>
           <select required id="inputIntake" name="IntakeMonth" class="w-full border border-slate-300 rounded-lg p-2 mt-1">
-            <option>January</option><option>February</option><option>March</option>
-            <option>April</option><option>May</option><option>June</option>
-            <option>July</option><option>August</option><option>September</option>
-            <option>October</option><option>November</option><option>December</option>
+            <option>Januari</option><option>Februari</option><option>Mac</option>
+            <option>April</option><option>Mei</option><option>Jun</option>
+            <option>Julai</option><option>Ogos</option><option>September</option>
+            <option>Oktober</option><option>November</option><option>Disember</option>
           </select>
         </div>
         <div>
@@ -124,7 +124,7 @@
           <input required id="inputManager" name="Manager" placeholder="cth. En. Hafiz" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
 
-        <!-- Fee Key-In Row with Live Auto-Balance & Tarikh Bayar Tunggakan -->
+        <!-- Fee Key-In Row -->
         <div class="lg:col-span-4 bg-slate-50 p-3 rounded-lg border border-slate-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 items-end">
           <div>
             <label class="text-xs font-bold uppercase text-slate-600">Yuran Pendaftaran (RM) *</label>
@@ -151,7 +151,7 @@
       </form>
     </section>
 
-    <!-- FILTERS & MASTER RECORD TABLE -->
+    <!-- FILTERS & MASTER RECORD TABLE (SEMUA KOLUM ASING) -->
     <div class="space-y-4">
       <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-5 gap-3">
         <input type="text" id="filterSearch" oninput="applyFilters()" placeholder="Cari nama pelajar atau pusat..." class="border rounded-lg px-3 py-2 text-sm" />
@@ -180,21 +180,28 @@
       </div>
 
       <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-x-auto">
-        <table class="w-full text-left border-collapse text-sm">
-          <thead class="bg-slate-100 text-slate-600 uppercase text-xs">
+        <table class="w-full text-left border-collapse text-xs whitespace-nowrap">
+          <thead class="bg-slate-100 text-slate-700 uppercase border-b border-slate-200">
             <tr>
-              <th class="p-3">Pelajar & No. Telefon</th>
-              <th class="p-3">Program & Pusat Bertauliah</th>
-              <th class="p-3">Intake & Tarikh Daftar</th>
-              <th class="p-3">PA / Pengurus</th>
+              <th class="p-3">Nama Pelatih</th>
+              <th class="p-3">No. Tel Pelajar</th>
+              <th class="p-3">No. Tel Bapa</th>
+              <th class="p-3">No. Tel Ibu</th>
+              <th class="p-3">Program</th>
+              <th class="p-3">Pusat Bertauliah</th>
+              <th class="p-3">Intake</th>
+              <th class="p-3">Tarikh Daftar</th>
+              <th class="p-3">PA</th>
+              <th class="p-3">Pengurus</th>
               <th class="p-3 text-right">Yuran (RM)</th>
               <th class="p-3 text-right">Dibayar (RM)</th>
               <th class="p-3 text-right">Baki (RM)</th>
-              <th class="p-3">Tarikh Bayar Tunggakan & Status</th>
+              <th class="p-3">Tarikh Bayar Tunggakan</th>
+              <th class="p-3">Status</th>
             </tr>
           </thead>
           <tbody id="tableBody" class="divide-y divide-slate-200">
-            <tr><td colspan="8" class="p-6 text-center text-slate-500">Memuatkan data dari Google Sheets...</td></tr>
+            <tr><td colspan="15" class="p-6 text-center text-slate-500">Memuatkan data dari Google Sheets...</td></tr>
           </tbody>
         </table>
       </div>
@@ -306,7 +313,7 @@
 
     async function fetchStudents() {
       const tbody = document.getElementById('tableBody');
-      tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-slate-500">Menyegerak data dengan Google Sheets...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="15" class="p-6 text-center text-slate-500">Menyegerak data dengan Google Sheets...</td></tr>';
       try {
         const res = await fetch(API_URL);
         const json = await res.json();
@@ -314,7 +321,7 @@
         populatePADropdown();
         applyFilters();
       } catch (err) {
-        tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-rose-600">Ralat sambungan. Pastikan API_URL sudah dimasukkan dengan betul.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="15" class="p-6 text-center text-rose-600">Ralat sambungan. Pastikan API_URL sudah dimasukkan dengan betul.</td></tr>';
       }
     }
 
@@ -360,43 +367,37 @@
     function renderTable(list) {
       const tbody = document.getElementById('tableBody');
       if (!list.length) {
-        tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-slate-500">Tiada rekod pelajar ditemui.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="15" class="p-6 text-center text-slate-500">Tiada rekod pelajar ditemui.</td></tr>';
         return;
       }
 
       tbody.innerHTML = list.map(s => {
         const bal = Number(s.Balance || 0);
         const regDate = s.RegDate ? String(s.RegDate).split('T')[0] : '-';
-        const paidDate = s.BalancePaidDate ? String(s.BalancePaidDate).split('T')[0] : '';
+        const paidDate = s.BalancePaidDate ? String(s.BalancePaidDate).split('T')[0] : '-';
 
         return `
           <tr class="hover:bg-slate-50">
+            <td class="p-3 font-bold text-slate-900">${s.FullName || '-'}</td>
+            <td class="p-3 text-slate-600">${s.StudentPhone || '-'}</td>
+            <td class="p-3 text-slate-600">${s.FatherPhone || '-'}</td>
+            <td class="p-3 text-slate-600">${s.MotherPhone || '-'}</td>
             <td class="p-3">
-              <div class="font-bold text-slate-900">${s.FullName}</div>
-              <div class="text-xs text-slate-500">Pelajar: ${s.StudentPhone} | Bapa: ${s.FatherPhone} | Ibu: ${s.MotherPhone}</div>
+              <span class="px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded font-semibold">${s.Program || '-'}</span>
             </td>
-            <td class="p-3">
-              <span class="px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded font-medium text-xs">${s.Program}</span>
-              <div class="text-xs text-slate-600 mt-1">${s.Center}</div>
-            </td>
-            <td class="p-3 text-xs">
-              <div class="font-semibold">${s.IntakeMonth}</div>
-              <div class="text-slate-500">Daftar: ${regDate}</div>
-            </td>
-            <td class="p-3 text-xs">
-              <div class="font-semibold">${s.PA || '-'}</div>
-              <div class="text-slate-500">Mgr: ${s.Manager}</div>
-            </td>
+            <td class="p-3 text-slate-700">${s.Center || '-'}</td>
+            <td class="p-3 font-medium">${s.IntakeMonth || '-'}</td>
+            <td class="p-3 text-slate-600">${regDate}</td>
+            <td class="p-3 font-medium text-slate-800">${s.PA || '-'}</td>
+            <td class="p-3 text-slate-600">${s.Manager || '-'}</td>
             <td class="p-3 text-right font-medium">${Number(s.TotalFee).toFixed(2)}</td>
             <td class="p-3 text-right text-emerald-600 font-medium">${Number(s.AmountPaid).toFixed(2)}</td>
             <td class="p-3 text-right font-bold ${bal > 0 ? 'text-rose-600' : 'text-slate-400'}">${bal.toFixed(2)}</td>
+            <td class="p-3 text-slate-600">${paidDate}</td>
             <td class="p-3">
               ${bal > 0
-                ? `<div class="space-y-1">
-                     <button onclick="openPayModal('${s.ID}', '${s.FullName}', ${bal})" class="bg-amber-500 hover:bg-amber-600 text-white text-xs px-3 py-1.5 rounded font-semibold">Bayar Baki</button>
-                     ${paidDate ? `<div class="text-[11px] text-slate-500">Bayaran akhir: ${paidDate}</div>` : ''}
-                   </div>`
-                : `<span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded font-semibold">Selesai (${paidDate})</span>`
+                ? `<button onclick="openPayModal('${s.ID}', '${s.FullName}', ${bal})" class="bg-amber-500 hover:bg-amber-600 text-white px-2.5 py-1 rounded font-semibold">Bayar Baki</button>`
+                : `<span class="bg-emerald-100 text-emerald-800 px-2 py-1 rounded font-semibold">Selesai</span>`
               }
             </td>
           </tr>
