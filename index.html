@@ -69,19 +69,19 @@
           <label class="font-semibold text-slate-600">Pecahan Mengikut:</label>
           <select id="chartGroupBy" onchange="updateChart()" class="border border-slate-300 rounded-lg px-3 py-1.5 font-semibold bg-slate-50">
             <option value="Program">Program Pilihan</option>
-            <option value="Manager">Pengurus (Manager)</option>
+            <option value="Pengurus">Pengurus (Manager)</option>
             <option value="PA">PA (Personal Advisor)</option>
-            <option value="Center">Pusat Bertauliah</option>
-            <option value="IntakeMonth">Bulan Pengambilan (Intake)</option>
-            <option value="PaymentStatus">Status Bayaran Yuran</option>
+            <option value="PusatBertauliah">Pusat Bertauliah</option>
+            <option value="BulanIntake">Bulan Intake</option>
+            <option value="StatusBayaran">Status Bayaran Yuran</option>
           </select>
 
           <label class="font-semibold text-slate-600 ml-2">Kira Berdasarkan:</label>
           <select id="chartMetric" onchange="updateChart()" class="border border-slate-300 rounded-lg px-3 py-1.5 font-semibold bg-slate-50">
             <option value="count">Bilangan Pelajar (Orang)</option>
-            <option value="fee">Jumlah Yuran Sepatutnya (RM)</option>
-            <option value="paid">Jumlah Yuran Diterima (RM)</option>
-            <option value="balance">Jumlah Baki Tertunggak (RM)</option>
+            <option value="fee">Jumlah Yuran (RM)</option>
+            <option value="paid">Jumlah Dibayar (RM)</option>
+            <option value="balance">Jumlah Baki (RM)</option>
           </select>
         </div>
       </div>
@@ -100,7 +100,7 @@
                 <th class="p-2.5" id="breakdownColTitle">Kategori</th>
                 <th class="p-2.5 text-right">Bil. Pelajar</th>
                 <th class="p-2.5 text-right">Peratus (%)</th>
-                <th class="p-2.5 text-right">Jumlah Yuran (RM)</th>
+                <th class="p-2.5 text-right">Yuran (RM)</th>
                 <th class="p-2.5 text-right">Dibayar (RM)</th>
                 <th class="p-2.5 text-right">Baki (RM)</th>
               </tr>
@@ -123,7 +123,7 @@
         <div class="flex items-center gap-2 text-xs">
           <label class="flex items-center gap-1.5 cursor-pointer bg-slate-100 px-3 py-1.5 rounded-lg">
             <input type="checkbox" id="keepBatchDefaults" checked class="accent-emerald-600" />
-            <span>Kekalkan Program, Intake & PA untuk pelajar seterusnya</span>
+            <span>Kekalkan Pusat, Program, Intake & PA untuk pelajar seterusnya</span>
           </label>
         </div>
       </div>
@@ -133,24 +133,24 @@
 
       <form id="keyInForm" onsubmit="submitRegistration(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
         <div class="lg:col-span-2">
-          <label class="text-xs font-bold uppercase text-slate-600">1. Nama Penuh Pelatih *</label>
-          <input required id="inputFullName" name="FullName" placeholder="cth. Ahmad Bin Ali" class="w-full border border-slate-300 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 rounded-lg p-2 mt-1" />
+          <label class="text-xs font-bold uppercase text-slate-600">1. Nama Pelatih *</label>
+          <input required id="inputNamaPelatih" name="NamaPelatih" placeholder="cth. Ahmad Bin Ali" class="w-full border border-slate-300 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="text-xs font-bold uppercase text-slate-600">2. No. Telefon Pelajar *</label>
-          <input required name="StudentPhone" placeholder="0123456789" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
+          <label class="text-xs font-bold uppercase text-slate-600">2. Tel Pelajar *</label>
+          <input required name="TelPelajar" placeholder="0123456789" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="text-xs font-bold uppercase text-slate-600">3. No. Telefon Bapa *</label>
-          <input required name="FatherPhone" placeholder="0198765432" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
+          <label class="text-xs font-bold uppercase text-slate-600">3. Tel Bapa *</label>
+          <input required name="TelBapa" placeholder="0198765432" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="text-xs font-bold uppercase text-slate-600">4. No. Telefon Ibu / Penjaga *</label>
-          <input required name="MotherPhone" placeholder="0176543210" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
+          <label class="text-xs font-bold uppercase text-slate-600">4. Tel Ibu *</label>
+          <input required name="TelIbu" placeholder="0176543210" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
         <div>
           <label class="text-xs font-bold uppercase text-slate-600">5. Pusat Bertauliah *</label>
-          <select required id="inputCenter" name="Center" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white">
+          <select required id="inputPusatBertauliah" name="PusatBertauliah" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white">
             <option value="Ambitious College">Ambitious College</option>
             <option value="Jv Skill">Jv Skill</option>
             <option value="Adelphi College">Adelphi College</option>
@@ -164,7 +164,7 @@
           </select>
         </div>
         <div>
-          <label class="text-xs font-bold uppercase text-slate-600">6. Program Pilihan *</label>
+          <label class="text-xs font-bold uppercase text-slate-600">6. Program *</label>
           <select required id="inputProgram" name="Program" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white">
             <option value="SKM Seni Pembuatan Pastri & Kek">SKM Seni Pembuatan Pastri & Kek</option>
             <option value="SKM Teknologi Automotif">SKM Teknologi Automotif</option>
@@ -181,8 +181,12 @@
           </select>
         </div>
         <div>
-          <label class="text-xs font-bold uppercase text-slate-600">7. Bulan Pengambilan (Intake) *</label>
-          <select required id="inputIntake" name="IntakeMonth" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white">
+          <label class="text-xs font-bold uppercase text-slate-600">7. Tarikh Daftar *</label>
+          <input required type="date" id="inputTarikhDaftar" name="TarikhDaftar" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
+        </div>
+        <div>
+          <label class="text-xs font-bold uppercase text-slate-600">8. Bulan Intake *</label>
+          <select required id="inputBulanIntake" name="BulanIntake" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white">
             <option>January</option><option>February</option><option>March</option>
             <option>April</option><option>May</option><option>June</option>
             <option>July</option><option>August</option><option>September</option>
@@ -190,38 +194,38 @@
           </select>
         </div>
         <div>
-          <label class="text-xs font-bold uppercase text-slate-600">8. Tarikh Pendaftaran *</label>
-          <input required type="date" id="inputRegDate" name="RegDate" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
-        </div>
-        <div>
-          <label class="text-xs font-bold uppercase text-slate-600">9. Nama PA (Personal Advisor) *</label>
+          <label class="text-xs font-bold uppercase text-slate-600">9. PA *</label>
           <input required id="inputPA" name="PA" placeholder="cth. Cik Nadhirah" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
-        <div class="sm:col-span-2">
-          <label class="text-xs font-bold uppercase text-slate-600">10. Nama Pengurus (Manager) *</label>
-          <input required id="inputManager" name="Manager" placeholder="cth. En. Hafiz" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
+        <div>
+          <label class="text-xs font-bold uppercase text-slate-600">10. Pengurus *</label>
+          <input required id="inputPengurus" name="Pengurus" placeholder="cth. En. Hafiz" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
+        </div>
+        <div>
+          <label class="text-xs font-bold uppercase text-slate-600">11. Catatan Bayaran</label>
+          <input name="CatatanBayaran" placeholder="Pilihan (cth. Ansuran kali pertama)" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
 
         <!-- Fee Key-In Row -->
         <div class="lg:col-span-4 bg-slate-50 p-3 rounded-lg border border-slate-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 items-end">
           <div>
-            <label class="text-xs font-bold uppercase text-slate-600">Yuran Daftar (RM) *</label>
-            <input required type="number" step="0.01" id="inputTotalFee" name="TotalFee" value="1600" oninput="calcLiveBalance()" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white" />
+            <label class="text-xs font-bold uppercase text-slate-600">Yuran (RM) *</label>
+            <input required type="number" step="0.01" id="inputYuran" name="Yuran" value="1600" oninput="calcLiveBalance()" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white" />
           </div>
           <div>
-            <label class="text-xs font-bold uppercase text-slate-600">Bayaran Awal (RM) *</label>
-            <input required type="number" step="0.01" id="inputAmountPaid" name="AmountPaid" value="1000" oninput="calcLiveBalance()" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white" />
+            <label class="text-xs font-bold uppercase text-slate-600">Dibayar Awal (RM) *</label>
+            <input required type="number" step="0.01" id="inputDibayar" name="Dibayar" value="1000" oninput="calcLiveBalance()" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white" />
           </div>
           <div>
             <label class="text-xs font-bold uppercase text-slate-600">Bayar Tunggakan (RM)</label>
-            <input type="number" step="0.01" id="inputFollowUpPaid" name="FollowUpPaid" placeholder="0.00" oninput="calcLiveBalance()" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white" />
+            <input type="number" step="0.01" id="inputBayarTunggakan" name="BayarTunggakan" placeholder="0.00" oninput="calcLiveBalance()" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white" />
           </div>
           <div>
             <label class="text-xs font-bold uppercase text-slate-600">Tarikh Bayar</label>
-            <input type="date" id="inputBalancePaidDate" name="BalancePaidDate" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white" />
+            <input type="date" id="inputTarikhBayar" name="TarikhBayar" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white" />
           </div>
           <div class="p-2 bg-white border border-slate-200 rounded-lg">
-            <span class="text-xs text-slate-500 block">Baki Semasa (Auto):</span>
+            <span class="text-xs text-slate-500 block">Baki (Auto):</span>
             <span id="liveBalancePreview" class="text-base font-bold text-rose-600">RM 600.00</span>
           </div>
           <div>
@@ -233,10 +237,10 @@
       </form>
     </section>
 
-    <!-- FILTERS & MASTER RECORD TABLE -->
+    <!-- FILTERS & MASTER RECORD TABLE (100% SEPADAN DENGAN SPREADSHEET) -->
     <div class="space-y-4">
       <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
-        <input type="text" id="filterSearch" oninput="applyFilters()" placeholder="Cari nama pelajar atau pusat..." class="border rounded-lg px-3 py-2 text-sm" />
+        <input type="text" id="filterSearch" oninput="applyFilters()" placeholder="Cari nama pelatih atau pusat..." class="border rounded-lg px-3 py-2 text-sm" />
         <select id="filterProgram" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
           <option value="">Semua Program</option>
           <option value="SKM Seni Pembuatan Pastri & Kek">SKM Seni Pembuatan Pastri & Kek</option>
@@ -253,21 +257,21 @@
           <option value="SKM Terapi Kecantikan">SKM Terapi Kecantikan</option>
         </select>
         <select id="filterIntake" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
-          <option value="">Semua Bulan Pengambilan</option>
+          <option value="">Semua Bulan Intake</option>
           <option>January</option><option>February</option><option>March</option>
           <option>April</option><option>May</option><option>June</option>
           <option>July</option><option>August</option><option>September</option>
           <option>October</option><option>November</option><option>December</option>
         </select>
         <select id="filterManager" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
-          <option value="">Semua Pengurus (Manager)</option>
+          <option value="">Semua Pengurus</option>
         </select>
         <select id="filterPA" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
           <option value="">Semua PA</option>
         </select>
         <select id="filterStatus" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
           <option value="">Semua Status Bayaran</option>
-          <option value="Paid">Selesai Bayar (Paid)</option>
+          <option value="Paid">Selesai Bayar</option>
           <option value="Outstanding">Ada Baki Tertunggak</option>
         </select>
       </div>
@@ -277,24 +281,25 @@
           <thead class="bg-slate-100 text-slate-700 uppercase border-b border-slate-200">
             <tr>
               <th class="p-3">Nama Pelatih</th>
-              <th class="p-3">No. Tel Pelajar</th>
-              <th class="p-3">No. Tel Bapa</th>
-              <th class="p-3">No. Tel Ibu</th>
-              <th class="p-3">Program</th>
+              <th class="p-3">Tel Pelajar</th>
+              <th class="p-3">Tel Bapa</th>
+              <th class="p-3">Tel Ibu</th>
               <th class="p-3">Pusat Bertauliah</th>
-              <th class="p-3">Intake</th>
+              <th class="p-3">Program</th>
               <th class="p-3">Tarikh Daftar</th>
+              <th class="p-3">Bulan Intake</th>
               <th class="p-3">PA</th>
               <th class="p-3">Pengurus</th>
               <th class="p-3 text-right">Yuran (RM)</th>
               <th class="p-3 text-right">Dibayar (RM)</th>
               <th class="p-3 text-right">Baki (RM)</th>
               <th class="p-3">Tarikh Bayar</th>
+              <th class="p-3">Catatan Bayaran</th>
               <th class="p-3">Status</th>
             </tr>
           </thead>
           <tbody id="tableBody" class="divide-y divide-slate-200">
-            <tr><td colspan="15" class="p-6 text-center text-slate-500">Memuatkan data dari Google Sheets...</td></tr>
+            <tr><td colspan="16" class="p-6 text-center text-slate-500">Memuatkan data dari Google Sheets...</td></tr>
           </tbody>
         </table>
       </div>
@@ -337,19 +342,19 @@
     ];
 
     window.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('inputRegDate').value = new Date().toISOString().split('T')[0];
+      document.getElementById('inputTarikhDaftar').value = new Date().toISOString().split('T')[0];
       calcLiveBalance();
       fetchStudents();
     });
 
     function calcLiveBalance() {
-      const fee = Number(document.getElementById('inputTotalFee').value || 0);
-      const initialPaid = Number(document.getElementById('inputAmountPaid').value || 0);
-      const followUpPaid = Number(document.getElementById('inputFollowUpPaid').value || 0);
-      const bal = Math.max(0, fee - (initialPaid + followUpPaid));
+      const yuran = Number(document.getElementById('inputYuran').value || 0);
+      const dibayarAwal = Number(document.getElementById('inputDibayar').value || 0);
+      const bayarTunggakan = Number(document.getElementById('inputBayarTunggakan').value || 0);
+      const baki = Math.max(0, yuran - (dibayarAwal + bayarTunggakan));
       const el = document.getElementById('liveBalancePreview');
-      el.textContent = `RM ${bal.toFixed(2)}`;
-      el.className = bal > 0 ? 'text-base font-bold text-rose-600' : 'text-base font-bold text-emerald-600';
+      el.textContent = `RM ${baki.toFixed(2)}`;
+      el.className = baki > 0 ? 'text-base font-bold text-rose-600' : 'text-base font-bold text-emerald-600';
     }
 
     function toggleSection(sectionId, btnId, label) {
@@ -371,37 +376,37 @@
 
       const keepDefaults = document.getElementById('keepBatchDefaults').checked;
       const savedDefaults = {
-        Center: formData.Center,
+        PusatBertauliah: formData.PusatBertauliah,
         Program: formData.Program,
-        IntakeMonth: formData.IntakeMonth,
-        RegDate: formData.RegDate,
+        BulanIntake: formData.BulanIntake,
+        TarikhDaftar: formData.TarikhDaftar,
         PA: formData.PA,
-        Manager: formData.Manager,
-        TotalFee: formData.TotalFee,
-        AmountPaid: formData.AmountPaid
+        Pengurus: formData.Pengurus,
+        Yuran: formData.Yuran,
+        Dibayar: formData.Dibayar
       };
 
       try {
         await fetch(API_URL, { method: 'POST', body: JSON.stringify(formData) });
         
         const toast = document.getElementById('toastMsg');
-        toast.textContent = `✓ Berjaya simpan "${formData.FullName}" (${formData.Program}) ke dalam rekod!`;
+        toast.textContent = `✓ Berjaya simpan "${formData.NamaPelatih}" (${formData.Program}) ke dalam rekod!`;
         toast.classList.remove('hidden');
         setTimeout(() => toast.classList.add('hidden'), 5000);
 
         form.reset();
         if (keepDefaults) {
-          document.getElementById('inputCenter').value = savedDefaults.Center;
+          document.getElementById('inputPusatBertauliah').value = savedDefaults.PusatBertauliah;
           document.getElementById('inputProgram').value = savedDefaults.Program;
-          document.getElementById('inputIntake').value = savedDefaults.IntakeMonth;
-          document.getElementById('inputRegDate').value = savedDefaults.RegDate;
+          document.getElementById('inputBulanIntake').value = savedDefaults.BulanIntake;
+          document.getElementById('inputTarikhDaftar').value = savedDefaults.TarikhDaftar;
           document.getElementById('inputPA').value = savedDefaults.PA;
-          document.getElementById('inputManager').value = savedDefaults.Manager;
-          document.getElementById('inputTotalFee').value = savedDefaults.TotalFee;
-          document.getElementById('inputAmountPaid').value = savedDefaults.AmountPaid;
+          document.getElementById('inputPengurus').value = savedDefaults.Pengurus;
+          document.getElementById('inputYuran').value = savedDefaults.Yuran;
+          document.getElementById('inputDibayar').value = savedDefaults.Dibayar;
         }
         calcLiveBalance();
-        document.getElementById('inputFullName').focus();
+        document.getElementById('inputNamaPelatih').focus();
         fetchStudents();
       } catch (err) {
         alert('Ralat semasa menyimpan data. Sila semak sambungan internet atau API URL.');
@@ -413,7 +418,7 @@
 
     async function fetchStudents() {
       const tbody = document.getElementById('tableBody');
-      tbody.innerHTML = '<tr><td colspan="15" class="p-6 text-center text-slate-500">Menyegerak data dengan Google Sheets...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="16" class="p-6 text-center text-slate-500">Menyegerak data dengan Google Sheets...</td></tr>';
       try {
         const res = await fetch(API_URL);
         const json = await res.json();
@@ -421,7 +426,7 @@
         populateDropdowns();
         applyFilters();
       } catch (err) {
-        tbody.innerHTML = '<tr><td colspan="15" class="p-6 text-center text-rose-600">Ralat sambungan. Pastikan API_URL sudah dimasukkan dengan betul.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="16" class="p-6 text-center text-rose-600">Ralat sambungan. Pastikan API_URL sudah dimasukkan dengan betul.</td></tr>';
       }
     }
 
@@ -432,8 +437,8 @@
         uniquePAs.map(pa => `<option value="${pa}">${pa}</option>`).join('');
 
       const mgrSelect = document.getElementById('filterManager');
-      const uniqueMgrs = [...new Set(allStudents.map(s => s.Manager).filter(Boolean))];
-      mgrSelect.innerHTML = '<option value="">Semua Pengurus (Manager)</option>' +
+      const uniqueMgrs = [...new Set(allStudents.map(s => s.Pengurus).filter(Boolean))];
+      mgrSelect.innerHTML = '<option value="">Semua Pengurus</option>' +
         uniqueMgrs.map(m => `<option value="${m}">${m}</option>`).join('');
     }
 
@@ -441,18 +446,18 @@
       const search = document.getElementById('filterSearch').value.toLowerCase();
       const program = document.getElementById('filterProgram').value;
       const intake = document.getElementById('filterIntake').value;
-      const manager = document.getElementById('filterManager').value;
+      const pengurus = document.getElementById('filterManager').value;
       const pa = document.getElementById('filterPA').value;
       const status = document.getElementById('filterStatus').value;
 
       currentFiltered = allStudents.filter(s => {
-        const matchSearch = (s.FullName || '').toLowerCase().includes(search) || (s.Center || '').toLowerCase().includes(search);
+        const matchSearch = (s.NamaPelatih || '').toLowerCase().includes(search) || (s.PusatBertauliah || '').toLowerCase().includes(search);
         const matchProg = !program || s.Program === program;
-        const matchIntake = !intake || s.IntakeMonth === intake;
-        const matchMgr = !manager || s.Manager === manager;
+        const matchIntake = !intake || s.BulanIntake === intake;
+        const matchMgr = !pengurus || s.Pengurus === pengurus;
         const matchPA = !pa || s.PA === pa;
-        const bal = Number(s.Balance || 0);
-        const matchStatus = !status || (status === 'Paid' ? bal <= 0 : bal > 0);
+        const baki = Number(s.Baki || 0);
+        const matchStatus = !status || (status === 'Paid' ? baki <= 0 : baki > 0);
         return matchSearch && matchProg && matchIntake && matchMgr && matchPA && matchStatus;
       });
 
@@ -462,9 +467,9 @@
     }
 
     function updateKPIs(list) {
-      const totalFee = list.reduce((sum, s) => sum + Number(s.TotalFee || 0), 0);
-      const collected = list.reduce((sum, s) => sum + Number(s.AmountPaid || 0), 0);
-      const balance = list.reduce((sum, s) => sum + Number(s.Balance || 0), 0);
+      const totalFee = list.reduce((sum, s) => sum + Number(s.Yuran || 0), 0);
+      const collected = list.reduce((sum, s) => sum + Number(s.Dibayar || 0), 0);
+      const balance = list.reduce((sum, s) => sum + Number(s.Baki || 0), 0);
 
       document.getElementById('kpiStudents').textContent = list.length;
       document.getElementById('kpiTotalFee').textContent = `RM ${totalFee.toFixed(2)}`;
@@ -477,19 +482,19 @@
       const metric = document.getElementById('chartMetric').value;
       const groupLabelMap = {
         Program: 'Program Pilihan',
-        Manager: 'Pengurus (Manager)',
+        Pengurus: 'Pengurus (Manager)',
         PA: 'PA (Personal Advisor)',
-        Center: 'Pusat Bertauliah',
-        IntakeMonth: 'Bulan Pengambilan',
-        PaymentStatus: 'Status Bayaran'
+        PusatBertauliah: 'Pusat Bertauliah',
+        BulanIntake: 'Bulan Intake',
+        StatusBayaran: 'Status Bayaran'
       };
       document.getElementById('breakdownColTitle').textContent = groupLabelMap[groupBy] || 'Kategori';
 
       const summaryMap = {};
       currentFiltered.forEach(s => {
         let key = '';
-        if (groupBy === 'PaymentStatus') {
-          key = Number(s.Balance || 0) <= 0 ? 'Selesai Bayar (Paid)' : 'Ada Baki Tertunggak';
+        if (groupBy === 'StatusBayaran') {
+          key = Number(s.Baki || 0) <= 0 ? 'Selesai Bayar' : 'Ada Baki Tertunggak';
         } else {
           key = s[groupBy] ? String(s[groupBy]).trim() : 'Tidak Dinyatakan';
         }
@@ -498,9 +503,9 @@
           summaryMap[key] = { count: 0, fee: 0, paid: 0, balance: 0 };
         }
         summaryMap[key].count += 1;
-        summaryMap[key].fee += Number(s.TotalFee || 0);
-        summaryMap[key].paid += Number(s.AmountPaid || 0);
-        summaryMap[key].balance += Number(s.Balance || 0);
+        summaryMap[key].fee += Number(s.Yuran || 0);
+        summaryMap[key].paid += Number(s.Dibayar || 0);
+        summaryMap[key].balance += Number(s.Baki || 0);
       });
 
       const sortedEntries = Object.entries(summaryMap).sort((a, b) => b[1][metric] - a[1][metric]);
@@ -568,37 +573,39 @@
     function renderTable(list) {
       const tbody = document.getElementById('tableBody');
       if (!list.length) {
-        tbody.innerHTML = '<tr><td colspan="15" class="p-6 text-center text-slate-500">Tiada rekod pelajar ditemui.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="16" class="p-6 text-center text-slate-500">Tiada rekod pelajar ditemui.</td></tr>';
         return;
       }
 
       tbody.innerHTML = list.map(s => {
-        const bal = Number(s.Balance || 0);
-        const regDate = s.RegDate ? String(s.RegDate).split('T')[0] : '-';
-        const paymentHistory = s.BalancePaidDate ? String(s.BalancePaidDate).trim() : '-';
-        const safeName = String(s.FullName || '').replace(/'/g, "\\'");
+        const baki = Number(s.Baki || 0);
+        const tarikhDaftar = s.TarikhDaftar ? String(s.TarikhDaftar).split('T')[0] : '-';
+        const tarikhBayar = s.TarikhBayar ? String(s.TarikhBayar).trim() : '-';
+        const catatanBayaran = s.CatatanBayaran ? String(s.CatatanBayaran).trim() : '-';
+        const safeName = String(s.NamaPelatih || '').replace(/'/g, "\\'");
 
         return `
           <tr class="hover:bg-slate-50">
-            <td class="p-3 font-bold text-slate-900">${s.FullName || '-'}</td>
-            <td class="p-3 text-slate-600">${s.StudentPhone || '-'}</td>
-            <td class="p-3 text-slate-600">${s.FatherPhone || '-'}</td>
-            <td class="p-3 text-slate-600">${s.MotherPhone || '-'}</td>
+            <td class="p-3 font-bold text-slate-900">${s.NamaPelatih || '-'}</td>
+            <td class="p-3 text-slate-600">${s.TelPelajar || '-'}</td>
+            <td class="p-3 text-slate-600">${s.TelBapa || '-'}</td>
+            <td class="p-3 text-slate-600">${s.TelIbu || '-'}</td>
+            <td class="p-3 text-slate-700">${s.PusatBertauliah || '-'}</td>
             <td class="p-3">
               <span class="px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded font-semibold">${s.Program || '-'}</span>
             </td>
-            <td class="p-3 text-slate-700">${s.Center || '-'}</td>
-            <td class="p-3 font-medium">${s.IntakeMonth || '-'}</td>
-            <td class="p-3 text-slate-600">${regDate}</td>
+            <td class="p-3 text-slate-600">${tarikhDaftar}</td>
+            <td class="p-3 font-medium">${s.BulanIntake || '-'}</td>
             <td class="p-3 font-medium text-slate-800">${s.PA || '-'}</td>
-            <td class="p-3 text-slate-600">${s.Manager || '-'}</td>
-            <td class="p-3 text-right font-medium">${Number(s.TotalFee).toFixed(2)}</td>
-            <td class="p-3 text-right text-emerald-600 font-medium">${Number(s.AmountPaid).toFixed(2)}</td>
-            <td class="p-3 text-right font-bold ${bal > 0 ? 'text-rose-600' : 'text-slate-400'}">${bal.toFixed(2)}</td>
-            <td class="p-3 text-slate-700 font-medium">${paymentHistory}</td>
+            <td class="p-3 text-slate-600">${s.Pengurus || '-'}</td>
+            <td class="p-3 text-right font-medium">${Number(s.Yuran || 0).toFixed(2)}</td>
+            <td class="p-3 text-right text-emerald-600 font-medium">${Number(s.Dibayar || 0).toFixed(2)}</td>
+            <td class="p-3 text-right font-bold ${baki > 0 ? 'text-rose-600' : 'text-slate-400'}">${baki.toFixed(2)}</td>
+            <td class="p-3 text-slate-700 font-medium">${tarikhBayar}</td>
+            <td class="p-3 text-slate-500">${catatanBayaran}</td>
             <td class="p-3">
-              ${bal > 0
-                ? `<button onclick="openPayModal(${s.rowIndex}, '${safeName}', ${bal})" class="bg-amber-500 hover:bg-amber-600 text-white px-2.5 py-1 rounded font-semibold">Bayar Baki</button>`
+              ${baki > 0
+                ? `<button onclick="openPayModal(${s.rowIndex}, '${safeName}', ${baki})" class="bg-amber-500 hover:bg-amber-600 text-white px-2.5 py-1 rounded font-semibold">Bayar Baki</button>`
                 : `<span class="bg-emerald-100 text-emerald-800 px-2 py-1 rounded font-semibold">Selesai</span>`
               }
             </td>
@@ -635,12 +642,13 @@
 
     function exportCSV() {
       if (!currentFiltered.length) return alert('Tiada data untuk dieksport.');
-      const headers = ['Nama Pelatih','Tel Pelajar','Tel Bapa','Tel Ibu','Pusat Bertauliah','Program','Tarikh Daftar','Bulan Pengambilan','PA','Pengurus','Yuran','Dibayar','Baki','Tarikh Bayar'];
+      const headers = ['NamaPelatih','TelPelajar','TelBapa','TelIbu','PusatBertauliah','Program','TarikhDaftar','BulanIntake','PA','Pengurus','Yuran','Dibayar','Baki','TarikhBayar','CatatanBayaran'];
       const rows = currentFiltered.map(s => [
-        s.FullName, s.StudentPhone, s.FatherPhone, s.MotherPhone,
-        s.Center, s.Program, String(s.RegDate).split('T')[0], s.IntakeMonth,
-        s.PA, s.Manager, s.TotalFee, s.AmountPaid, s.Balance,
-        s.BalancePaidDate ? String(s.BalancePaidDate) : ''
+        s.NamaPelatih, s.TelPelajar, s.TelBapa, s.TelIbu,
+        s.PusatBertauliah, s.Program, String(s.TarikhDaftar || '').split('T')[0], s.BulanIntake,
+        s.PA, s.Pengurus, s.Yuran, s.Dibayar, s.Baki,
+        s.TarikhBayar ? String(s.TarikhBayar) : '',
+        s.CatatanBayaran ? String(s.CatatanBayaran) : ''
       ]);
       const csv = [headers, ...rows].map(r => r.map(v => `"${String(v || '').replace(/"/g, '""')}"`).join(',')).join('\n');
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
