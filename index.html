@@ -3,24 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Registration & Financial Dashboard</title>
+  <title>Student Registration Key-In & Dashboard System</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans">
+<body class="bg-slate-100 text-slate-800 font-sans">
 
-  <!-- Top Navbar -->
+  <!-- Top Navigation Bar -->
   <header class="bg-slate-900 text-white shadow">
     <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4">
       <div>
-        <h1 class="text-xl font-bold tracking-tight">Student Registration & Fee Ledger</h1>
-        <p class="text-xs text-slate-400">Live Sync with Google Sheets Database</p>
+        <div class="flex items-center gap-2">
+          <h1 class="text-xl font-bold tracking-tight">EduTrack Key-In & Record System</h1>
+          <span id="roleBadge" class="text-xs bg-emerald-600 px-2 py-0.5 rounded font-semibold">ADMIN MODE</span>
+        </div>
+        <p class="text-xs text-slate-400">Real-Time Cloud Registration & Payment Ledger</p>
       </div>
-      <div class="flex gap-3">
-        <button onclick="fetchStudents()" class="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-lg text-sm font-medium">
-          ↻ Refresh Data
+      <div id="adminControls" class="flex flex-wrap gap-2">
+        <button onclick="copyLeaderLink()" class="bg-indigo-600 hover:bg-indigo-500 px-3 py-2 rounded-lg text-xs font-semibold">
+          🔗 Copy Leader Key-In Link
         </button>
-        <button onclick="openModal('registerModal')" class="bg-emerald-600 hover:bg-emerald-500 px-4 py-2 rounded-lg text-sm font-semibold shadow">
-          + Register Student
+        <button onclick="toggleKeyInPanel()" id="togglePanelBtn" class="bg-emerald-600 hover:bg-emerald-500 px-3 py-2 rounded-lg text-xs font-semibold">
+          ⌨️ Hide Key-In Panel
+        </button>
+        <button onclick="fetchStudents()" class="bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-lg text-xs font-medium">
+          ↻ Sync
         </button>
       </div>
     </div>
@@ -28,106 +34,68 @@
 
   <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
 
-    <!-- KPI Summary Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-        <p class="text-xs font-semibold uppercase text-slate-500">Total Students</p>
+    <!-- KPI Cards (Hidden in Leader Key-In Mode) -->
+    <div id="kpiSection" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+        <p class="text-xs font-semibold uppercase text-slate-500">Total Registered</p>
         <p id="kpiStudents" class="text-2xl font-bold mt-1">0</p>
       </div>
-      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
         <p class="text-xs font-semibold uppercase text-slate-500">Total Fees Expected</p>
         <p id="kpiTotalFee" class="text-2xl font-bold text-slate-800 mt-1">RM 0.00</p>
       </div>
-      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
         <p class="text-xs font-semibold uppercase text-slate-500">Total Collected</p>
         <p id="kpiCollected" class="text-2xl font-bold text-emerald-600 mt-1">RM 0.00</p>
       </div>
-      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
         <p class="text-xs font-semibold uppercase text-slate-500">Outstanding Balance</p>
         <p id="kpiBalance" class="text-2xl font-bold text-rose-600 mt-1">RM 0.00</p>
       </div>
     </div>
 
-    <!-- Filters Bar -->
-    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-5 gap-3">
-      <input type="text" id="filterSearch" oninput="applyFilters()" placeholder="Search student name or center..." class="border rounded-lg px-3 py-2 text-sm" />
-      <select id="filterProgram" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
-        <option value="">All Programs</option>
-        <option value="TVET">TVET</option>
-        <option value="Smart Tahfiz">Smart Tahfiz</option>
-        <option value="Automotive">Automotive</option>
-        <option value="Electrical">Electrical</option>
-      </select>
-      <select id="filterIntake" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
-        <option value="">All Intake Months</option>
-        <option>January</option><option>February</option><option>March</option>
-        <option>April</option><option>May</option><option>June</option>
-        <option>July</option><option>August</option><option>September</option>
-        <option>October</option><option>November</option><option>December</option>
-      </select>
-      <select id="filterEA" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
-        <option value="">All Team Leaders (EA)</option>
-      </select>
-      <select id="filterStatus" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
-        <option value="">All Payment Status</option>
-        <option value="Paid">Fully Paid</option>
-        <option value="Outstanding">Has Balance</option>
-      </select>
-    </div>
-
-    <!-- Data Table -->
-    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-x-auto">
-      <table class="w-full text-left border-collapse text-sm">
-        <thead class="bg-slate-100 text-slate-600 uppercase text-xs">
-          <tr>
-            <th class="p-3">Student & Contacts</th>
-            <th class="p-3">Program & Center</th>
-            <th class="p-3">Intake & Reg Date</th>
-            <th class="p-3">EA / Manager</th>
-            <th class="p-3 text-right">Fee (RM)</th>
-            <th class="p-3 text-right">Paid (RM)</th>
-            <th class="p-3 text-right">Balance (RM)</th>
-            <th class="p-3">Status & Action</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody" class="divide-y divide-slate-200">
-          <tr><td colspan="8" class="p-6 text-center text-slate-500">Loading records from Google Sheets...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </main>
-
-  <!-- Register New Student Modal -->
-  <div id="registerModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-xl max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto space-y-4">
-      <div class="flex justify-between items-center border-b pb-3">
-        <h2 class="text-lg font-bold">Register New Student</h2>
-        <button onclick="closeModal('registerModal')" class="text-slate-400 hover:text-slate-700 text-xl">&times;</button>
+    <!-- FAST KEY-IN PANEL -->
+    <section id="keyInPanel" class="bg-white rounded-xl border-2 border-emerald-500/30 shadow-md p-5">
+      <div class="flex flex-wrap justify-between items-center border-b pb-3 mb-4 gap-2">
+        <div>
+          <h2 class="text-base font-bold text-slate-900">⌨️ Fast Student Key-In Form</h2>
+          <p class="text-xs text-slate-500">Fill in details below and press <strong>Save & Next</strong> to immediately record into the database.</p>
+        </div>
+        <div class="flex items-center gap-2 text-xs">
+          <label class="flex items-center gap-1.5 cursor-pointer bg-slate-100 px-3 py-1.5 rounded-lg">
+            <input type="checkbox" id="keepBatchDefaults" checked class="accent-emerald-600" />
+            <span>Keep Program, Intake & EA for next entry</span>
+          </label>
+        </div>
       </div>
-      <form id="registerForm" onsubmit="submitRegistration(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-        <div class="sm:col-span-2">
-          <label class="font-semibold">Student Full Name (Nama Pelatih) *</label>
-          <input required name="FullName" class="w-full border rounded-lg p-2 mt-1" />
+
+      <!-- Toast Notification -->
+      <div id="toastMsg" class="hidden mb-4 p-3 rounded-lg bg-emerald-50 border border-emerald-300 text-emerald-800 text-sm font-medium"></div>
+
+      <form id="keyInForm" onsubmit="submitRegistration(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
+        <div class="lg:col-span-2">
+          <label class="text-xs font-bold uppercase text-slate-600">1. Student Full Name (Nama Pelatih) *</label>
+          <input required id="inputFullName" name="FullName" placeholder="e.g. Ahmad Bin Ali" class="w-full border border-slate-300 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="font-semibold">Student Phone *</label>
-          <input required name="StudentPhone" class="w-full border rounded-lg p-2 mt-1" />
+          <label class="text-xs font-bold uppercase text-slate-600">2. Student Phone *</label>
+          <input required name="StudentPhone" placeholder="0123456789" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="font-semibold">Father's Phone *</label>
-          <input required name="FatherPhone" class="w-full border rounded-lg p-2 mt-1" />
+          <label class="text-xs font-bold uppercase text-slate-600">3. Father's Phone *</label>
+          <input required name="FatherPhone" placeholder="0198765432" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="font-semibold">Mother's / Guardian Phone *</label>
-          <input required name="MotherPhone" class="w-full border rounded-lg p-2 mt-1" />
+          <label class="text-xs font-bold uppercase text-slate-600">4. Mother's / Guardian Phone *</label>
+          <input required name="MotherPhone" placeholder="0176543210" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="font-semibold">Accredited Center (Pusat Bertauliah) *</label>
-          <input required name="Center" placeholder="e.g. Kolej Kemahiran KL" class="w-full border rounded-lg p-2 mt-1" />
+          <label class="text-xs font-bold uppercase text-slate-600">5. Accredited Center (Pusat Bertauliah) *</label>
+          <input required id="inputCenter" name="Center" placeholder="e.g. Kolej Kemahiran KL" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="font-semibold">Chosen Program *</label>
-          <select required name="Program" class="w-full border rounded-lg p-2 mt-1">
+          <label class="text-xs font-bold uppercase text-slate-600">6. Chosen Program *</label>
+          <select required id="inputProgram" name="Program" class="w-full border border-slate-300 rounded-lg p-2 mt-1">
             <option value="TVET">TVET</option>
             <option value="Smart Tahfiz">Smart Tahfiz</option>
             <option value="Automotive">Automotive</option>
@@ -135,12 +103,8 @@
           </select>
         </div>
         <div>
-          <label class="font-semibold">Registration Date *</label>
-          <input required type="date" name="RegDate" class="w-full border rounded-lg p-2 mt-1" />
-        </div>
-        <div>
-          <label class="font-semibold">Intake Month *</label>
-          <select required name="IntakeMonth" class="w-full border rounded-lg p-2 mt-1">
+          <label class="text-xs font-bold uppercase text-slate-600">7. Intake Month *</label>
+          <select required id="inputIntake" name="IntakeMonth" class="w-full border border-slate-300 rounded-lg p-2 mt-1">
             <option>January</option><option>February</option><option>March</option>
             <option>April</option><option>May</option><option>June</option>
             <option>July</option><option>August</option><option>September</option>
@@ -148,32 +112,94 @@
           </select>
         </div>
         <div>
-          <label class="font-semibold">Team Leader (EA) *</label>
-          <input required name="EA" placeholder="e.g. Cik Nadhirah" class="w-full border rounded-lg p-2 mt-1" />
+          <label class="text-xs font-bold uppercase text-slate-600">8. Registration Date *</label>
+          <input required type="date" id="inputRegDate" name="RegDate" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="font-semibold">Manager (Pengurus) *</label>
-          <input required name="Manager" class="w-full border rounded-lg p-2 mt-1" />
-        </div>
-        <div class="sm:col-span-2">
-          <label class="font-semibold">Mailing Address (Alamat Surat-Menyurat)</label>
-          <textarea name="Address" rows="2" class="w-full border rounded-lg p-2 mt-1"></textarea>
+          <label class="text-xs font-bold uppercase text-slate-600">9. Team Leader (EA) *</label>
+          <input required id="inputEA" name="EA" placeholder="e.g. Cik Nadhirah" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="font-semibold">Total Registration Fee (RM) *</label>
-          <input required type="number" step="0.01" name="TotalFee" value="1600" class="w-full border rounded-lg p-2 mt-1" />
+          <label class="text-xs font-bold uppercase text-slate-600">10. Manager (Pengurus) *</label>
+          <input required id="inputManager" name="Manager" placeholder="e.g. En. Hafiz" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="font-semibold">Initial Amount Paid (RM) *</label>
-          <input required type="number" step="0.01" name="AmountPaid" value="1000" class="w-full border rounded-lg p-2 mt-1" />
+          <label class="text-xs font-bold uppercase text-slate-600">11. Mailing Address</label>
+          <input name="Address" placeholder="No. 12, Jalan Merdeka, KL" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
         </div>
-        <div class="sm:col-span-2 flex justify-end gap-2 pt-3 border-t">
-          <button type="button" onclick="closeModal('registerModal')" class="px-4 py-2 border rounded-lg">Cancel</button>
-          <button type="submit" id="submitBtn" class="px-5 py-2 bg-emerald-600 text-white font-semibold rounded-lg">Save to Database</button>
+
+        <!-- Fee Key-In Row with Live Auto-Balance -->
+        <div class="lg:col-span-4 bg-slate-50 p-3 rounded-lg border border-slate-200 grid grid-cols-1 sm:grid-cols-4 gap-3 items-end">
+          <div>
+            <label class="text-xs font-bold uppercase text-slate-600">Total Fee (RM) *</label>
+            <input required type="number" step="0.01" id="inputTotalFee" name="TotalFee" value="1600" oninput="calcLiveBalance()" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white" />
+          </div>
+          <div>
+            <label class="text-xs font-bold uppercase text-slate-600">Amount Paid (RM) *</label>
+            <input required type="number" step="0.01" id="inputAmountPaid" name="AmountPaid" value="1000" oninput="calcLiveBalance()" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white" />
+          </div>
+          <div class="p-2 bg-white border border-slate-200 rounded-lg">
+            <span class="text-xs text-slate-500 block">Auto-Calculated Balance:</span>
+            <span id="liveBalancePreview" class="text-base font-bold text-rose-600">RM 600.00</span>
+          </div>
+          <div class="flex gap-2">
+            <button type="submit" id="submitBtn" class="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg shadow">
+              ✓ Save & Key-In Next
+            </button>
+          </div>
         </div>
       </form>
+    </section>
+
+    <!-- ADMIN DASHBOARD TABLE & FILTERS (Hidden in Leader Key-In Mode) -->
+    <div id="adminDatabaseSection" class="space-y-4">
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-5 gap-3">
+        <input type="text" id="filterSearch" oninput="applyFilters()" placeholder="Search student or center..." class="border rounded-lg px-3 py-2 text-sm" />
+        <select id="filterProgram" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
+          <option value="">All Programs</option>
+          <option value="TVET">TVET</option>
+          <option value="Smart Tahfiz">Smart Tahfiz</option>
+          <option value="Automotive">Automotive</option>
+          <option value="Electrical">Electrical</option>
+        </select>
+        <select id="filterIntake" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
+          <option value="">All Intake Months</option>
+          <option>January</option><option>February</option><option>March</option>
+          <option>April</option><option>May</option><option>June</option>
+          <option>July</option><option>August</option><option>September</option>
+          <option>October</option><option>November</option><option>December</option>
+        </select>
+        <select id="filterEA" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
+          <option value="">All Team Leaders (EA)</option>
+        </select>
+        <select id="filterStatus" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
+          <option value="">All Payment Status</option>
+          <option value="Paid">Fully Paid</option>
+          <option value="Outstanding">Has Balance</option>
+        </select>
+      </div>
+
+      <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-x-auto">
+        <table class="w-full text-left border-collapse text-sm">
+          <thead class="bg-slate-100 text-slate-600 uppercase text-xs">
+            <tr>
+              <th class="p-3">Student & Contacts</th>
+              <th class="p-3">Program & Center</th>
+              <th class="p-3">Intake & Reg Date</th>
+              <th class="p-3">EA / Manager</th>
+              <th class="p-3 text-right">Fee (RM)</th>
+              <th class="p-3 text-right">Paid (RM)</th>
+              <th class="p-3 text-right">Balance (RM)</th>
+              <th class="p-3">Status & Action</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody" class="divide-y divide-slate-200">
+            <tr><td colspan="8" class="p-6 text-center text-slate-500">Loading records...</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
+  </main>
 
   <!-- Settle Balance Modal -->
   <div id="payModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
@@ -191,7 +217,7 @@
           <input required type="date" id="payDate" class="w-full border rounded-lg p-2 mt-1" />
         </div>
         <div class="flex justify-end gap-2 pt-3">
-          <button type="button" onclick="closeModal('payModal')" class="px-4 py-2 border rounded-lg">Cancel</button>
+          <button type="button" onclick="document.getElementById('payModal').classList.add('hidden')" class="px-4 py-2 border rounded-lg">Cancel</button>
           <button type="submit" id="payBtn" class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg">Update Balance</button>
         </div>
       </form>
@@ -199,9 +225,106 @@
   </div>
 
   <script>
-    // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL BELOW:
+    // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
     const API_URL = 'https://script.google.com/macros/s/AKfycbxaejQRcYTkFNIONboMnyS8arvH5xMYi1ZWz9UkC1RiAE7kVSjDLSVelRFqWBmSlYTk/exec';
     let allStudents = [];
+
+    // Check if opened in Leader Key-In Only Mode (?mode=keyin)
+    const urlParams = new URLSearchParams(window.location.search);
+    const isLeaderMode = urlParams.get('mode') === 'keyin';
+
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('inputRegDate').value = new Date().toISOString().split('T')[0];
+      calcLiveBalance();
+
+      if (isLeaderMode) {
+        document.getElementById('roleBadge').textContent = 'LEADER KEY-IN PORTAL';
+        document.getElementById('roleBadge').className = 'text-xs bg-indigo-600 px-2 py-0.5 rounded font-semibold';
+        document.getElementById('adminControls').classList.add('hidden');
+        document.getElementById('kpiSection').classList.add('hidden');
+        document.getElementById('adminDatabaseSection').classList.add('hidden');
+      } else {
+        fetchStudents();
+      }
+    });
+
+    function calcLiveBalance() {
+      const fee = Number(document.getElementById('inputTotalFee').value || 0);
+      const paid = Number(document.getElementById('inputAmountPaid').value || 0);
+      const bal = Math.max(0, fee - paid);
+      const el = document.getElementById('liveBalancePreview');
+      el.textContent = `RM ${bal.toFixed(2)}`;
+      el.className = bal > 0 ? 'text-base font-bold text-rose-600' : 'text-base font-bold text-emerald-600';
+    }
+
+    function toggleKeyInPanel() {
+      const panel = document.getElementById('keyInPanel');
+      const btn = document.getElementById('togglePanelBtn');
+      panel.classList.toggle('hidden');
+      btn.textContent = panel.classList.contains('hidden') ? '⌨️ Open Key-In Panel' : '⌨️ Hide Key-In Panel';
+    }
+
+    function copyLeaderLink() {
+      const baseUrl = window.location.href.split('?')[0];
+      const leaderUrl = `${baseUrl}?mode=keyin`;
+      navigator.clipboard.writeText(leaderUrl);
+      alert('Leader Key-In Link copied!\n\nShare this link with Team Leaders (EA) so they can key in students without seeing the master financial dashboard:\n' + leaderUrl);
+    }
+
+    async function submitRegistration(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Saving to Cloud...';
+
+      const form = e.target;
+      const formData = Object.fromEntries(new FormData(form).entries());
+      formData.action = 'create';
+
+      // Save batch defaults if checkbox is ticked
+      const keepDefaults = document.getElementById('keepBatchDefaults').checked;
+      const savedDefaults = {
+        Center: formData.Center,
+        Program: formData.Program,
+        IntakeMonth: formData.IntakeMonth,
+        RegDate: formData.RegDate,
+        EA: formData.EA,
+        Manager: formData.Manager,
+        TotalFee: formData.TotalFee,
+        AmountPaid: formData.AmountPaid
+      };
+
+      try {
+        await fetch(API_URL, { method: 'POST', body: JSON.stringify(formData) });
+        
+        // Show confirmation toast
+        const toast = document.getElementById('toastMsg');
+        toast.textContent = `✓ Saved "${formData.FullName}" (${formData.Program}) to database! Ready for next student.`;
+        toast.classList.remove('hidden');
+        setTimeout(() => toast.classList.add('hidden'), 5000);
+
+        form.reset();
+        if (keepDefaults) {
+          document.getElementById('inputCenter').value = savedDefaults.Center;
+          document.getElementById('inputProgram').value = savedDefaults.Program;
+          document.getElementById('inputIntake').value = savedDefaults.IntakeMonth;
+          document.getElementById('inputRegDate').value = savedDefaults.RegDate;
+          document.getElementById('inputEA').value = savedDefaults.EA;
+          document.getElementById('inputManager').value = savedDefaults.Manager;
+          document.getElementById('inputTotalFee').value = savedDefaults.TotalFee;
+          document.getElementById('inputAmountPaid').value = savedDefaults.AmountPaid;
+        }
+        calcLiveBalance();
+        document.getElementById('inputFullName').focus(); // Auto-focus back to Name field for rapid key-in
+
+        if (!isLeaderMode) fetchStudents();
+      } catch (err) {
+        alert('Error saving record. Please check your internet connection or API URL.');
+      }
+
+      btn.disabled = false;
+      btn.textContent = '✓ Save & Key-In Next';
+    }
 
     async function fetchStudents() {
       const tbody = document.getElementById('tableBody');
@@ -273,7 +396,6 @@
             <td class="p-3">
               <div class="font-bold text-slate-900">${s.FullName}</div>
               <div class="text-xs text-slate-500">S: ${s.StudentPhone} | F: ${s.FatherPhone} | M: ${s.MotherPhone}</div>
-              <div class="text-xs text-slate-400 truncate max-w-xs">${s.Address || ''}</div>
             </td>
             <td class="p-3">
               <span class="px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded font-medium text-xs">${s.Program}</span>
@@ -301,27 +423,12 @@
       }).join('');
     }
 
-    async function submitRegistration(e) {
-      e.preventDefault();
-      const btn = document.getElementById('submitBtn');
-      btn.disabled = true; btn.textContent = 'Saving...';
-
-      const formData = Object.fromEntries(new FormData(e.target).entries());
-      formData.action = 'create';
-
-      await fetch(API_URL, { method: 'POST', body: JSON.stringify(formData) });
-      e.target.reset();
-      closeModal('registerModal');
-      btn.disabled = false; btn.textContent = 'Save to Database';
-      fetchStudents();
-    }
-
     function openPayModal(id, name, balance) {
       document.getElementById('payStudentId').value = id;
       document.getElementById('payStudentInfo').textContent = `Student: ${name} — Remaining Balance: RM ${balance.toFixed(2)}`;
       document.getElementById('payAmount').value = balance;
       document.getElementById('payDate').value = new Date().toISOString().split('T')[0];
-      openModal('payModal');
+      document.getElementById('payModal').classList.remove('hidden');
     }
 
     async function submitPayment(e) {
@@ -337,15 +444,10 @@
       };
 
       await fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) });
-      closeModal('payModal');
+      document.getElementById('payModal').classList.add('hidden');
       btn.disabled = false; btn.textContent = 'Update Balance';
       fetchStudents();
     }
-
-    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-
-    fetchStudents();
   </script>
 </body>
 </html>
