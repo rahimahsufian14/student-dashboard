@@ -87,14 +87,12 @@
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-        <!-- Pie Chart Canvas -->
         <div class="lg:col-span-5 flex justify-center">
           <div class="w-full max-w-xs h-64 relative">
             <canvas id="summaryPieChart"></canvas>
           </div>
         </div>
 
-        <!-- Breakdown Summary Table next to Chart -->
         <div class="lg:col-span-7 overflow-x-auto">
           <table class="w-full text-left border-collapse text-xs">
             <thead class="bg-slate-100 text-slate-700 uppercase border-b">
@@ -120,7 +118,7 @@
       <div class="flex flex-wrap justify-between items-center border-b pb-3 mb-4 gap-2">
         <div>
           <h2 class="text-base font-bold text-slate-900">⌨️ Borang Key-In Pendaftaran Pelajar</h2>
-          <p class="text-xs text-slate-500">Masukkan butiran pelajar yang sah mendaftar dan tekan <strong>Simpan & Seterusnya</strong>.</p>
+          <p class="text-xs text-slate-500">Jika pelajar terus bayar penuh semasa daftar, biarkan <strong>Tarikh Bayar</strong> kosong. Jika ada bayaran tunggakan, isi jumlah & tarikhnya.</p>
         </div>
         <div class="flex items-center gap-2 text-xs">
           <label class="flex items-center gap-1.5 cursor-pointer bg-slate-100 px-3 py-1.5 rounded-lg">
@@ -152,20 +150,39 @@
         </div>
         <div>
           <label class="text-xs font-bold uppercase text-slate-600">5. Pusat Bertauliah *</label>
-          <input required id="inputCenter" name="Center" placeholder="cth. Kolej Kemahiran KL" class="w-full border border-slate-300 rounded-lg p-2 mt-1" />
+          <select required id="inputCenter" name="Center" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white">
+            <option value="Ambitious College">Ambitious College</option>
+            <option value="Jv Skill">Jv Skill</option>
+            <option value="Adelphi College">Adelphi College</option>
+            <option value="Iman Motor Academy">Iman Motor Academy</option>
+            <option value="Dual Training Institute">Dual Training Institute</option>
+            <option value="Silverspoon International College">Silverspoon International College</option>
+            <option value="Kolej Dayatech">Kolej Dayatech</option>
+            <option value="Noble School of Engineering">Noble School of Engineering</option>
+            <option value="Noble School City Campus">Noble School City Campus</option>
+            <option value="Malaysia Technical Skill Academy">Malaysia Technical Skill Academy</option>
+          </select>
         </div>
         <div>
           <label class="text-xs font-bold uppercase text-slate-600">6. Program Pilihan *</label>
-          <select required id="inputProgram" name="Program" class="w-full border border-slate-300 rounded-lg p-2 mt-1">
-            <option value="TVET">TVET</option>
-            <option value="Smart Tahfiz">Smart Tahfiz</option>
-            <option value="Automotive">Automotive</option>
-            <option value="Electrical">Electrical</option>
+          <select required id="inputProgram" name="Program" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white">
+            <option value="SKM Seni Pembuatan Pastri & Kek">SKM Seni Pembuatan Pastri & Kek</option>
+            <option value="SKM Teknologi Automotif">SKM Teknologi Automotif</option>
+            <option value="SKM Teknologi Automasi Industri">SKM Teknologi Automasi Industri</option>
+            <option value="SKM Pemasangan & Wiring Elektrik">SKM Pemasangan & Wiring Elektrik</option>
+            <option value="SKM Kimpalan Arka & Gas">SKM Kimpalan Arka & Gas</option>
+            <option value="SKM Teknologi Kenderaan Elektrik">SKM Teknologi Kenderaan Elektrik</option>
+            <option value="SKM Pengajian Awal Kanak-Kanak">SKM Pengajian Awal Kanak-Kanak</option>
+            <option value="SKM Pendidikan Prasekolah">SKM Pendidikan Prasekolah</option>
+            <option value="SKM Seni Kulinari">SKM Seni Kulinari</option>
+            <option value="SKM Pembuatan Roti & Pastri">SKM Pembuatan Roti & Pastri</option>
+            <option value="SKM Penyejukan & Penyamanan Udara (RAC)">SKM Penyejukan & Penyamanan Udara (RAC)</option>
+            <option value="SKM Terapi Kecantikan">SKM Terapi Kecantikan</option>
           </select>
         </div>
         <div>
           <label class="text-xs font-bold uppercase text-slate-600">7. Bulan Pengambilan (Intake) *</label>
-          <select required id="inputIntake" name="IntakeMonth" class="w-full border border-slate-300 rounded-lg p-2 mt-1">
+          <select required id="inputIntake" name="IntakeMonth" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white">
             <option>January</option><option>February</option><option>March</option>
             <option>April</option><option>May</option><option>June</option>
             <option>July</option><option>August</option><option>September</option>
@@ -186,22 +203,26 @@
         </div>
 
         <!-- Fee Key-In Row -->
-        <div class="lg:col-span-4 bg-slate-50 p-3 rounded-lg border border-slate-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 items-end">
+        <div class="lg:col-span-4 bg-slate-50 p-3 rounded-lg border border-slate-200 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 items-end">
           <div>
-            <label class="text-xs font-bold uppercase text-slate-600">Yuran Pendaftaran (RM) *</label>
+            <label class="text-xs font-bold uppercase text-slate-600">Yuran Daftar (RM) *</label>
             <input required type="number" step="0.01" id="inputTotalFee" name="TotalFee" value="1600" oninput="calcLiveBalance()" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white" />
           </div>
           <div>
-            <label class="text-xs font-bold uppercase text-slate-600">Jumlah Dibayar (RM) *</label>
+            <label class="text-xs font-bold uppercase text-slate-600">Bayaran Awal (RM) *</label>
             <input required type="number" step="0.01" id="inputAmountPaid" name="AmountPaid" value="1000" oninput="calcLiveBalance()" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white" />
           </div>
-          <div class="p-2 bg-white border border-slate-200 rounded-lg">
-            <span class="text-xs text-slate-500 block">Baki Tertunggak (Auto):</span>
-            <span id="liveBalancePreview" class="text-base font-bold text-rose-600">RM 600.00</span>
+          <div>
+            <label class="text-xs font-bold uppercase text-slate-600">Bayar Tunggakan (RM)</label>
+            <input type="number" step="0.01" id="inputFollowUpPaid" name="FollowUpPaid" placeholder="0.00" oninput="calcLiveBalance()" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white" />
           </div>
           <div>
-            <label class="text-xs font-bold uppercase text-slate-600">Tarikh Bayar Tunggakan</label>
+            <label class="text-xs font-bold uppercase text-slate-600">Tarikh Bayar</label>
             <input type="date" id="inputBalancePaidDate" name="BalancePaidDate" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white" />
+          </div>
+          <div class="p-2 bg-white border border-slate-200 rounded-lg">
+            <span class="text-xs text-slate-500 block">Baki Semasa (Auto):</span>
+            <span id="liveBalancePreview" class="text-base font-bold text-rose-600">RM 600.00</span>
           </div>
           <div>
             <button type="submit" id="submitBtn" class="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg shadow">
@@ -218,10 +239,18 @@
         <input type="text" id="filterSearch" oninput="applyFilters()" placeholder="Cari nama pelajar atau pusat..." class="border rounded-lg px-3 py-2 text-sm" />
         <select id="filterProgram" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
           <option value="">Semua Program</option>
-          <option value="TVET">TVET</option>
-          <option value="Smart Tahfiz">Smart Tahfiz</option>
-          <option value="Automotive">Automotive</option>
-          <option value="Electrical">Electrical</option>
+          <option value="SKM Seni Pembuatan Pastri & Kek">SKM Seni Pembuatan Pastri & Kek</option>
+          <option value="SKM Teknologi Automotif">SKM Teknologi Automotif</option>
+          <option value="SKM Teknologi Automasi Industri">SKM Teknologi Automasi Industri</option>
+          <option value="SKM Pemasangan & Wiring Elektrik">SKM Pemasangan & Wiring Elektrik</option>
+          <option value="SKM Kimpalan Arka & Gas">SKM Kimpalan Arka & Gas</option>
+          <option value="SKM Teknologi Kenderaan Elektrik">SKM Teknologi Kenderaan Elektrik</option>
+          <option value="SKM Pengajian Awal Kanak-Kanak">SKM Pengajian Awal Kanak-Kanak</option>
+          <option value="SKM Pendidikan Prasekolah">SKM Pendidikan Prasekolah</option>
+          <option value="SKM Seni Kulinari">SKM Seni Kulinari</option>
+          <option value="SKM Pembuatan Roti & Pastri">SKM Pembuatan Roti & Pastri</option>
+          <option value="SKM Penyejukan & Penyamanan Udara (RAC)">SKM Penyejukan & Penyamanan Udara (RAC)</option>
+          <option value="SKM Terapi Kecantikan">SKM Terapi Kecantikan</option>
         </select>
         <select id="filterIntake" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
           <option value="">Semua Bulan Pengambilan</option>
@@ -260,7 +289,7 @@
               <th class="p-3 text-right">Yuran (RM)</th>
               <th class="p-3 text-right">Dibayar (RM)</th>
               <th class="p-3 text-right">Baki (RM)</th>
-              <th class="p-3">Tarikh Bayar Tunggakan</th>
+              <th class="p-3">Tarikh Bayar</th>
               <th class="p-3">Status</th>
             </tr>
           </thead>
@@ -275,7 +304,7 @@
   <!-- Settle Balance Modal -->
   <div id="payModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
     <div class="bg-white rounded-xl max-w-md w-full p-6 space-y-4">
-      <h2 class="text-lg font-bold">Rekod Bayaran Baki Tunggakan</h2>
+      <h2 class="text-lg font-bold">Rekod Bayaran Tunggakan</h2>
       <p id="payStudentInfo" class="text-sm text-slate-600"></p>
       <form onsubmit="submitPayment(event)" class="space-y-3 text-sm">
         <input type="hidden" id="payStudentId" />
@@ -284,7 +313,7 @@
           <input required type="number" step="0.01" id="payAmount" class="w-full border rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="font-semibold">Tarikh Bayar Tunggakan *</label>
+          <label class="font-semibold">Tarikh Bayar *</label>
           <input required type="date" id="payDate" class="w-full border rounded-lg p-2 mt-1" />
         </div>
         <div class="flex justify-end gap-2 pt-3">
@@ -315,8 +344,9 @@
 
     function calcLiveBalance() {
       const fee = Number(document.getElementById('inputTotalFee').value || 0);
-      const paid = Number(document.getElementById('inputAmountPaid').value || 0);
-      const bal = Math.max(0, fee - paid);
+      const initialPaid = Number(document.getElementById('inputAmountPaid').value || 0);
+      const followUpPaid = Number(document.getElementById('inputFollowUpPaid').value || 0);
+      const bal = Math.max(0, fee - (initialPaid + followUpPaid));
       const el = document.getElementById('liveBalancePreview');
       el.textContent = `RM ${bal.toFixed(2)}`;
       el.className = bal > 0 ? 'text-base font-bold text-rose-600' : 'text-base font-bold text-emerald-600';
@@ -473,13 +503,11 @@
         summaryMap[key].balance += Number(s.Balance || 0);
       });
 
-      // Susun dari nilai tertinggi ke terendah
       const sortedEntries = Object.entries(summaryMap).sort((a, b) => b[1][metric] - a[1][metric]);
       const labels = sortedEntries.map(e => e[0]);
       const values = sortedEntries.map(e => e[1][metric]);
       const totalMetricValue = values.reduce((a, b) => a + b, 0);
 
-      // Kemaskini Jadual Pecahan di sebelah Pie Chart
       const breakdownBody = document.getElementById('chartBreakdownBody');
       if (!sortedEntries.length) {
         breakdownBody.innerHTML = '<tr><td colspan="6" class="p-4 text-center text-slate-400">Tiada data untuk dipaparkan.</td></tr>';
@@ -503,7 +531,6 @@
         }).join('');
       }
 
-      // Lukis / Kemaskini Pie Chart
       const ctx = document.getElementById('summaryPieChart').getContext('2d');
       if (pieChartInstance) pieChartInstance.destroy();
 
@@ -548,7 +575,8 @@
       tbody.innerHTML = list.map(s => {
         const bal = Number(s.Balance || 0);
         const regDate = s.RegDate ? String(s.RegDate).split('T')[0] : '-';
-        const paidDate = s.BalancePaidDate ? String(s.BalancePaidDate).split('T')[0] : '-';
+        // Papar jumlah & tarikh bayaran tunggakan jika ada; jika terus bayar penuh semasa daftar, papar '-'
+        const paymentHistory = s.BalancePaidDate ? String(s.BalancePaidDate).trim() : '-';
 
         return `
           <tr class="hover:bg-slate-50">
@@ -567,7 +595,7 @@
             <td class="p-3 text-right font-medium">${Number(s.TotalFee).toFixed(2)}</td>
             <td class="p-3 text-right text-emerald-600 font-medium">${Number(s.AmountPaid).toFixed(2)}</td>
             <td class="p-3 text-right font-bold ${bal > 0 ? 'text-rose-600' : 'text-slate-400'}">${bal.toFixed(2)}</td>
-            <td class="p-3 text-slate-600">${paidDate}</td>
+            <td class="p-3 text-slate-700 font-medium">${paymentHistory}</td>
             <td class="p-3">
               ${bal > 0
                 ? `<button onclick="openPayModal('${s.ID}', '${s.FullName}', ${bal})" class="bg-amber-500 hover:bg-amber-600 text-white px-2.5 py-1 rounded font-semibold">Bayar Baki</button>`
@@ -607,12 +635,12 @@
 
     function exportCSV() {
       if (!currentFiltered.length) return alert('Tiada data untuk dieksport.');
-      const headers = ['ID','Nama Pelatih','Tel Pelajar','Tel Bapa','Tel Ibu','Pusat Bertauliah','Program','Tarikh Daftar','Bulan Pengambilan','PA','Pengurus','Yuran','Dibayar','Baki','Tarikh Bayar Tunggakan'];
+      const headers = ['ID','Nama Pelatih','Tel Pelajar','Tel Bapa','Tel Ibu','Pusat Bertauliah','Program','Tarikh Daftar','Bulan Pengambilan','PA','Pengurus','Yuran','Dibayar','Baki','Tarikh Bayar'];
       const rows = currentFiltered.map(s => [
         s.ID, s.FullName, s.StudentPhone, s.FatherPhone, s.MotherPhone,
         s.Center, s.Program, String(s.RegDate).split('T')[0], s.IntakeMonth,
         s.PA, s.Manager, s.TotalFee, s.AmountPaid, s.Balance,
-        s.BalancePaidDate ? String(s.BalancePaidDate).split('T')[0] : ''
+        s.BalancePaidDate ? String(s.BalancePaidDate) : ''
       ]);
       const csv = [headers, ...rows].map(r => r.map(v => `"${String(v || '').replace(/"/g, '""')}"`).join(',')).join('\n');
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
