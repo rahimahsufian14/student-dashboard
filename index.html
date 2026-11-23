@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sistem Pendaftaran Pelajar & Rekod Yuran</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans">
 
@@ -16,10 +17,13 @@
           <h1 class="text-xl font-bold tracking-tight">Sistem Pendaftaran Pelajar & Rekod Yuran</h1>
           <span class="text-xs bg-emerald-600 px-2 py-0.5 rounded font-semibold">ADMIN SYSTEM</span>
         </div>
-        <p class="text-xs text-slate-400">Pengurusan Pendaftaran Rasmi & Baki Yuran Pelatih</p>
+        <p class="text-xs text-slate-400">Pengurusan Pendaftaran Rasmi, Rumusan Laporan & Baki Yuran Pelatih</p>
       </div>
       <div class="flex flex-wrap gap-2">
-        <button onclick="toggleKeyInPanel()" id="togglePanelBtn" class="bg-emerald-600 hover:bg-emerald-500 px-3 py-2 rounded-lg text-xs font-semibold">
+        <button onclick="toggleSection('chartSection', 'toggleChartBtn', '📊 Carta Rumusan')" id="toggleChartBtn" class="bg-sky-600 hover:bg-sky-500 px-3 py-2 rounded-lg text-xs font-semibold">
+          📊 Sembunyi Carta Rumusan
+        </button>
+        <button onclick="toggleSection('keyInPanel', 'togglePanelBtn', '⌨️ Borang Key-In')" id="togglePanelBtn" class="bg-emerald-600 hover:bg-emerald-500 px-3 py-2 rounded-lg text-xs font-semibold">
           ⌨️ Sembunyi Borang Key-In
         </button>
         <button onclick="exportCSV()" class="bg-indigo-600 hover:bg-indigo-500 px-3 py-2 rounded-lg text-xs font-semibold">
@@ -53,6 +57,63 @@
         <p id="kpiBalance" class="text-2xl font-bold text-rose-600 mt-1">RM 0.00</p>
       </div>
     </div>
+
+    <!-- INTERACTIVE PIE CHART & SUMMARY REPORT SECTION -->
+    <section id="chartSection" class="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+      <div class="flex flex-wrap justify-between items-center border-b pb-3 mb-4 gap-3">
+        <div>
+          <h2 class="text-base font-bold text-slate-900">📊 Rumusan Laporan & Analisis Pendaftaran</h2>
+          <p class="text-xs text-slate-500">Carta dikemaskini secara automatik mengikut penapis (filter) yang dipilih di bawah.</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2 text-xs">
+          <label class="font-semibold text-slate-600">Pecahan Mengikut:</label>
+          <select id="chartGroupBy" onchange="updateChart()" class="border border-slate-300 rounded-lg px-3 py-1.5 font-semibold bg-slate-50">
+            <option value="Program">Program Pilihan</option>
+            <option value="Manager">Pengurus (Manager)</option>
+            <option value="PA">PA (Personal Advisor)</option>
+            <option value="Center">Pusat Bertauliah</option>
+            <option value="IntakeMonth">Bulan Pengambilan (Intake)</option>
+            <option value="PaymentStatus">Status Bayaran Yuran</option>
+          </select>
+
+          <label class="font-semibold text-slate-600 ml-2">Kira Berdasarkan:</label>
+          <select id="chartMetric" onchange="updateChart()" class="border border-slate-300 rounded-lg px-3 py-1.5 font-semibold bg-slate-50">
+            <option value="count">Bilangan Pelajar (Orang)</option>
+            <option value="fee">Jumlah Yuran Sepatutnya (RM)</option>
+            <option value="paid">Jumlah Yuran Diterima (RM)</option>
+            <option value="balance">Jumlah Baki Tertunggak (RM)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+        <!-- Pie Chart Canvas -->
+        <div class="lg:col-span-5 flex justify-center">
+          <div class="w-full max-w-xs h-64 relative">
+            <canvas id="summaryPieChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Breakdown Summary Table next to Chart -->
+        <div class="lg:col-span-7 overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead class="bg-slate-100 text-slate-700 uppercase border-b">
+              <tr>
+                <th class="p-2.5" id="breakdownColTitle">Kategori</th>
+                <th class="p-2.5 text-right">Bil. Pelajar</th>
+                <th class="p-2.5 text-right">Peratus (%)</th>
+                <th class="p-2.5 text-right">Jumlah Yuran (RM)</th>
+                <th class="p-2.5 text-right">Dibayar (RM)</th>
+                <th class="p-2.5 text-right">Baki (RM)</th>
+              </tr>
+            </thead>
+            <tbody id="chartBreakdownBody" class="divide-y divide-slate-200">
+              <tr><td colspan="6" class="p-4 text-center text-slate-400">Tiada data untuk dipaparkan.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
 
     <!-- FAST KEY-IN PANEL -->
     <section id="keyInPanel" class="bg-white rounded-xl border-2 border-emerald-500/30 shadow-md p-5">
@@ -98,17 +159,17 @@
           <select required id="inputProgram" name="Program" class="w-full border border-slate-300 rounded-lg p-2 mt-1">
             <option value="TVET">TVET</option>
             <option value="Smart Tahfiz">Smart Tahfiz</option>
-            <option value="Automotive">Automotif</option>
-            <option value="Electrical">Elektrikal</option>
+            <option value="Automotive">Automotive</option>
+            <option value="Electrical">Electrical</option>
           </select>
         </div>
         <div>
           <label class="text-xs font-bold uppercase text-slate-600">7. Bulan Pengambilan (Intake) *</label>
           <select required id="inputIntake" name="IntakeMonth" class="w-full border border-slate-300 rounded-lg p-2 mt-1">
-            <option>Januari</option><option>Februari</option><option>Mac</option>
-            <option>April</option><option>Mei</option><option>Jun</option>
-            <option>Julai</option><option>Ogos</option><option>September</option>
-            <option>Oktober</option><option>November</option><option>Disember</option>
+            <option>January</option><option>February</option><option>March</option>
+            <option>April</option><option>May</option><option>June</option>
+            <option>July</option><option>August</option><option>September</option>
+            <option>October</option><option>November</option><option>December</option>
           </select>
         </div>
         <div>
@@ -151,9 +212,9 @@
       </form>
     </section>
 
-    <!-- FILTERS & MASTER RECORD TABLE (SEMUA KOLUM ASING) -->
+    <!-- FILTERS & MASTER RECORD TABLE -->
     <div class="space-y-4">
-      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-5 gap-3">
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
         <input type="text" id="filterSearch" oninput="applyFilters()" placeholder="Cari nama pelajar atau pusat..." class="border rounded-lg px-3 py-2 text-sm" />
         <select id="filterProgram" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
           <option value="">Semua Program</option>
@@ -168,6 +229,9 @@
           <option>April</option><option>May</option><option>June</option>
           <option>July</option><option>August</option><option>September</option>
           <option>October</option><option>November</option><option>December</option>
+        </select>
+        <select id="filterManager" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
+          <option value="">Semua Pengurus (Manager)</option>
         </select>
         <select id="filterPA" onchange="applyFilters()" class="border rounded-lg px-3 py-2 text-sm">
           <option value="">Semua PA</option>
@@ -236,6 +300,12 @@
     const API_URL = 'https://script.google.com/macros/s/AKfycbxaejQRcYTkFNIONboMnyS8arvH5xMYi1ZWz9UkC1RiAE7kVSjDLSVelRFqWBmSlYTk/exec';
     let allStudents = [];
     let currentFiltered = [];
+    let pieChartInstance = null;
+
+    const CHART_COLORS = [
+      '#0284c7', '#059669', '#d97706', '#7c3aed', '#e11d48',
+      '#0d9488', '#4f46e5', '#ea580c', '#2563eb', '#65a30d'
+    ];
 
     window.addEventListener('DOMContentLoaded', () => {
       document.getElementById('inputRegDate').value = new Date().toISOString().split('T')[0];
@@ -252,11 +322,11 @@
       el.className = bal > 0 ? 'text-base font-bold text-rose-600' : 'text-base font-bold text-emerald-600';
     }
 
-    function toggleKeyInPanel() {
-      const panel = document.getElementById('keyInPanel');
-      const btn = document.getElementById('togglePanelBtn');
-      panel.classList.toggle('hidden');
-      btn.textContent = panel.classList.contains('hidden') ? '⌨️ Buka Borang Key-In' : '⌨️ Sembunyi Borang Key-In';
+    function toggleSection(sectionId, btnId, label) {
+      const sec = document.getElementById(sectionId);
+      const btn = document.getElementById(btnId);
+      sec.classList.toggle('hidden');
+      btn.textContent = sec.classList.contains('hidden') ? `${label.split(' ')[0]} Buka ${label.slice(2)}` : `${label.split(' ')[0]} Sembunyi ${label.slice(2)}`;
     }
 
     async function submitRegistration(e) {
@@ -318,24 +388,30 @@
         const res = await fetch(API_URL);
         const json = await res.json();
         allStudents = json.data || [];
-        populatePADropdown();
+        populateDropdowns();
         applyFilters();
       } catch (err) {
         tbody.innerHTML = '<tr><td colspan="15" class="p-6 text-center text-rose-600">Ralat sambungan. Pastikan API_URL sudah dimasukkan dengan betul.</td></tr>';
       }
     }
 
-    function populatePADropdown() {
+    function populateDropdowns() {
       const paSelect = document.getElementById('filterPA');
       const uniquePAs = [...new Set(allStudents.map(s => s.PA).filter(Boolean))];
       paSelect.innerHTML = '<option value="">Semua PA</option>' +
         uniquePAs.map(pa => `<option value="${pa}">${pa}</option>`).join('');
+
+      const mgrSelect = document.getElementById('filterManager');
+      const uniqueMgrs = [...new Set(allStudents.map(s => s.Manager).filter(Boolean))];
+      mgrSelect.innerHTML = '<option value="">Semua Pengurus (Manager)</option>' +
+        uniqueMgrs.map(m => `<option value="${m}">${m}</option>`).join('');
     }
 
     function applyFilters() {
       const search = document.getElementById('filterSearch').value.toLowerCase();
       const program = document.getElementById('filterProgram').value;
       const intake = document.getElementById('filterIntake').value;
+      const manager = document.getElementById('filterManager').value;
       const pa = document.getElementById('filterPA').value;
       const status = document.getElementById('filterStatus').value;
 
@@ -343,14 +419,16 @@
         const matchSearch = (s.FullName || '').toLowerCase().includes(search) || (s.Center || '').toLowerCase().includes(search);
         const matchProg = !program || s.Program === program;
         const matchIntake = !intake || s.IntakeMonth === intake;
+        const matchMgr = !manager || s.Manager === manager;
         const matchPA = !pa || s.PA === pa;
         const bal = Number(s.Balance || 0);
         const matchStatus = !status || (status === 'Paid' ? bal <= 0 : bal > 0);
-        return matchSearch && matchProg && matchIntake && matchPA && matchStatus;
+        return matchSearch && matchProg && matchIntake && matchMgr && matchPA && matchStatus;
       });
 
       renderTable(currentFiltered);
       updateKPIs(currentFiltered);
+      updateChart();
     }
 
     function updateKPIs(list) {
@@ -362,6 +440,102 @@
       document.getElementById('kpiTotalFee').textContent = `RM ${totalFee.toFixed(2)}`;
       document.getElementById('kpiCollected').textContent = `RM ${collected.toFixed(2)}`;
       document.getElementById('kpiBalance').textContent = `RM ${balance.toFixed(2)}`;
+    }
+
+    function updateChart() {
+      const groupBy = document.getElementById('chartGroupBy').value;
+      const metric = document.getElementById('chartMetric').value;
+      const groupLabelMap = {
+        Program: 'Program Pilihan',
+        Manager: 'Pengurus (Manager)',
+        PA: 'PA (Personal Advisor)',
+        Center: 'Pusat Bertauliah',
+        IntakeMonth: 'Bulan Pengambilan',
+        PaymentStatus: 'Status Bayaran'
+      };
+      document.getElementById('breakdownColTitle').textContent = groupLabelMap[groupBy] || 'Kategori';
+
+      const summaryMap = {};
+      currentFiltered.forEach(s => {
+        let key = '';
+        if (groupBy === 'PaymentStatus') {
+          key = Number(s.Balance || 0) <= 0 ? 'Selesai Bayar (Paid)' : 'Ada Baki Tertunggak';
+        } else {
+          key = s[groupBy] ? String(s[groupBy]).trim() : 'Tidak Dinyatakan';
+        }
+
+        if (!summaryMap[key]) {
+          summaryMap[key] = { count: 0, fee: 0, paid: 0, balance: 0 };
+        }
+        summaryMap[key].count += 1;
+        summaryMap[key].fee += Number(s.TotalFee || 0);
+        summaryMap[key].paid += Number(s.AmountPaid || 0);
+        summaryMap[key].balance += Number(s.Balance || 0);
+      });
+
+      // Susun dari nilai tertinggi ke terendah
+      const sortedEntries = Object.entries(summaryMap).sort((a, b) => b[1][metric] - a[1][metric]);
+      const labels = sortedEntries.map(e => e[0]);
+      const values = sortedEntries.map(e => e[1][metric]);
+      const totalMetricValue = values.reduce((a, b) => a + b, 0);
+
+      // Kemaskini Jadual Pecahan di sebelah Pie Chart
+      const breakdownBody = document.getElementById('chartBreakdownBody');
+      if (!sortedEntries.length) {
+        breakdownBody.innerHTML = '<tr><td colspan="6" class="p-4 text-center text-slate-400">Tiada data untuk dipaparkan.</td></tr>';
+      } else {
+        breakdownBody.innerHTML = sortedEntries.map(([label, stats], idx) => {
+          const pct = totalMetricValue > 0 ? ((stats[metric] / totalMetricValue) * 100).toFixed(1) : '0.0';
+          const dotColor = CHART_COLORS[idx % CHART_COLORS.length];
+          return `
+            <tr class="hover:bg-slate-50">
+              <td class="p-2.5 font-semibold text-slate-800 flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full inline-block shrink-0" style="background:${dotColor}"></span>
+                ${label}
+              </td>
+              <td class="p-2.5 text-right font-bold">${stats.count}</td>
+              <td class="p-2.5 text-right text-slate-500">${pct}%</td>
+              <td class="p-2.5 text-right">${stats.fee.toFixed(2)}</td>
+              <td class="p-2.5 text-right text-emerald-600 font-medium">${stats.paid.toFixed(2)}</td>
+              <td class="p-2.5 text-right text-rose-600 font-medium">${stats.balance.toFixed(2)}</td>
+            </tr>
+          `;
+        }).join('');
+      }
+
+      // Lukis / Kemaskini Pie Chart
+      const ctx = document.getElementById('summaryPieChart').getContext('2d');
+      if (pieChartInstance) pieChartInstance.destroy();
+
+      pieChartInstance = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: values,
+            backgroundColor: labels.map((_, i) => CHART_COLORS[i % CHART_COLORS.length]),
+            borderWidth: 2,
+            borderColor: '#ffffff'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const val = context.parsed;
+                  const pct = totalMetricValue > 0 ? ((val / totalMetricValue) * 100).toFixed(1) : 0;
+                  const formatted = metric === 'count' ? `${val} pelajar` : `RM ${val.toFixed(2)}`;
+                  return ` ${context.label}: ${formatted} (${pct}%)`;
+                }
+              }
+            }
+          }
+        }
+      });
     }
 
     function renderTable(list) {
