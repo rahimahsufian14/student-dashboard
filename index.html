@@ -307,7 +307,7 @@
       <h2 class="text-lg font-bold">Rekod Bayaran Tunggakan</h2>
       <p id="payStudentInfo" class="text-sm text-slate-600"></p>
       <form onsubmit="submitPayment(event)" class="space-y-3 text-sm">
-        <input type="hidden" id="payStudentId" />
+        <input type="hidden" id="payRowIndex" />
         <div>
           <label class="font-semibold">Jumlah Bayaran Diterima (RM) *</label>
           <input required type="number" step="0.01" id="payAmount" class="w-full border rounded-lg p-2 mt-1" />
@@ -575,8 +575,8 @@
       tbody.innerHTML = list.map(s => {
         const bal = Number(s.Balance || 0);
         const regDate = s.RegDate ? String(s.RegDate).split('T')[0] : '-';
-        // Papar jumlah & tarikh bayaran tunggakan jika ada; jika terus bayar penuh semasa daftar, papar '-'
         const paymentHistory = s.BalancePaidDate ? String(s.BalancePaidDate).trim() : '-';
+        const safeName = String(s.FullName || '').replace(/'/g, "\\'");
 
         return `
           <tr class="hover:bg-slate-50">
@@ -598,7 +598,7 @@
             <td class="p-3 text-slate-700 font-medium">${paymentHistory}</td>
             <td class="p-3">
               ${bal > 0
-                ? `<button onclick="openPayModal('${s.ID}', '${s.FullName}', ${bal})" class="bg-amber-500 hover:bg-amber-600 text-white px-2.5 py-1 rounded font-semibold">Bayar Baki</button>`
+                ? `<button onclick="openPayModal(${s.rowIndex}, '${safeName}', ${bal})" class="bg-amber-500 hover:bg-amber-600 text-white px-2.5 py-1 rounded font-semibold">Bayar Baki</button>`
                 : `<span class="bg-emerald-100 text-emerald-800 px-2 py-1 rounded font-semibold">Selesai</span>`
               }
             </td>
@@ -607,8 +607,8 @@
       }).join('');
     }
 
-    function openPayModal(id, name, balance) {
-      document.getElementById('payStudentId').value = id;
+    function openPayModal(rowIndex, name, balance) {
+      document.getElementById('payRowIndex').value = rowIndex;
       document.getElementById('payStudentInfo').textContent = `Pelajar: ${name} — Baki Tertunggak: RM ${balance.toFixed(2)}`;
       document.getElementById('payAmount').value = balance;
       document.getElementById('payDate').value = new Date().toISOString().split('T')[0];
@@ -622,7 +622,7 @@
 
       const payload = {
         action: 'payBalance',
-        ID: document.getElementById('payStudentId').value,
+        rowIndex: document.getElementById('payRowIndex').value,
         AddAmount: document.getElementById('payAmount').value,
         PayDate: document.getElementById('payDate').value
       };
@@ -635,9 +635,9 @@
 
     function exportCSV() {
       if (!currentFiltered.length) return alert('Tiada data untuk dieksport.');
-      const headers = ['ID','Nama Pelatih','Tel Pelajar','Tel Bapa','Tel Ibu','Pusat Bertauliah','Program','Tarikh Daftar','Bulan Pengambilan','PA','Pengurus','Yuran','Dibayar','Baki','Tarikh Bayar'];
+      const headers = ['Nama Pelatih','Tel Pelajar','Tel Bapa','Tel Ibu','Pusat Bertauliah','Program','Tarikh Daftar','Bulan Pengambilan','PA','Pengurus','Yuran','Dibayar','Baki','Tarikh Bayar'];
       const rows = currentFiltered.map(s => [
-        s.ID, s.FullName, s.StudentPhone, s.FatherPhone, s.MotherPhone,
+        s.FullName, s.StudentPhone, s.FatherPhone, s.MotherPhone,
         s.Center, s.Program, String(s.RegDate).split('T')[0], s.IntakeMonth,
         s.PA, s.Manager, s.TotalFee, s.AmountPaid, s.Balance,
         s.BalancePaidDate ? String(s.BalancePaidDate) : ''
