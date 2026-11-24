@@ -23,18 +23,21 @@
 </head>
 <body class="min-h-screen antialiased selection:bg-teal-200 selection:text-teal-950">
 
-  <!-- ==================== ADMIN AUTH SCREEN ==================== -->
+  <!-- ==================== SECURE ADMIN AUTH SCREEN ==================== -->
   <div id="authScreen" class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-[#e3e8f8] via-[#ece7f6] to-[#e1f0ec]">
     <div class="w-full max-w-md bg-[#f7f5fc]/95 backdrop-blur-xl border border-[#d6d0e8] rounded-3xl shadow-xl shadow-indigo-950/10 overflow-hidden">
       <div class="px-8 pt-8 pb-6 text-center border-b border-[#e3def2] bg-gradient-to-b from-[#efeafd] to-[#f7f5fc]">
         <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-500 flex items-center justify-center shadow-md shadow-teal-600/20 mb-4">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
           </svg>
         </div>
         <h1 class="text-xl font-extrabold text-slate-800 tracking-tight">Portal Pengurusan Pelatih</h1>
-        <p class="text-xs text-slate-500 mt-1">Akses Terhad Pentadbir & Penasihat Akademik</p>
+        <p class="text-xs text-slate-500 mt-1 flex items-center justify-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>Dilindungi Penyulitan SHA-256 & Salted Hash</span>
+        </p>
 
         <div class="grid grid-cols-2 gap-1.5 bg-[#e6e1f4] p-1 rounded-xl border border-[#d5cee9] mt-5 text-xs font-bold">
           <button type="button" id="tabLoginBtn" onclick="switchAuthTab('login')" class="py-2 rounded-lg bg-teal-600 text-white shadow-sm transition">
@@ -56,10 +59,15 @@
         </div>
         <div>
           <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1.5">Kata Laluan</label>
-          <input required type="password" id="loginPassword" autocomplete="current-password" placeholder="••••••••" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 text-slate-800 rounded-xl px-4 py-3 outline-none transition" />
+          <div class="relative">
+            <input required type="password" id="loginPassword" autocomplete="current-password" placeholder="••••••••" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 text-slate-800 rounded-xl pl-4 pr-11 py-3 outline-none transition" />
+            <button type="button" onclick="togglePasswordVisibility('loginPassword')" title="Papar/Sembunyi Kata Laluan" class="absolute right-3 top-3 text-slate-500 hover:text-slate-800">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
         </div>
         <button type="submit" id="loginSubmitBtn" class="w-full py-3 px-4 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-500 hover:to-emerald-500 text-white font-bold rounded-xl shadow-md shadow-teal-600/20 transition mt-2">
-          Log Masuk ke Sistem
+          Log Masuk Secara Selamat
         </button>
       </form>
 
@@ -74,12 +82,29 @@
           <input required id="signupUsername" placeholder="cth. admin_razak" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-800 rounded-xl px-4 py-2.5 outline-none transition" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1.5">Kata Laluan (Min. 4 aksara)</label>
-          <input required type="password" minlength="4" id="signupPassword" placeholder="••••••••" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-800 rounded-xl px-4 py-2.5 outline-none transition" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1.5">Kata Laluan Kukuh</label>
+          <div class="relative">
+            <input required type="password" minlength="8" id="signupPassword" oninput="evaluatePasswordStrength()" placeholder="Min. 8 aksara (Huruf Besar, Kecil & Nombor)" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-800 rounded-xl pl-4 pr-11 py-2.5 outline-none transition" />
+            <button type="button" onclick="togglePasswordVisibility('signupPassword')" class="absolute right-3 top-2.5 text-slate-500 hover:text-slate-800">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <!-- Password Strength Meter -->
+          <div class="mt-2 space-y-1">
+            <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+              <div id="pwStrengthBar" class="h-full bg-rose-500 transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <p id="pwStrengthText" class="text-[11px] text-slate-500">Syarat: Sekurang-kurangnya 8 aksara, 1 huruf besar, 1 huruf kecil & 1 nombor.</p>
+          </div>
         </div>
         <div>
           <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1.5">Sahkan Kata Laluan</label>
-          <input required type="password" minlength="4" id="signupConfirmPassword" placeholder="••••••••" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-800 rounded-xl px-4 py-2.5 outline-none transition" />
+          <div class="relative">
+            <input required type="password" minlength="8" id="signupConfirmPassword" placeholder="Ulang kata laluan anda" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-800 rounded-xl pl-4 pr-11 py-2.5 outline-none transition" />
+            <button type="button" onclick="togglePasswordVisibility('signupConfirmPassword')" class="absolute right-3 top-2.5 text-slate-500 hover:text-slate-800">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
         </div>
         <button type="submit" id="signupSubmitBtn" class="w-full py-3 px-4 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400 text-white font-bold rounded-xl shadow-md shadow-indigo-500/20 transition mt-2">
           Daftar Akaun Admin Baharu
@@ -113,7 +138,6 @@
           </div>
         </div>
 
-        <!-- Primary Action Toolbar -->
         <div class="flex items-center gap-2">
           <button onclick="openRegisterDrawer()" class="inline-flex items-center gap-1.5 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-sm transition">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
@@ -137,7 +161,6 @@
 
     <main class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-5 space-y-5">
 
-      <!-- Global Toast Alert -->
       <div id="toastMsg" class="hidden p-3.5 rounded-2xl bg-teal-100 border border-teal-300 text-teal-900 text-xs sm:text-sm font-semibold flex items-center justify-between shadow-xs"></div>
 
       <!-- Compact Executive KPI Strip -->
@@ -210,7 +233,6 @@
           </button>
         </div>
 
-        <!-- Quick Status Pills -->
         <div class="flex items-center gap-1.5 text-[11px] font-bold px-2">
           <span class="text-slate-500 hidden xl:inline mr-1">Tapis Pantas:</span>
           <button type="button" onclick="quickStatusFilter('')" id="pillAll" class="px-3 py-1.5 rounded-lg bg-slate-800 text-white transition">Semua</button>
@@ -383,9 +405,7 @@
           <span id="followupSummaryBadge" class="text-xs font-extrabold bg-rose-200 text-rose-900 px-3.5 py-1.5 rounded-xl">0 Rekod Berbaki</span>
         </div>
 
-        <div id="followupCardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <!-- Rendered dynamically -->
-        </div>
+        <div id="followupCardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       </section>
 
     </main>
@@ -394,7 +414,6 @@
   <!-- ==================== SLIDE-OVER DRAWER: REGISTER NEW STUDENT ==================== -->
   <div id="registerDrawerBackdrop" onclick="closeRegisterDrawer()" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-40 transition-opacity"></div>
   <aside id="registerDrawer" class="fixed top-0 right-0 h-full w-full max-w-2xl bg-[#f6f4fb] border-l border-[#d4cde8] shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
-    <!-- Drawer Header -->
     <div class="px-6 py-4 bg-[#e4f2ee] border-b border-[#c5e2da] flex items-center justify-between shrink-0">
       <div class="flex items-center gap-2.5">
         <span class="w-2 h-6 rounded-full bg-teal-600"></span>
@@ -406,7 +425,6 @@
       <button type="button" onclick="closeRegisterDrawer()" class="w-8 h-8 rounded-xl bg-white/80 hover:bg-white text-slate-600 hover:text-slate-900 font-bold flex items-center justify-center border border-[#c5e2da] transition">✕</button>
     </div>
 
-    <!-- Drawer Body -->
     <div class="p-6 overflow-y-auto flex-1 space-y-5">
       <div class="flex items-center justify-between bg-[#efecf8] px-3.5 py-2.5 rounded-xl border border-[#dcd5ee]">
         <span class="text-xs font-semibold text-slate-700">Mod Pendaftaran Berkelompok</span>
@@ -417,7 +435,6 @@
       </div>
 
       <form id="keyInForm" onsubmit="submitRegistration(event)" class="space-y-4 text-xs">
-        <!-- Section A -->
         <div class="bg-[#efecf8]/80 p-4 rounded-2xl border border-[#dcd5ee] space-y-3">
           <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider text-indigo-800 bg-indigo-100 border border-indigo-200 px-2.5 py-0.5 rounded-md">A. Maklumat Pelatih & Waris</span>
           <div>
@@ -440,7 +457,6 @@
           </div>
         </div>
 
-        <!-- Section B -->
         <div class="bg-[#efecf8]/80 p-4 rounded-2xl border border-[#dcd5ee] space-y-3">
           <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider text-sky-800 bg-sky-100 border border-sky-200 px-2.5 py-0.5 rounded-md">B. Pengajian & Penasihat Akademik</span>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -512,7 +528,6 @@
           </div>
         </div>
 
-        <!-- Section C -->
         <div class="bg-[#e7f3ef] p-4 rounded-2xl border border-[#c3e0d7] space-y-3">
           <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider text-teal-900 bg-teal-200/70 border border-teal-300 px-2.5 py-0.5 rounded-md">C. Rekod Yuran & Bayaran</span>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -697,7 +712,7 @@
   <script>
     // PASTE URL GOOGLE APPS SCRIPT (/exec) ANDA DI SINI:
     const API_URL = 'https://script.google.com/macros/s/AKfycbxaejQRcYTkFNIONboMnyS8arvH5xMYi1ZWz9UkC1RiAE7kVSjDLSVelRFqWBmSlYTk/exec';
-    const SESSION_KEY = 'skm_admin_session_v1';
+    const SESSION_KEY = 'skm_admin_session_v2';
 
     let allStudents = [];
     let currentFiltered = [];
@@ -707,6 +722,52 @@
       '#38bdf8', '#34d399', '#f59e0b', '#818cf8', '#fb7185',
       '#2dd4bf', '#a78bfa', '#fb923c', '#60a5fa', '#84cc16'
     ];
+
+    // ==================== CRYPTOGRAPHIC SECURITY (SHA-256) ====================
+    async function sha256Hex(plainText) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(plainText);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function togglePasswordVisibility(inputId) {
+      const inp = document.getElementById(inputId);
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+    }
+
+    function evaluatePasswordStrength() {
+      const pw = document.getElementById('signupPassword').value;
+      const bar = document.getElementById('pwStrengthBar');
+      const txt = document.getElementById('pwStrengthText');
+
+      let score = 0;
+      if (pw.length >= 8) score++;
+      if (/[A-Z]/.test(pw)) score++;
+      if (/[a-z]/.test(pw)) score++;
+      if (/[0-9]/.test(pw)) score++;
+      if (/[^A-Za-z0-9]/.test(pw)) score++;
+
+      const widths = ['0%', '25%', '45%', '70%', '90%', '100%'];
+      const colors = ['bg-rose-500', 'bg-rose-500', 'bg-amber-500', 'bg-sky-500', 'bg-teal-500', 'bg-emerald-600'];
+      const labels = [
+        'Syarat: Sekurang-kurangnya 8 aksara, 1 huruf besar, 1 huruf kecil & 1 nombor.',
+        'Lemah — Tambah huruf besar, nombor dan panjang sekurang-kurangnya 8 aksara.',
+        'Sederhana — Hampir memenuhi kriteria keselamatan.',
+        'Baik — Masukkan nombor atau simbol untuk tahap maksimum.',
+        'Kukuh — Kata laluan selamat!',
+        'Sangat Kukuh — Tahap keselamatan optimum!'
+      ];
+
+      bar.style.width = widths[score];
+      bar.className = `h-full ${colors[score]} transition-all duration-300`;
+      txt.textContent = labels[score];
+    }
+
+    function isStrongPassword(pw) {
+      return pw.length >= 8 && /[A-Z]/.test(pw) && /[a-z]/.test(pw) && /[0-9]/.test(pw);
+    }
 
     // ==================== WORKSPACE & DRAWER CONTROLS ====================
     function switchWorkspaceTab(tab) {
@@ -827,12 +888,16 @@
       e.preventDefault();
       const btn = document.getElementById('loginSubmitBtn');
       btn.disabled = true;
-      btn.textContent = 'Mengesahkan...';
+      btn.textContent = 'Menyulitkan & Mengesahkan...';
+
+      const cleanUsername = document.getElementById('loginUsername').value.trim().toLowerCase();
+      const rawPassword = document.getElementById('loginPassword').value;
+      const passwordHash = await sha256Hex(`${cleanUsername}:${rawPassword}`);
 
       const payload = {
         action: 'login',
-        username: document.getElementById('loginUsername').value,
-        password: document.getElementById('loginPassword').value
+        username: cleanUsername,
+        passwordHash: passwordHash
       };
 
       try {
@@ -849,13 +914,19 @@
       }
 
       btn.disabled = false;
-      btn.textContent = 'Log Masuk ke Sistem';
+      btn.textContent = 'Log Masuk Secara Selamat';
     }
 
     async function handleSignup(e) {
       e.preventDefault();
       const pw = document.getElementById('signupPassword').value;
       const confirmPw = document.getElementById('signupConfirmPassword').value;
+      const cleanUsername = document.getElementById('signupUsername').value.trim().toLowerCase();
+
+      if (!isStrongPassword(pw)) {
+        showAuthAlert('Kata laluan mesti sekurang-kurangnya 8 aksara serta mengandungi huruf besar, huruf kecil, dan nombor.', true);
+        return;
+      }
 
       if (pw !== confirmPw) {
         showAuthAlert('Kata laluan dan pengesahan kata laluan tidak sepadan.', true);
@@ -864,13 +935,15 @@
 
       const btn = document.getElementById('signupSubmitBtn');
       btn.disabled = true;
-      btn.textContent = 'Mendaftarkan Akaun...';
+      btn.textContent = 'Menyulitkan & Mendaftar...';
+
+      const passwordHash = await sha256Hex(`${cleanUsername}:${pw}`);
 
       const payload = {
         action: 'signup',
-        fullName: document.getElementById('signupFullName').value,
-        username: document.getElementById('signupUsername').value,
-        password: pw
+        fullName: document.getElementById('signupFullName').value.trim(),
+        username: cleanUsername,
+        passwordHash: passwordHash
       };
 
       try {
