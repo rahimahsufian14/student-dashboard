@@ -15,7 +15,7 @@
       background-color: #ebe8f2;
       color: #292536;
     }
-    ::-webkit-scrollbar { width: 7px; height: 7px; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: #e2dfec; }
     ::-webkit-scrollbar-thumb { background: #b8b2cc; border-radius: 9999px; }
     ::-webkit-scrollbar-thumb:hover { background: #9b93b5; }
@@ -23,7 +23,7 @@
 </head>
 <body class="min-h-screen antialiased selection:bg-teal-200 selection:text-teal-950">
 
-  <!-- ==================== ADMIN AUTH SCREEN (LOGIN & SIGN UP) ==================== -->
+  <!-- ==================== ADMIN AUTH SCREEN ==================== -->
   <div id="authScreen" class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-[#e3e8f8] via-[#ece7f6] to-[#e1f0ec]">
     <div class="w-full max-w-md bg-[#f7f5fc]/95 backdrop-blur-xl border border-[#d6d0e8] rounded-3xl shadow-xl shadow-indigo-950/10 overflow-hidden">
       <div class="px-8 pt-8 pb-6 text-center border-b border-[#e3def2] bg-gradient-to-b from-[#efeafd] to-[#f7f5fc]">
@@ -88,123 +88,241 @@
     </div>
   </div>
 
-  <!-- ==================== MAIN DASHBOARD APP (PROTECTED) ==================== -->
+  <!-- ==================== MAIN DASHBOARD APP ==================== -->
   <div id="dashboardApp" class="hidden">
 
-    <!-- Sticky Pastel Top Navigation Bar -->
-    <header class="sticky top-0 z-40 bg-[#e4dff2]/95 backdrop-blur-md border-b border-[#cfc7e6] shadow-xs">
-      <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap justify-between items-center gap-4">
-        <div class="flex items-center gap-3.5">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-500 flex items-center justify-center shadow-sm shrink-0">
+    <!-- Compact Top Command Header -->
+    <header class="sticky top-0 z-30 bg-[#e4dff2]/95 backdrop-blur-md border-b border-[#cfc7e6]">
+      <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap justify-between items-center gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-500 flex items-center justify-center shadow-xs shrink-0">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
               <path d="M6 12v5c3 3 9 3 12 0v-5"/>
             </svg>
           </div>
           <div>
-            <div class="flex items-center gap-2.5">
-              <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-slate-800">Sistem Pendaftaran Pelajar & Rekod Yuran</h1>
-              <span class="hidden sm:inline-flex items-center gap-1.5 text-[11px] bg-teal-100 text-teal-800 border border-teal-300 px-2.5 py-0.5 rounded-full font-bold">
+            <div class="flex items-center gap-2">
+              <h1 class="text-sm sm:text-base font-extrabold tracking-tight text-slate-800">Sistem Pengurusan Pelajar & Yuran</h1>
+              <span class="hidden md:inline-flex items-center gap-1.5 text-[10px] bg-teal-100 text-teal-800 border border-teal-300 px-2 py-0.5 rounded-full font-bold">
                 <span class="w-1.5 h-1.5 rounded-full bg-teal-600 animate-pulse"></span>
                 <span id="loggedInAdminLabel">ADMIN</span>
               </span>
             </div>
-            <p class="text-xs text-slate-600">Pengurusan Pendaftaran Rasmi, Penasihat Akademik & Pemantauan Baki Yuran</p>
+            <p class="text-[11px] text-slate-600 hidden sm:block">Panel Kawalan Bersepadu • Penasihat Akademik • Pemantauan Kewangan</p>
           </div>
         </div>
 
-        <div class="flex flex-wrap items-center gap-2">
-          <button onclick="toggleSection('chartSection', 'toggleChartBtn', 'Carta')" id="toggleChartBtn" class="inline-flex items-center gap-1.5 bg-[#f3f0fa] hover:bg-[#e9e3f7] text-slate-700 border border-[#cdc4e6] px-3 py-2 rounded-xl text-xs font-semibold transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-sky-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
-            <span>Sembunyi Carta</span>
+        <!-- Primary Action Toolbar -->
+        <div class="flex items-center gap-2">
+          <button onclick="openRegisterDrawer()" class="inline-flex items-center gap-1.5 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-sm transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+            <span>Daftar Pelatih</span>
           </button>
-          <button onclick="toggleSection('keyInPanel', 'togglePanelBtn', 'Borang')" id="togglePanelBtn" class="inline-flex items-center gap-1.5 bg-[#f3f0fa] hover:bg-[#e9e3f7] text-slate-700 border border-[#cdc4e6] px-3 py-2 rounded-xl text-xs font-semibold transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-teal-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-            <span>Sembunyi Borang</span>
-          </button>
-          <button onclick="exportCSV()" class="inline-flex items-center gap-1.5 bg-indigo-500 hover:bg-indigo-600 text-white px-3.5 py-2 rounded-xl text-xs font-semibold shadow-xs transition">
+          <button onclick="exportCSV()" class="inline-flex items-center gap-1.5 bg-[#f3f0fa] hover:bg-white text-indigo-800 border border-[#cdc4e6] px-3 py-2 rounded-xl text-xs font-semibold transition">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-            <span>Export CSV</span>
+            <span class="hidden sm:inline">Export CSV</span>
           </button>
-          <button onclick="fetchStudents()" class="inline-flex items-center gap-1.5 bg-teal-600 hover:bg-teal-700 text-white px-3.5 py-2 rounded-xl text-xs font-semibold shadow-xs transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
-            <span>Refresh</span>
+          <button onclick="fetchStudents()" title="Segerak Data" class="inline-flex items-center gap-1.5 bg-[#f3f0fa] hover:bg-white text-slate-700 border border-[#cdc4e6] px-3 py-2 rounded-xl text-xs font-semibold transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-teal-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+            <span class="hidden md:inline">Refresh</span>
           </button>
           <button onclick="logoutAdmin()" title="Log Keluar" class="inline-flex items-center gap-1.5 bg-rose-100 hover:bg-rose-200 text-rose-800 border border-rose-300 px-3 py-2 rounded-xl text-xs font-semibold transition">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
-            <span>Log Keluar</span>
+            <span class="hidden sm:inline">Keluar</span>
           </button>
         </div>
       </div>
     </header>
 
-    <main class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+    <main class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-5 space-y-5">
 
-      <!-- Pastel Executive KPI Summary Cards -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-[#e4f0fb] p-5 rounded-2xl border border-[#c4ddf5] shadow-xs flex items-start justify-between">
+      <!-- Global Toast Alert -->
+      <div id="toastMsg" class="hidden p-3.5 rounded-2xl bg-teal-100 border border-teal-300 text-teal-900 text-xs sm:text-sm font-semibold flex items-center justify-between shadow-xs"></div>
+
+      <!-- Compact Executive KPI Strip -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+        <div class="bg-[#e4f0fb] px-5 py-4 rounded-2xl border border-[#c4ddf5] flex items-center justify-between">
           <div>
-            <p class="text-xs font-bold uppercase tracking-wider text-sky-900/70">Jumlah Pelatih</p>
-            <p id="kpiStudents" class="text-2xl sm:text-3xl font-extrabold text-sky-950 mt-1.5">0</p>
-            <p class="text-[11px] text-sky-800/70 mt-1">Rekod aktif mengikut tapisan</p>
+            <p class="text-[11px] font-bold uppercase tracking-wider text-sky-900/70">Jumlah Pelatih</p>
+            <p id="kpiStudents" class="text-2xl font-extrabold text-sky-950 mt-0.5">0</p>
+            <p class="text-[11px] text-sky-800/70 mt-0.5">Mengikut penapis semasa</p>
           </div>
-          <div class="w-11 h-11 rounded-xl bg-sky-200/80 text-sky-700 flex items-center justify-center shrink-0">
+          <div class="w-10 h-10 rounded-xl bg-sky-200/80 text-sky-700 flex items-center justify-center shrink-0">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
         </div>
 
-        <div class="bg-[#ece8fb] p-5 rounded-2xl border border-[#d2caf5] shadow-xs flex items-start justify-between">
+        <div class="bg-[#ece8fb] px-5 py-4 rounded-2xl border border-[#d2caf5] flex items-center justify-between">
           <div>
-            <p class="text-xs font-bold uppercase tracking-wider text-indigo-900/70">Yuran Sepatutnya</p>
-            <p id="kpiTotalFee" class="text-2xl sm:text-3xl font-extrabold text-indigo-950 mt-1.5">RM 0.00</p>
-            <p class="text-[11px] text-indigo-800/70 mt-1">Keseluruhan yuran pendaftaran</p>
+            <p class="text-[11px] font-bold uppercase tracking-wider text-indigo-900/70">Yuran Sepatutnya</p>
+            <p id="kpiTotalFee" class="text-2xl font-extrabold text-indigo-950 mt-0.5">RM 0.00</p>
+            <p class="text-[11px] text-indigo-800/70 mt-0.5">Nilai keseluruhan pendaftaran</p>
           </div>
-          <div class="w-11 h-11 rounded-xl bg-indigo-200/80 text-indigo-700 flex items-center justify-center shrink-0">
+          <div class="w-10 h-10 rounded-xl bg-indigo-200/80 text-indigo-700 flex items-center justify-center shrink-0">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
           </div>
         </div>
 
-        <div class="bg-[#e1f5ee] p-5 rounded-2xl border border-[#bce6d7] shadow-xs flex items-start justify-between">
-          <div>
-            <p class="text-xs font-bold uppercase tracking-wider text-teal-900/70">Yuran Diterima</p>
-            <p id="kpiCollected" class="text-2xl sm:text-3xl font-extrabold text-teal-800 mt-1.5">RM 0.00</p>
-            <p class="text-[11px] text-teal-800/80 font-medium mt-1">Kutipan rasmi direkodkan</p>
+        <div class="bg-[#e1f5ee] px-5 py-4 rounded-2xl border border-[#bce6d7]">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-[11px] font-bold uppercase tracking-wider text-teal-900/70">Yuran Diterima</p>
+              <p id="kpiCollected" class="text-2xl font-extrabold text-teal-800 mt-0.5">RM 0.00</p>
+            </div>
+            <span id="collectionRateBadge" class="text-xs font-extrabold bg-teal-200/90 text-teal-900 px-2.5 py-1 rounded-lg">0%</span>
           </div>
-          <div class="w-11 h-11 rounded-xl bg-teal-200/80 text-teal-700 flex items-center justify-center shrink-0">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <div class="w-full bg-teal-200/70 h-1.5 rounded-full mt-2.5 overflow-hidden">
+            <div id="collectionRateBar" class="bg-teal-600 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
           </div>
         </div>
 
-        <div class="bg-[#fbe8ec] p-5 rounded-2xl border border-[#f2c8d1] shadow-xs flex items-start justify-between">
+        <div class="bg-[#fbe8ec] px-5 py-4 rounded-2xl border border-[#f2c8d1] flex items-center justify-between">
           <div>
-            <p class="text-xs font-bold uppercase tracking-wider text-rose-900/70">Baki Tertunggak</p>
-            <p id="kpiBalance" class="text-2xl sm:text-3xl font-extrabold text-rose-700 mt-1.5">RM 0.00</p>
-            <p class="text-[11px] text-rose-800/80 font-medium mt-1">Perlu tindakan susulan</p>
+            <p class="text-[11px] font-bold uppercase tracking-wider text-rose-900/70">Baki Tertunggak</p>
+            <p id="kpiBalance" class="text-2xl font-extrabold text-rose-700 mt-0.5">RM 0.00</p>
+            <p id="kpiUnpaidCount" class="text-[11px] text-rose-800/80 font-medium mt-0.5">0 pelatih berbaki</p>
           </div>
-          <div class="w-11 h-11 rounded-xl bg-rose-200/80 text-rose-700 flex items-center justify-center shrink-0">
+          <div class="w-10 h-10 rounded-xl bg-rose-200/80 text-rose-700 flex items-center justify-center shrink-0">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
           </div>
         </div>
       </div>
 
-      <!-- INTERACTIVE ANALYTICS & SUMMARY SECTION -->
-      <section id="chartSection" class="bg-[#f5f3fa] rounded-2xl border border-[#dad3ec] shadow-xs overflow-hidden">
+      <!-- INNOVATIVE WORKSPACE SWITCHER BAR -->
+      <div class="flex flex-wrap items-center justify-between gap-3 bg-[#f5f3fa] p-2 rounded-2xl border border-[#dad3ec]">
+        <div class="flex flex-wrap items-center gap-1.5 text-xs font-bold">
+          <button type="button" id="navTabRecords" onclick="switchWorkspaceTab('records')" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 text-white shadow-xs transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            <span>Senarai Rekod Pelatih</span>
+            <span id="tabBadgeAll" class="bg-white/20 text-white px-2 py-0.5 rounded-full text-[10px]">0</span>
+          </button>
+
+          <button type="button" id="navTabAnalytics" onclick="switchWorkspaceTab('analytics')" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-[#e8e3f5] transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-sky-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+            <span>Analitik & Laporan</span>
+          </button>
+
+          <button type="button" id="navTabFollowup" onclick="switchWorkspaceTab('followup')" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-[#e8e3f5] transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+            <span>Pantauan Tunggakan</span>
+            <span id="tabBadgeDue" class="bg-rose-200 text-rose-900 px-2 py-0.5 rounded-full text-[10px]">0</span>
+          </button>
+        </div>
+
+        <!-- Quick Status Pills -->
+        <div class="flex items-center gap-1.5 text-[11px] font-bold px-2">
+          <span class="text-slate-500 hidden xl:inline mr-1">Tapis Pantas:</span>
+          <button type="button" onclick="quickStatusFilter('')" id="pillAll" class="px-3 py-1.5 rounded-lg bg-slate-800 text-white transition">Semua</button>
+          <button type="button" onclick="quickStatusFilter('Paid')" id="pillPaid" class="px-3 py-1.5 rounded-lg bg-teal-100 text-teal-800 hover:bg-teal-200 transition">Selesai</button>
+          <button type="button" onclick="quickStatusFilter('Outstanding')" id="pillDue" class="px-3 py-1.5 rounded-lg bg-rose-100 text-rose-800 hover:bg-rose-200 transition">Ada Baki</button>
+        </div>
+      </div>
+
+      <!-- SHARED SMART FILTER BAR -->
+      <section class="bg-[#f5f3fa] p-4 rounded-2xl border border-[#dad3ec] shadow-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2.5 text-xs">
+          <div class="relative lg:col-span-2">
+            <input type="text" id="filterSearch" oninput="applyFilters()" placeholder="Cari nama pelatih, no. telefon atau pusat bertauliah..." class="w-full bg-[#f8f7fc] border border-[#cfc7e6] focus:border-indigo-500 text-slate-800 rounded-xl pl-9 pr-3 py-2.5 outline-none" />
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </div>
+          <select id="filterProgram" onchange="applyFilters()" class="bg-[#f8f7fc] border border-[#cfc7e6] focus:border-indigo-500 text-slate-700 rounded-xl px-3 py-2.5 outline-none">
+            <option value="">Semua Program</option>
+            <option value="SKM Seni Pembuatan Pastri & Kek">SKM Seni Pembuatan Pastri & Kek</option>
+            <option value="SKM Teknologi Automotif">SKM Teknologi Automotif</option>
+            <option value="SKM Teknologi Automasi Industri">SKM Teknologi Automasi Industri</option>
+            <option value="SKM Pemasangan & Wiring Elektrik">SKM Pemasangan & Wiring Elektrik</option>
+            <option value="SKM Kimpalan Arka & Gas">SKM Kimpalan Arka & Gas</option>
+            <option value="SKM Teknologi Kenderaan Elektrik">SKM Teknologi Kenderaan Elektrik</option>
+            <option value="SKM Pengajian Awal Kanak-Kanak">SKM Pengajian Awal Kanak-Kanak</option>
+            <option value="SKM Pendidikan Prasekolah">SKM Pendidikan Prasekolah</option>
+            <option value="SKM Seni Kulinari">SKM Seni Kulinari</option>
+            <option value="SKM Pembuatan Roti & Pastri">SKM Pembuatan Roti & Pastri</option>
+            <option value="SKM Penyejukan & Penyamanan Udara (RAC)">SKM Penyejukan & Penyamanan Udara (RAC)</option>
+            <option value="SKM Terapi Kecantikan">SKM Terapi Kecantikan</option>
+          </select>
+          <select id="filterIntake" onchange="applyFilters()" class="bg-[#f8f7fc] border border-[#cfc7e6] focus:border-indigo-500 text-slate-700 rounded-xl px-3 py-2.5 outline-none">
+            <option value="">Semua Bulan Intake</option>
+            <option value="Januari">Januari</option>
+            <option value="Februari">Februari</option>
+            <option value="Mac">Mac</option>
+            <option value="April">April</option>
+            <option value="Mei">Mei</option>
+            <option value="Jun">Jun</option>
+            <option value="Julai">Julai</option>
+            <option value="Ogos">Ogos</option>
+            <option value="September">September</option>
+            <option value="Oktober">Oktober</option>
+            <option value="November">November</option>
+            <option value="Disember">Disember</option>
+          </select>
+          <select id="filterPA" onchange="applyFilters()" class="bg-[#f8f7fc] border border-[#cfc7e6] focus:border-indigo-500 text-slate-700 rounded-xl px-3 py-2.5 outline-none">
+            <option value="">Semua Penasihat Akademik</option>
+          </select>
+          <div class="flex gap-2">
+            <select id="filterManager" onchange="applyFilters()" class="w-full bg-[#f8f7fc] border border-[#cfc7e6] focus:border-indigo-500 text-slate-700 rounded-xl px-3 py-2.5 outline-none">
+              <option value="">Semua Pengurus</option>
+            </select>
+            <button type="button" onclick="resetFilters()" title="Reset Semua Penapis" class="px-3 bg-[#e9e4f6] hover:bg-[#dcd4f0] text-slate-700 border border-[#cfc7e6] rounded-xl font-bold transition shrink-0">
+              ↺
+            </button>
+          </div>
+        </div>
+        <input type="hidden" id="filterStatus" value="" />
+      </section>
+
+      <!-- ==================== VIEW 1: MASTER RECORD TABLE ==================== -->
+      <section id="viewRecords" class="bg-[#f5f3fa] rounded-2xl border border-[#dad3ec] shadow-xs overflow-hidden">
+        <div class="px-5 py-3.5 bg-[#ebe6f6] border-b border-[#dad3ec] flex flex-wrap justify-between items-center gap-2">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-5 rounded-full bg-indigo-500"></span>
+            <h2 class="text-sm font-bold text-slate-800">Senarai Induk Rekod Pelatih</h2>
+          </div>
+          <span id="recordCountBadge" class="text-xs font-bold text-indigo-900 bg-indigo-100 border border-indigo-200 px-3 py-1 rounded-full">Memuatkan...</span>
+        </div>
+
+        <div class="overflow-x-auto max-h-[650px]">
+          <table class="w-full text-left border-collapse text-xs whitespace-nowrap">
+            <thead class="bg-[#e6e1f4] text-slate-700 uppercase tracking-wider border-b border-[#d3cbe8] sticky top-0 z-20">
+              <tr>
+                <th class="py-3.5 px-4 font-bold sticky left-0 bg-[#e6e1f4] z-30 border-r border-[#d3cbe8]">Nama Pelatih</th>
+                <th class="py-3.5 px-3.5 font-bold">Hubungan (Pelajar / Waris)</th>
+                <th class="py-3.5 px-3.5 font-bold">Pusat & Program</th>
+                <th class="py-3.5 px-3.5 font-bold">Intake & Daftar</th>
+                <th class="py-3.5 px-3.5 font-bold">Penasihat Akademik & Pengurus</th>
+                <th class="py-3.5 px-3.5 text-right font-bold">Yuran (RM)</th>
+                <th class="py-3.5 px-3.5 text-right font-bold">Dibayar (RM)</th>
+                <th class="py-3.5 px-3.5 text-right font-bold">Baki (RM)</th>
+                <th class="py-3.5 px-3.5 font-bold">Sejarah Bayaran & Catatan</th>
+                <th class="py-3.5 px-3.5 font-bold">Status</th>
+                <th class="py-3.5 px-4 text-center font-bold">Tindakan</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody" class="divide-y divide-[#e6e1f2]">
+              <tr><td colspan="11" class="p-8 text-center text-slate-500">Memuatkan data dari Google Sheets...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ==================== VIEW 2: ANALYTICS & BREAKDOWN ==================== -->
+      <section id="viewAnalytics" class="hidden bg-[#f5f3fa] rounded-2xl border border-[#dad3ec] shadow-xs overflow-hidden">
         <div class="px-6 py-4 bg-[#ebe6f6] border-b border-[#dad3ec] flex flex-wrap justify-between items-center gap-3">
           <div class="flex items-center gap-2.5">
             <span class="w-2 h-6 rounded-full bg-sky-500"></span>
             <div>
-              <h2 class="text-sm sm:text-base font-bold text-slate-800">Rumusan Laporan & Analisis Pendaftaran</h2>
-              <p class="text-xs text-slate-600">Visualisasi pecahan data dikemas kini secara automatik mengikut penapis di bawah.</p>
+              <h2 class="text-sm sm:text-base font-bold text-slate-800">Analitik & Pecahan Prestasi Pendaftaran</h2>
+              <p class="text-xs text-slate-600">Analisis dinamik mengikut penapis yang dipilih di atas.</p>
             </div>
           </div>
           <div class="flex flex-wrap items-center gap-2 text-xs">
             <div class="flex items-center gap-1.5 bg-[#f7f5fc] border border-[#cfc7e6] rounded-xl px-3 py-1.5">
               <span class="font-semibold text-slate-500">Pecahan:</span>
               <select id="chartGroupBy" onchange="updateChart()" class="font-bold text-slate-800 bg-transparent focus:outline-none cursor-pointer">
-                <option value="Program">Program Pilihan</option>
-                <option value="Pengurus">Pengurus</option>
                 <option value="PA">Penasihat Akademik</option>
+                <option value="Program">Program Pilihan</option>
                 <option value="PusatBertauliah">Pusat Bertauliah</option>
+                <option value="Pengurus">Pengurus</option>
                 <option value="BulanIntake">Bulan Intake</option>
                 <option value="StatusBayaran">Status Bayaran Yuran</option>
               </select>
@@ -224,7 +342,7 @@
 
         <div class="p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
           <div class="lg:col-span-4 flex flex-col items-center justify-center">
-            <div class="w-full max-w-[260px] h-60 relative">
+            <div class="w-full max-w-[260px] h-64 relative">
               <canvas id="summaryPieChart"></canvas>
             </div>
           </div>
@@ -249,268 +367,186 @@
         </div>
       </section>
 
-      <!-- STRUCTURED 3-SECTION REGISTRATION FORM -->
-      <section id="keyInPanel" class="bg-[#f5f3fa] rounded-2xl border border-[#dad3ec] shadow-xs overflow-hidden">
-        <div class="px-6 py-4 bg-[#e4f2ee] border-b border-[#c5e2da] flex flex-wrap justify-between items-center gap-3">
-          <div class="flex items-center gap-2.5">
-            <span class="w-2 h-6 rounded-full bg-teal-500"></span>
-            <div>
-              <h2 class="text-sm sm:text-base font-bold text-slate-800">Borang Pendaftaran Pelatih Baharu</h2>
-              <p class="text-xs text-slate-600">Biarkan <strong class="text-slate-800">Tarikh Bayar</strong> kosong jika pelajar terus melangsaikan yuran penuh semasa mendaftar.</p>
-            </div>
+      <!-- ==================== VIEW 3: FOLLOW-UP & OUTSTANDING CARDS ==================== -->
+      <section id="viewFollowup" class="hidden space-y-4">
+        <div class="bg-[#fbe8ec] border border-[#f2c8d1] rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 class="text-sm sm:text-base font-bold text-rose-950">Senarai Tindakan Susulan Baki Yuran</h2>
+            <p class="text-xs text-rose-800/80">Klik butang WhatsApp untuk menghantar peringatan mesra terus kepada pelajar atau waris.</p>
           </div>
-          <label class="inline-flex items-center gap-2 cursor-pointer bg-[#f4faf8] border border-[#bde0d6] hover:border-teal-400 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-teal-900 transition">
-            <input type="checkbox" id="keepBatchDefaults" checked class="w-3.5 h-3.5 accent-teal-600 rounded" />
-            <span>Kekalkan Pusat, Program, Intake & Penasihat Akademik selepas simpan</span>
-          </label>
+          <span id="followupSummaryBadge" class="text-xs font-extrabold bg-rose-200 text-rose-900 px-3.5 py-1.5 rounded-xl">0 Rekod Berbaki</span>
         </div>
 
-        <div class="p-6 space-y-5">
-          <!-- Toast Notification -->
-          <div id="toastMsg" class="hidden p-3.5 rounded-xl bg-teal-100 border border-teal-300 text-teal-900 text-xs sm:text-sm font-semibold flex items-center gap-2"></div>
-
-          <form id="keyInForm" onsubmit="submitRegistration(event)" class="space-y-5 text-xs sm:text-sm">
-
-            <!-- Group A: Maklumat Peribadi & Waris -->
-            <div class="bg-[#efecf8]/80 p-4 rounded-xl border border-[#dcd5ee]">
-              <div class="flex items-center gap-2 mb-3">
-                <span class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-800 bg-indigo-100 border border-indigo-200 px-2.5 py-0.5 rounded-md">A. Maklumat Pelatih & Waris</span>
-              </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
-                <div class="lg:col-span-2">
-                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">1. Nama Penuh Pelatih <span class="text-rose-600">*</span></label>
-                  <input required id="inputNamaPelatih" name="NamaPelatih" placeholder="cth. Ahmad Bin Ali" class="w-full bg-[#f8f7fc] border border-[#cfc7e6] focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 text-slate-800 rounded-xl px-3.5 py-2.5 transition outline-none" />
-                </div>
-                <div>
-                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">2. No. Tel Pelajar <span class="text-rose-600">*</span></label>
-                  <input required name="TelPelajar" placeholder="0123456789" class="w-full bg-[#f8f7fc] border border-[#cfc7e6] focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 text-slate-800 rounded-xl px-3.5 py-2.5 transition outline-none" />
-                </div>
-                <div>
-                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">3. No. Tel Bapa <span class="text-rose-600">*</span></label>
-                  <input required name="TelBapa" placeholder="0198765432" class="w-full bg-[#f8f7fc] border border-[#cfc7e6] focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 text-slate-800 rounded-xl px-3.5 py-2.5 transition outline-none" />
-                </div>
-                <div>
-                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">4. No. Tel Ibu <span class="text-rose-600">*</span></label>
-                  <input required name="TelIbu" placeholder="0176543210" class="w-full bg-[#f8f7fc] border border-[#cfc7e6] focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 text-slate-800 rounded-xl px-3.5 py-2.5 transition outline-none" />
-                </div>
-              </div>
-            </div>
-
-            <!-- Group B: Maklumat Pengajian & Penasihat Akademik -->
-            <div class="bg-[#efecf8]/80 p-4 rounded-xl border border-[#dcd5ee]">
-              <div class="flex items-center gap-2 mb-3">
-                <span class="text-[11px] font-extrabold uppercase tracking-wider text-sky-800 bg-sky-100 border border-sky-200 px-2.5 py-0.5 rounded-md">B. Maklumat Pengajian & Penasihat Akademik</span>
-              </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-                <div>
-                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">5. Pusat Bertauliah <span class="text-rose-600">*</span></label>
-                  <select required id="inputPusatBertauliah" name="PusatBertauliah" class="w-full bg-[#f8f7fc] border border-[#cfc7e6] focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 text-slate-800 rounded-xl px-3.5 py-2.5 transition outline-none">
-                    <option value="Ambitious College">Ambitious College</option>
-                    <option value="Jv Skill">Jv Skill</option>
-                    <option value="Adelphi College">Adelphi College</option>
-                    <option value="Iman Motor Academy">Iman Motor Academy</option>
-                    <option value="Dual Training Institute">Dual Training Institute</option>
-                    <option value="Silverspoon International College">Silverspoon International College</option>
-                    <option value="Kolej Dayatech">Kolej Dayatech</option>
-                    <option value="Noble School of Engineering">Noble School of Engineering</option>
-                    <option value="Noble School City Campus">Noble School City Campus</option>
-                    <option value="Malaysia Technical Skill Academy">Malaysia Technical Skill Academy</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">6. Program SKM <span class="text-rose-600">*</span></label>
-                  <select required id="inputProgram" name="Program" class="w-full bg-[#f8f7fc] border border-[#cfc7e6] focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 text-slate-800 rounded-xl px-3.5 py-2.5 transition outline-none">
-                    <option value="SKM Seni Pembuatan Pastri & Kek">SKM Seni Pembuatan Pastri & Kek</option>
-                    <option value="SKM Teknologi Automotif">SKM Teknologi Automotif</option>
-                    <option value="SKM Teknologi Automasi Industri">SKM Teknologi Automasi Industri</option>
-                    <option value="SKM Pemasangan & Wiring Elektrik">SKM Pemasangan & Wiring Elektrik</option>
-                    <option value="SKM Kimpalan Arka & Gas">SKM Kimpalan Arka & Gas</option>
-                    <option value="SKM Teknologi Kenderaan Elektrik">SKM Teknologi Kenderaan Elektrik</option>
-                    <option value="SKM Pengajian Awal Kanak-Kanak">SKM Pengajian Awal Kanak-Kanak</option>
-                    <option value="SKM Pendidikan Prasekolah">SKM Pendidikan Prasekolah</option>
-                    <option value="SKM Seni Kulinari">SKM Seni Kulinari</option>
-                    <option value="SKM Pembuatan Roti & Pastri">SKM Pembuatan Roti & Pastri</option>
-                    <option value="SKM Penyejukan & Penyamanan Udara (RAC)">SKM Penyejukan & Penyamanan Udara (RAC)</option>
-                    <option value="SKM Terapi Kecantikan">SKM Terapi Kecantikan</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">7. Tarikh Daftar <span class="text-rose-600">*</span></label>
-                  <input required type="date" id="inputTarikhDaftar" name="TarikhDaftar" class="w-full bg-[#f8f7fc] border border-[#cfc7e6] focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 text-slate-800 rounded-xl px-3.5 py-2.5 transition outline-none" />
-                </div>
-                <div>
-                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">8. Bulan Intake <span class="text-rose-600">*</span></label>
-                  <select required id="inputBulanIntake" name="BulanIntake" class="w-full bg-[#f8f7fc] border border-[#cfc7e6] focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 text-slate-800 rounded-xl px-3.5 py-2.5 transition outline-none">
-                    <option value="Januari">Januari</option>
-                    <option value="Februari">Februari</option>
-                    <option value="Mac">Mac</option>
-                    <option value="April">April</option>
-                    <option value="Mei">Mei</option>
-                    <option value="Jun">Jun</option>
-                    <option value="Julai">Julai</option>
-                    <option value="Ogos">Ogos</option>
-                    <option value="September">September</option>
-                    <option value="Oktober">Oktober</option>
-                    <option value="November">November</option>
-                    <option value="Disember">Disember</option>
-                  </select>
-                </div>
-                <div class="lg:col-span-2">
-                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">9. Penasihat Akademik <span class="text-rose-600">*</span></label>
-                  <input required id="inputPA" name="PA" placeholder="cth. Cik Nadhirah" class="w-full bg-[#f8f7fc] border border-[#cfc7e6] focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 text-slate-800 rounded-xl px-3.5 py-2.5 transition outline-none" />
-                </div>
-                <div>
-                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">10. Pengurus <span class="text-rose-600">*</span></label>
-                  <input required id="inputPengurus" name="Pengurus" placeholder="cth. En. Hafiz" class="w-full bg-[#f8f7fc] border border-[#cfc7e6] focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 text-slate-800 rounded-xl px-3.5 py-2.5 transition outline-none" />
-                </div>
-                <div>
-                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">11. Catatan Bayaran</label>
-                  <input name="CatatanBayaran" placeholder="Pilihan (cth. Ansuran pertama)" class="w-full bg-[#f8f7fc] border border-[#cfc7e6] focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 text-slate-800 rounded-xl px-3.5 py-2.5 transition outline-none" />
-                </div>
-              </div>
-            </div>
-
-            <!-- Group C: Rekod Yuran & Bayaran -->
-            <div class="bg-[#e7f3ef] p-4 rounded-xl border border-[#c3e0d7]">
-              <div class="flex items-center justify-between mb-3">
-                <span class="text-[11px] font-extrabold uppercase tracking-wider text-teal-900 bg-teal-200/70 border border-teal-300 px-2.5 py-0.5 rounded-md">C. Rekod Yuran & Bayaran Pendaftaran</span>
-              </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3.5 items-end">
-                <div>
-                  <label class="block text-[11px] font-bold uppercase tracking-wider text-teal-900/80 mb-1">Yuran (RM) <span class="text-rose-600">*</span></label>
-                  <input required type="number" step="50" min="0" id="inputYuran" name="Yuran" value="1600" oninput="calcLiveBalance()" class="w-full bg-[#f5fbf9] border border-[#b6d8ce] focus:border-teal-600 text-slate-800 rounded-xl px-3.5 py-2.5 font-bold outline-none" />
-                </div>
-                <div>
-                  <div class="flex justify-between items-center mb-1">
-                    <label class="text-[11px] font-bold uppercase tracking-wider text-teal-900/80">Dibayar (RM) <span class="text-rose-600">*</span></label>
-                    <button type="button" onclick="setFullPayment()" class="text-[10px] bg-teal-200 hover:bg-teal-300 text-teal-950 px-2 py-0.5 rounded-md font-bold transition">Bayar Penuh</button>
-                  </div>
-                  <input required type="number" step="50" min="0" id="inputDibayar" name="Dibayar" value="1000" oninput="calcLiveBalance()" class="w-full bg-[#f5fbf9] border border-[#b6d8ce] focus:border-teal-600 text-slate-800 rounded-xl px-3.5 py-2.5 font-bold outline-none" />
-                </div>
-                <div>
-                  <label class="block text-[11px] font-bold uppercase tracking-wider text-teal-900/80 mb-1">Bayar Tunggakan (RM)</label>
-                  <input type="number" step="50" min="0" id="inputBayarTunggakan" name="BayarTunggakan" placeholder="0" oninput="calcLiveBalance()" class="w-full bg-[#f5fbf9] border border-[#b6d8ce] focus:border-teal-600 text-slate-800 rounded-xl px-3.5 py-2.5 outline-none" />
-                </div>
-                <div>
-                  <label class="block text-[11px] font-bold uppercase tracking-wider text-teal-900/80 mb-1">Tarikh Bayar</label>
-                  <input type="date" id="inputTarikhBayar" name="TarikhBayar" class="w-full bg-[#f5fbf9] border border-[#b6d8ce] focus:border-teal-600 text-slate-800 rounded-xl px-3.5 py-2.5 outline-none" />
-                </div>
-                <div class="px-3.5 py-2 bg-[#f5fbf9] border border-[#b6d8ce] rounded-xl flex flex-col justify-center">
-                  <span class="text-[10px] uppercase font-bold tracking-wider text-slate-500">Baki Semasa</span>
-                  <span id="liveBalancePreview" class="text-base font-extrabold text-rose-600">RM 600.00</span>
-                </div>
-                <div>
-                  <button type="submit" id="submitBtn" class="w-full py-2.5 px-4 bg-teal-600 hover:bg-teal-700 active:scale-[0.99] text-white font-bold rounded-xl shadow-sm transition flex items-center justify-center gap-1.5">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                    <span>Simpan Rekod</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-          </form>
+        <div id="followupCardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Rendered dynamically -->
         </div>
       </section>
 
-      <!-- FILTERS & MASTER RECORD TABLE -->
-      <section class="bg-[#f5f3fa] rounded-2xl border border-[#dad3ec] shadow-xs overflow-hidden">
-        <div class="p-4 sm:p-5 bg-[#ebe6f6] border-b border-[#dad3ec] space-y-3.5">
-          <div class="flex flex-wrap justify-between items-center gap-2">
-            <div class="flex items-center gap-2.5">
-              <span class="w-2 h-6 rounded-full bg-indigo-500"></span>
-              <div>
-                <h2 class="text-sm sm:text-base font-bold text-slate-800">Senarai Induk Rekod Pelatih</h2>
-                <p class="text-[11px] text-slate-500">Tapis mengikut program, bulan intake, pengurus, penasihat akademik atau status bayaran.</p>
-              </div>
-            </div>
-            <div class="flex items-center gap-2">
-              <button type="button" onclick="resetFilters()" class="text-xs font-semibold text-slate-600 hover:text-slate-900 bg-[#f8f7fc] hover:bg-white border border-[#cfc7e6] px-3 py-1.5 rounded-xl transition">
-                ↺ Reset Penapis
-              </button>
-              <span id="recordCountBadge" class="text-xs font-bold text-indigo-900 bg-indigo-100 border border-indigo-200 px-3 py-1.5 rounded-xl">Memuatkan...</span>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2.5 text-xs">
-            <div class="relative">
-              <input type="text" id="filterSearch" oninput="applyFilters()" placeholder="Cari nama pelatih / pusat..." class="w-full bg-[#f8f7fc] border border-[#cfc7e6] focus:border-indigo-500 text-slate-800 rounded-xl pl-8 pr-3 py-2 outline-none" />
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-            </div>
-            <select id="filterProgram" onchange="applyFilters()" class="bg-[#f8f7fc] border border-[#cfc7e6] focus:border-indigo-500 text-slate-700 rounded-xl px-3 py-2 outline-none">
-              <option value="">Semua Program</option>
-              <option value="SKM Seni Pembuatan Pastri & Kek">SKM Seni Pembuatan Pastri & Kek</option>
-              <option value="SKM Teknologi Automotif">SKM Teknologi Automotif</option>
-              <option value="SKM Teknologi Automasi Industri">SKM Teknologi Automasi Industri</option>
-              <option value="SKM Pemasangan & Wiring Elektrik">SKM Pemasangan & Wiring Elektrik</option>
-              <option value="SKM Kimpalan Arka & Gas">SKM Kimpalan Arka & Gas</option>
-              <option value="SKM Teknologi Kenderaan Elektrik">SKM Teknologi Kenderaan Elektrik</option>
-              <option value="SKM Pengajian Awal Kanak-Kanak">SKM Pengajian Awal Kanak-Kanak</option>
-              <option value="SKM Pendidikan Prasekolah">SKM Pendidikan Prasekolah</option>
-              <option value="SKM Seni Kulinari">SKM Seni Kulinari</option>
-              <option value="SKM Pembuatan Roti & Pastri">SKM Pembuatan Roti & Pastri</option>
-              <option value="SKM Penyejukan & Penyamanan Udara (RAC)">SKM Penyejukan & Penyamanan Udara (RAC)</option>
-              <option value="SKM Terapi Kecantikan">SKM Terapi Kecantikan</option>
-            </select>
-            <select id="filterIntake" onchange="applyFilters()" class="bg-[#f8f7fc] border border-[#cfc7e6] focus:border-indigo-500 text-slate-700 rounded-xl px-3 py-2 outline-none">
-              <option value="">Semua Bulan Intake</option>
-              <option value="Januari">Januari</option>
-              <option value="Februari">Februari</option>
-              <option value="Mac">Mac</option>
-              <option value="April">April</option>
-              <option value="Mei">Mei</option>
-              <option value="Jun">Jun</option>
-              <option value="Julai">Julai</option>
-              <option value="Ogos">Ogos</option>
-              <option value="September">September</option>
-              <option value="Oktober">Oktober</option>
-              <option value="November">November</option>
-              <option value="Disember">Disember</option>
-            </select>
-            <select id="filterManager" onchange="applyFilters()" class="bg-[#f8f7fc] border border-[#cfc7e6] focus:border-indigo-500 text-slate-700 rounded-xl px-3 py-2 outline-none">
-              <option value="">Semua Pengurus</option>
-            </select>
-            <select id="filterPA" onchange="applyFilters()" class="bg-[#f8f7fc] border border-[#cfc7e6] focus:border-indigo-500 text-slate-700 rounded-xl px-3 py-2 outline-none">
-              <option value="">Semua Penasihat Akademik</option>
-            </select>
-            <select id="filterStatus" onchange="applyFilters()" class="bg-[#f8f7fc] border border-[#cfc7e6] focus:border-indigo-500 text-slate-700 rounded-xl px-3 py-2 outline-none">
-              <option value="">Semua Status Bayaran</option>
-              <option value="Paid">Selesai Bayar</option>
-              <option value="Outstanding">Ada Baki Tertunggak</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="overflow-x-auto max-h-[620px]">
-          <table class="w-full text-left border-collapse text-xs whitespace-nowrap">
-            <thead class="bg-[#e6e1f4] text-slate-700 uppercase tracking-wider border-b border-[#d3cbe8] sticky top-0 z-20">
-              <tr>
-                <th class="py-3.5 px-4 font-bold sticky left-0 bg-[#e6e1f4] z-30 border-r border-[#d3cbe8]">Nama Pelatih</th>
-                <th class="py-3.5 px-3.5 font-bold">Tel Pelajar</th>
-                <th class="py-3.5 px-3.5 font-bold">Tel Bapa</th>
-                <th class="py-3.5 px-3.5 font-bold">Tel Ibu</th>
-                <th class="py-3.5 px-3.5 font-bold">Pusat Bertauliah</th>
-                <th class="py-3.5 px-3.5 font-bold">Program</th>
-                <th class="py-3.5 px-3.5 font-bold">Tarikh Daftar</th>
-                <th class="py-3.5 px-3.5 font-bold">Bulan Intake</th>
-                <th class="py-3.5 px-3.5 font-bold">Penasihat Akademik</th>
-                <th class="py-3.5 px-3.5 font-bold">Pengurus</th>
-                <th class="py-3.5 px-3.5 text-right font-bold">Yuran (RM)</th>
-                <th class="py-3.5 px-3.5 text-right font-bold">Dibayar (RM)</th>
-                <th class="py-3.5 px-3.5 text-right font-bold">Baki (RM)</th>
-                <th class="py-3.5 px-3.5 font-bold">Tarikh Bayar</th>
-                <th class="py-3.5 px-3.5 font-bold">Catatan Bayaran</th>
-                <th class="py-3.5 px-3.5 font-bold">Status</th>
-                <th class="py-3.5 px-4 text-center font-bold">Tindakan</th>
-              </tr>
-            </thead>
-            <tbody id="tableBody" class="divide-y divide-[#e6e1f2]">
-              <tr><td colspan="17" class="p-8 text-center text-slate-500">Memuatkan data dari Google Sheets...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
     </main>
   </div>
+
+  <!-- ==================== SLIDE-OVER DRAWER: REGISTER NEW STUDENT ==================== -->
+  <div id="registerDrawerBackdrop" onclick="closeRegisterDrawer()" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-40 transition-opacity"></div>
+  <aside id="registerDrawer" class="fixed top-0 right-0 h-full w-full max-w-2xl bg-[#f6f4fb] border-l border-[#d4cde8] shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
+    <!-- Drawer Header -->
+    <div class="px-6 py-4 bg-[#e4f2ee] border-b border-[#c5e2da] flex items-center justify-between shrink-0">
+      <div class="flex items-center gap-2.5">
+        <span class="w-2 h-6 rounded-full bg-teal-600"></span>
+        <div>
+          <h2 class="text-base font-extrabold text-slate-800">Daftar Pelatih Baharu</h2>
+          <p class="text-[11px] text-slate-600">Isi butiran pelatih, penasihat akademik & rekod yuran pendaftaran.</p>
+        </div>
+      </div>
+      <button type="button" onclick="closeRegisterDrawer()" class="w-8 h-8 rounded-xl bg-white/80 hover:bg-white text-slate-600 hover:text-slate-900 font-bold flex items-center justify-center border border-[#c5e2da] transition">✕</button>
+    </div>
+
+    <!-- Drawer Body -->
+    <div class="p-6 overflow-y-auto flex-1 space-y-5">
+      <div class="flex items-center justify-between bg-[#efecf8] px-3.5 py-2.5 rounded-xl border border-[#dcd5ee]">
+        <span class="text-xs font-semibold text-slate-700">Mod Pendaftaran Berkelompok</span>
+        <label class="inline-flex items-center gap-2 cursor-pointer text-xs font-bold text-teal-800">
+          <input type="checkbox" id="keepBatchDefaults" checked class="w-4 h-4 accent-teal-600 rounded" />
+          <span>Kekalkan Pusat, Program, Intake & Penasihat Akademik</span>
+        </label>
+      </div>
+
+      <form id="keyInForm" onsubmit="submitRegistration(event)" class="space-y-4 text-xs">
+        <!-- Section A -->
+        <div class="bg-[#efecf8]/80 p-4 rounded-2xl border border-[#dcd5ee] space-y-3">
+          <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider text-indigo-800 bg-indigo-100 border border-indigo-200 px-2.5 py-0.5 rounded-md">A. Maklumat Pelatih & Waris</span>
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">1. Nama Penuh Pelatih <span class="text-rose-600">*</span></label>
+            <input required id="inputNamaPelatih" name="NamaPelatih" placeholder="cth. Ahmad Bin Ali" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3.5 py-2.5 outline-none" />
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">2. Tel Pelajar <span class="text-rose-600">*</span></label>
+              <input required name="TelPelajar" placeholder="0123456789" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">3. Tel Bapa <span class="text-rose-600">*</span></label>
+              <input required name="TelBapa" placeholder="0198765432" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">4. Tel Ibu <span class="text-rose-600">*</span></label>
+              <input required name="TelIbu" placeholder="0176543210" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Section B -->
+        <div class="bg-[#efecf8]/80 p-4 rounded-2xl border border-[#dcd5ee] space-y-3">
+          <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider text-sky-800 bg-sky-100 border border-sky-200 px-2.5 py-0.5 rounded-md">B. Pengajian & Penasihat Akademik</span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">5. Pusat Bertauliah <span class="text-rose-600">*</span></label>
+              <select required id="inputPusatBertauliah" name="PusatBertauliah" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none">
+                <option value="Ambitious College">Ambitious College</option>
+                <option value="Jv Skill">Jv Skill</option>
+                <option value="Adelphi College">Adelphi College</option>
+                <option value="Iman Motor Academy">Iman Motor Academy</option>
+                <option value="Dual Training Institute">Dual Training Institute</option>
+                <option value="Silverspoon International College">Silverspoon International College</option>
+                <option value="Kolej Dayatech">Kolej Dayatech</option>
+                <option value="Noble School of Engineering">Noble School of Engineering</option>
+                <option value="Noble School City Campus">Noble School City Campus</option>
+                <option value="Malaysia Technical Skill Academy">Malaysia Technical Skill Academy</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">6. Program SKM <span class="text-rose-600">*</span></label>
+              <select required id="inputProgram" name="Program" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none">
+                <option value="SKM Seni Pembuatan Pastri & Kek">SKM Seni Pembuatan Pastri & Kek</option>
+                <option value="SKM Teknologi Automotif">SKM Teknologi Automotif</option>
+                <option value="SKM Teknologi Automasi Industri">SKM Teknologi Automasi Industri</option>
+                <option value="SKM Pemasangan & Wiring Elektrik">SKM Pemasangan & Wiring Elektrik</option>
+                <option value="SKM Kimpalan Arka & Gas">SKM Kimpalan Arka & Gas</option>
+                <option value="SKM Teknologi Kenderaan Elektrik">SKM Teknologi Kenderaan Elektrik</option>
+                <option value="SKM Pengajian Awal Kanak-Kanak">SKM Pengajian Awal Kanak-Kanak</option>
+                <option value="SKM Pendidikan Prasekolah">SKM Pendidikan Prasekolah</option>
+                <option value="SKM Seni Kulinari">SKM Seni Kulinari</option>
+                <option value="SKM Pembuatan Roti & Pastri">SKM Pembuatan Roti & Pastri</option>
+                <option value="SKM Penyejukan & Penyamanan Udara (RAC)">SKM Penyejukan & Penyamanan Udara (RAC)</option>
+                <option value="SKM Terapi Kecantikan">SKM Terapi Kecantikan</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">7. Tarikh Daftar <span class="text-rose-600">*</span></label>
+              <input required type="date" id="inputTarikhDaftar" name="TarikhDaftar" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">8. Bulan Intake <span class="text-rose-600">*</span></label>
+              <select required id="inputBulanIntake" name="BulanIntake" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none">
+                <option value="Januari">Januari</option>
+                <option value="Februari">Februari</option>
+                <option value="Mac">Mac</option>
+                <option value="April">April</option>
+                <option value="Mei">Mei</option>
+                <option value="Jun">Jun</option>
+                <option value="Julai">Julai</option>
+                <option value="Ogos">Ogos</option>
+                <option value="September">September</option>
+                <option value="Oktober">Oktober</option>
+                <option value="November">November</option>
+                <option value="Disember">Disember</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">9. Penasihat Akademik <span class="text-rose-600">*</span></label>
+              <input required id="inputPA" name="PA" placeholder="cth. Cik Nadhirah" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">10. Pengurus <span class="text-rose-600">*</span></label>
+              <input required id="inputPengurus" name="Pengurus" placeholder="cth. En. Hafiz" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+            </div>
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">11. Catatan Bayaran</label>
+            <input name="CatatanBayaran" placeholder="Pilihan (cth. Ansuran pertama)" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+          </div>
+        </div>
+
+        <!-- Section C -->
+        <div class="bg-[#e7f3ef] p-4 rounded-2xl border border-[#c3e0d7] space-y-3">
+          <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider text-teal-900 bg-teal-200/70 border border-teal-300 px-2.5 py-0.5 rounded-md">C. Rekod Yuran & Bayaran</span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-teal-900/80 mb-1">Yuran (RM) <span class="text-rose-600">*</span></label>
+              <input required type="number" step="50" min="0" id="inputYuran" name="Yuran" value="1600" oninput="calcLiveBalance()" class="w-full bg-white border border-[#b6d8ce] focus:border-teal-600 text-slate-800 rounded-xl px-3 py-2 font-bold outline-none" />
+            </div>
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <label class="text-[11px] font-bold uppercase tracking-wider text-teal-900/80">Dibayar (RM) <span class="text-rose-600">*</span></label>
+                <button type="button" onclick="setFullPayment()" class="text-[10px] bg-teal-200 hover:bg-teal-300 text-teal-950 px-2 py-0.5 rounded-md font-bold transition">Bayar Penuh</button>
+              </div>
+              <input required type="number" step="50" min="0" id="inputDibayar" name="Dibayar" value="1000" oninput="calcLiveBalance()" class="w-full bg-white border border-[#b6d8ce] focus:border-teal-600 text-slate-800 rounded-xl px-3 py-2 font-bold outline-none" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-teal-900/80 mb-1">Bayar Tunggakan (RM)</label>
+              <input type="number" step="50" min="0" id="inputBayarTunggakan" name="BayarTunggakan" placeholder="0" oninput="calcLiveBalance()" class="w-full bg-white border border-[#b6d8ce] focus:border-teal-600 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-teal-900/80 mb-1">Tarikh Bayar</label>
+              <input type="date" id="inputTarikhBayar" name="TarikhBayar" class="w-full bg-white border border-[#b6d8ce] focus:border-teal-600 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+            </div>
+          </div>
+
+          <div class="px-4 py-2.5 bg-white border border-[#b6d8ce] rounded-xl flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-600">Baki Semasa Selepas Pendaftaran:</span>
+            <span id="liveBalancePreview" class="text-base font-extrabold text-rose-600">RM 600.00</span>
+          </div>
+        </div>
+
+        <div class="pt-2 flex gap-2.5">
+          <button type="button" onclick="closeRegisterDrawer()" class="w-1/3 py-3 border border-[#cfc7e6] hover:bg-[#eae5f6] text-slate-700 font-bold rounded-xl transition">Batal</button>
+          <button type="submit" id="submitBtn" class="w-2/3 py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl shadow-sm transition flex items-center justify-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Simpan Rekod Pelatih</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </aside>
 
   <!-- Settle Balance Modal -->
   <div id="payModal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
@@ -524,11 +560,11 @@
         <input type="hidden" id="payRowIndex" />
         <div>
           <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Jumlah Bayaran Diterima (RM) *</label>
-          <input required type="number" step="50" min="0" id="payAmount" class="w-full bg-[#eeebf7] border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3.5 py-2.5 font-bold outline-none" />
+          <input required type="number" step="50" min="0" id="payAmount" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3.5 py-2.5 font-bold outline-none" />
         </div>
         <div>
           <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Tarikh Bayar *</label>
-          <input required type="date" id="payDate" class="w-full bg-[#eeebf7] border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3.5 py-2.5 outline-none" />
+          <input required type="date" id="payDate" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3.5 py-2.5 outline-none" />
         </div>
         <div class="flex justify-end gap-2 pt-3 border-t border-[#e3def2]">
           <button type="button" onclick="document.getElementById('payModal').classList.add('hidden')" class="px-4 py-2 border border-[#cfc7e6] hover:bg-[#eae5f6] text-slate-700 rounded-xl font-semibold text-xs">Batal</button>
@@ -549,23 +585,23 @@
         <input type="hidden" id="editRowIndex" />
         <div class="sm:col-span-2">
           <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Nama Pelatih *</label>
-          <input required id="editNamaPelatih" class="w-full bg-[#eeebf7] border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+          <input required id="editNamaPelatih" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div>
           <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Tel Pelajar *</label>
-          <input required id="editTelPelajar" class="w-full bg-[#eeebf7] border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+          <input required id="editTelPelajar" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div>
           <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Tel Bapa *</label>
-          <input required id="editTelBapa" class="w-full bg-[#eeebf7] border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+          <input required id="editTelBapa" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div>
           <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Tel Ibu *</label>
-          <input required id="editTelIbu" class="w-full bg-[#eeebf7] border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+          <input required id="editTelIbu" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div>
           <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Pusat Bertauliah *</label>
-          <select required id="editPusatBertauliah" class="w-full bg-[#eeebf7] border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none">
+          <select required id="editPusatBertauliah" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none">
             <option value="Ambitious College">Ambitious College</option>
             <option value="Jv Skill">Jv Skill</option>
             <option value="Adelphi College">Adelphi College</option>
@@ -580,7 +616,7 @@
         </div>
         <div class="sm:col-span-2">
           <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Program *</label>
-          <select required id="editProgram" class="w-full bg-[#eeebf7] border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none">
+          <select required id="editProgram" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none">
             <option value="SKM Seni Pembuatan Pastri & Kek">SKM Seni Pembuatan Pastri & Kek</option>
             <option value="SKM Teknologi Automotif">SKM Teknologi Automotif</option>
             <option value="SKM Teknologi Automasi Industri">SKM Teknologi Automasi Industri</option>
@@ -597,11 +633,11 @@
         </div>
         <div>
           <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Tarikh Daftar *</label>
-          <input required type="date" id="editTarikhDaftar" class="w-full bg-[#eeebf7] border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+          <input required type="date" id="editTarikhDaftar" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div>
           <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Bulan Intake *</label>
-          <select required id="editBulanIntake" class="w-full bg-[#eeebf7] border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none">
+          <select required id="editBulanIntake" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none">
             <option value="Januari">Januari</option>
             <option value="Februari">Februari</option>
             <option value="Mac">Mac</option>
@@ -618,19 +654,19 @@
         </div>
         <div>
           <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Penasihat Akademik *</label>
-          <input required id="editPA" class="w-full bg-[#eeebf7] border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+          <input required id="editPA" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div>
           <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Pengurus *</label>
-          <input required id="editPengurus" class="w-full bg-[#eeebf7] border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+          <input required id="editPengurus" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div>
           <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Yuran (RM) *</label>
-          <input required type="number" step="50" min="0" id="editYuran" oninput="calcEditBalance()" class="w-full bg-[#eeebf7] border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 font-bold outline-none" />
+          <input required type="number" step="50" min="0" id="editYuran" oninput="calcEditBalance()" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 font-bold outline-none" />
         </div>
         <div>
           <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Jumlah Dibayar (RM) *</label>
-          <input required type="number" step="50" min="0" id="editDibayar" oninput="calcEditBalance()" class="w-full bg-[#eeebf7] border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 font-bold outline-none" />
+          <input required type="number" step="50" min="0" id="editDibayar" oninput="calcEditBalance()" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 font-bold outline-none" />
         </div>
         <div class="px-3 py-2 bg-[#e7f3ef] border border-[#c3e0d7] rounded-xl flex flex-col justify-center">
           <span class="text-[10px] uppercase font-bold tracking-wider text-teal-800">Baki Terkini</span>
@@ -638,11 +674,11 @@
         </div>
         <div class="sm:col-span-3">
           <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Tarikh Bayar (Rekod Ansuran)</label>
-          <input id="editTarikhBayar" placeholder="cth. RM300.00 (2026-04-20) | RM300.00 (2026-05-05)" class="w-full bg-[#eeebf7] border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+          <input id="editTarikhBayar" placeholder="cth. RM300.00 (2026-04-20) | RM300.00 (2026-05-05)" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div class="sm:col-span-3">
           <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Catatan Bayaran</label>
-          <input id="editCatatanBayaran" class="w-full bg-[#eeebf7] border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+          <input id="editCatatanBayaran" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div class="sm:col-span-3 flex justify-end gap-2 pt-3 border-t border-[#e3def2]">
           <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')" class="px-4 py-2 border border-[#cfc7e6] hover:bg-[#eae5f6] text-slate-700 rounded-xl font-semibold">Batal</button>
@@ -665,6 +701,56 @@
       '#38bdf8', '#34d399', '#f59e0b', '#818cf8', '#fb7185',
       '#2dd4bf', '#a78bfa', '#fb923c', '#60a5fa', '#84cc16'
     ];
+
+    // ==================== WORKSPACE & DRAWER CONTROLS ====================
+    function switchWorkspaceTab(tab) {
+      const views = {
+        records: document.getElementById('viewRecords'),
+        analytics: document.getElementById('viewAnalytics'),
+        followup: document.getElementById('viewFollowup')
+      };
+      const tabs = {
+        records: document.getElementById('navTabRecords'),
+        analytics: document.getElementById('navTabAnalytics'),
+        followup: document.getElementById('navTabFollowup')
+      };
+
+      Object.keys(views).forEach(k => {
+        if (k === tab) {
+          views[k].classList.remove('hidden');
+          tabs[k].className = 'inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 text-white shadow-xs transition';
+        } else {
+          views[k].classList.add('hidden');
+          tabs[k].className = 'inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-[#e8e3f5] transition';
+        }
+      });
+
+      if (tab === 'analytics') updateChart();
+    }
+
+    function openRegisterDrawer() {
+      document.getElementById('registerDrawerBackdrop').classList.remove('hidden');
+      document.getElementById('registerDrawer').classList.remove('translate-x-full');
+      setTimeout(() => document.getElementById('inputNamaPelatih').focus(), 200);
+    }
+
+    function closeRegisterDrawer() {
+      document.getElementById('registerDrawerBackdrop').classList.add('hidden');
+      document.getElementById('registerDrawer').classList.add('translate-x-full');
+    }
+
+    function quickStatusFilter(status) {
+      document.getElementById('filterStatus').value = status;
+      const pills = {
+        '': document.getElementById('pillAll'),
+        'Paid': document.getElementById('pillPaid'),
+        'Outstanding': document.getElementById('pillDue')
+      };
+      pills[''].className = status === '' ? 'px-3 py-1.5 rounded-lg bg-slate-800 text-white transition' : 'px-3 py-1.5 rounded-lg bg-slate-200 text-slate-700 hover:bg-slate-300 transition';
+      pills['Paid'].className = status === 'Paid' ? 'px-3 py-1.5 rounded-lg bg-teal-600 text-white transition' : 'px-3 py-1.5 rounded-lg bg-teal-100 text-teal-800 hover:bg-teal-200 transition';
+      pills['Outstanding'].className = status === 'Outstanding' ? 'px-3 py-1.5 rounded-lg bg-rose-600 text-white transition' : 'px-3 py-1.5 rounded-lg bg-rose-100 text-rose-800 hover:bg-rose-200 transition';
+      applyFilters();
+    }
 
     // ==================== AUTHENTICATION LOGIC ====================
     window.addEventListener('DOMContentLoaded', () => {
@@ -824,18 +910,6 @@
       el.className = baki > 0 ? 'text-sm font-extrabold text-rose-600' : 'text-sm font-extrabold text-teal-700';
     }
 
-    function toggleSection(sectionId, btnId, label) {
-      const sec = document.getElementById(sectionId);
-      const btn = document.getElementById(btnId);
-      sec.classList.toggle('hidden');
-      const span = btn.querySelector('span');
-      if (span) {
-        span.textContent = sec.classList.contains('hidden')
-          ? `Buka ${label}`
-          : `Sembunyi ${label}`;
-      }
-    }
-
     async function submitRegistration(e) {
       e.preventDefault();
       const btn = document.getElementById('submitBtn');
@@ -875,26 +949,26 @@
           document.getElementById('inputDibayar').value = savedDefaults.Dibayar;
         }
         calcLiveBalance();
-        document.getElementById('inputNamaPelatih').focus();
+        closeRegisterDrawer();
         fetchStudents();
       } catch (err) {
         alert('Ralat semasa menyimpan data. Sila semak sambungan internet atau API URL.');
       }
 
       btn.disabled = false;
-      span.textContent = 'Simpan Rekod';
+      span.textContent = 'Simpan Rekod Pelatih';
     }
 
     function showToast(msg) {
       const toast = document.getElementById('toastMsg');
-      toast.textContent = msg;
+      toast.innerHTML = `<span>${msg}</span><button onclick="this.parentElement.classList.add('hidden')" class="text-xs font-bold px-2">✕</button>`;
       toast.classList.remove('hidden');
       setTimeout(() => toast.classList.add('hidden'), 5000);
     }
 
     async function fetchStudents() {
       const tbody = document.getElementById('tableBody');
-      tbody.innerHTML = '<tr><td colspan="17" class="p-8 text-center text-slate-500">Menyegerak data dengan Google Sheets...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="11" class="p-8 text-center text-slate-500">Menyegerak data dengan Google Sheets...</td></tr>';
       try {
         const res = await fetch(API_URL);
         const json = await res.json();
@@ -902,7 +976,7 @@
         populateDropdowns();
         applyFilters();
       } catch (err) {
-        tbody.innerHTML = '<tr><td colspan="17" class="p-8 text-center text-rose-700 font-medium">Ralat sambungan. Pastikan API_URL sudah dimasukkan dengan betul.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="11" class="p-8 text-center text-rose-700 font-medium">Ralat sambungan. Pastikan API_URL sudah dimasukkan dengan betul.</td></tr>';
       }
     }
 
@@ -924,8 +998,7 @@
       document.getElementById('filterIntake').value = '';
       document.getElementById('filterManager').value = '';
       document.getElementById('filterPA').value = '';
-      document.getElementById('filterStatus').value = '';
-      applyFilters();
+      quickStatusFilter('');
     }
 
     function applyFilters() {
@@ -937,7 +1010,10 @@
       const status = document.getElementById('filterStatus').value;
 
       currentFiltered = allStudents.filter(s => {
-        const matchSearch = (s.NamaPelatih || '').toLowerCase().includes(search) || (s.PusatBertauliah || '').toLowerCase().includes(search);
+        const matchSearch =
+          (s.NamaPelatih || '').toLowerCase().includes(search) ||
+          (s.PusatBertauliah || '').toLowerCase().includes(search) ||
+          String(s.TelPelajar || '').includes(search);
         const matchProg = !program || s.Program === program;
         const matchIntake = !intake || s.BulanIntake === intake;
         const matchMgr = !pengurus || s.Pengurus === pengurus;
@@ -947,8 +1023,13 @@
         return matchSearch && matchProg && matchIntake && matchMgr && matchPA && matchStatus;
       });
 
+      const dueCount = currentFiltered.filter(s => Number(s.Baki || 0) > 0).length;
       document.getElementById('recordCountBadge').textContent = `${currentFiltered.length} daripada ${allStudents.length} rekod`;
+      document.getElementById('tabBadgeAll').textContent = currentFiltered.length;
+      document.getElementById('tabBadgeDue').textContent = dueCount;
+
       renderTable(currentFiltered);
+      renderFollowupCards(currentFiltered);
       updateKPIs(currentFiltered);
       updateChart();
     }
@@ -957,21 +1038,26 @@
       const totalFee = list.reduce((sum, s) => sum + Number(s.Yuran || 0), 0);
       const collected = list.reduce((sum, s) => sum + Number(s.Dibayar || 0), 0);
       const balance = list.reduce((sum, s) => sum + Number(s.Baki || 0), 0);
+      const unpaidList = list.filter(s => Number(s.Baki || 0) > 0);
+      const pct = totalFee > 0 ? Math.round((collected / totalFee) * 100) : 0;
 
       document.getElementById('kpiStudents').textContent = list.length;
       document.getElementById('kpiTotalFee').textContent = `RM ${totalFee.toFixed(2)}`;
       document.getElementById('kpiCollected').textContent = `RM ${collected.toFixed(2)}`;
       document.getElementById('kpiBalance').textContent = `RM ${balance.toFixed(2)}`;
+      document.getElementById('kpiUnpaidCount').textContent = `${unpaidList.length} pelatih berbaki`;
+      document.getElementById('collectionRateBadge').textContent = `${pct}% Dikutip`;
+      document.getElementById('collectionRateBar').style.width = `${pct}%`;
     }
 
     function updateChart() {
       const groupBy = document.getElementById('chartGroupBy').value;
       const metric = document.getElementById('chartMetric').value;
       const groupLabelMap = {
-        Program: 'Program Pilihan',
-        Pengurus: 'Pengurus',
         PA: 'Penasihat Akademik',
+        Program: 'Program Pilihan',
         PusatBertauliah: 'Pusat Bertauliah',
+        Pengurus: 'Pengurus',
         BulanIntake: 'Bulan Intake',
         StatusBayaran: 'Status Bayaran'
       };
@@ -1041,7 +1127,7 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          cutout: '62%',
+          cutout: '64%',
           plugins: {
             legend: { display: false },
             tooltip: {
@@ -1062,39 +1148,50 @@
       });
     }
 
+    // ==================== STREAMLINED GROUPED TABLE ====================
     function renderTable(list) {
       const tbody = document.getElementById('tableBody');
       if (!list.length) {
-        tbody.innerHTML = '<tr><td colspan="17" class="p-8 text-center text-slate-500">Tiada rekod pelajar ditemui.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="11" class="p-8 text-center text-slate-500">Tiada rekod pelajar ditemui.</td></tr>';
         return;
       }
 
       tbody.innerHTML = list.map(s => {
         const baki = Number(s.Baki || 0);
         const tarikhDaftar = s.TarikhDaftar ? String(s.TarikhDaftar).split('T')[0] : '-';
-        const tarikhBayar = s.TarikhBayar ? String(s.TarikhBayar).trim() : '-';
-        const catatanBayaran = s.CatatanBayaran ? String(s.CatatanBayaran).trim() : '-';
+        const tarikhBayar = s.TarikhBayar ? String(s.TarikhBayar).trim() : '';
+        const catatanBayaran = s.CatatanBayaran ? String(s.CatatanBayaran).trim() : '';
         const safeName = String(s.NamaPelatih || '').replace(/'/g, "\\'");
 
         return `
           <tr class="group bg-[#f8f7fc] hover:bg-[#ede8f8] transition">
-            <td class="py-3 px-4 font-bold text-slate-800 sticky left-0 bg-[#f8f7fc] group-hover:bg-[#ede8f8] z-10 border-r border-[#e4def2]">${s.NamaPelatih || '-'}</td>
-            <td class="py-3 px-3.5 text-slate-600 font-mono text-[11px]">${s.TelPelajar || '-'}</td>
-            <td class="py-3 px-3.5 text-slate-600 font-mono text-[11px]">${s.TelBapa || '-'}</td>
-            <td class="py-3 px-3.5 text-slate-600 font-mono text-[11px]">${s.TelIbu || '-'}</td>
-            <td class="py-3 px-3.5 text-slate-700 font-medium">${s.PusatBertauliah || '-'}</td>
-            <td class="py-3 px-3.5">
-              <span class="px-2.5 py-1 bg-indigo-100 text-indigo-800 border border-indigo-200 rounded-lg font-semibold">${s.Program || '-'}</span>
+            <td class="py-3 px-4 font-bold text-slate-800 sticky left-0 bg-[#f8f7fc] group-hover:bg-[#ede8f8] z-10 border-r border-[#e4def2]">
+              <div>${s.NamaPelatih || '-'}</div>
+              <div class="text-[10px] font-mono text-slate-500 font-normal mt-0.5">Pelajar: ${s.TelPelajar || '-'}</div>
             </td>
-            <td class="py-3 px-3.5 text-slate-600">${tarikhDaftar}</td>
-            <td class="py-3 px-3.5 font-semibold text-slate-700">${s.BulanIntake || '-'}</td>
-            <td class="py-3 px-3.5 font-medium text-slate-800">${s.PA || '-'}</td>
-            <td class="py-3 px-3.5 text-slate-600">${s.Pengurus || '-'}</td>
+            <td class="py-3 px-3.5 text-[11px] text-slate-600 font-mono">
+              <div>Bapa: ${s.TelBapa || '-'}</div>
+              <div>Ibu: ${s.TelIbu || '-'}</div>
+            </td>
+            <td class="py-3 px-3.5">
+              <div class="font-bold text-slate-800">${s.PusatBertauliah || '-'}</div>
+              <span class="inline-block mt-1 px-2 py-0.5 bg-indigo-100 text-indigo-800 border border-indigo-200 rounded-md text-[11px] font-semibold">${s.Program || '-'}</span>
+            </td>
+            <td class="py-3 px-3.5">
+              <div class="font-bold text-slate-700">Intake ${s.BulanIntake || '-'}</div>
+              <div class="text-[11px] text-slate-500">Daftar: ${tarikhDaftar}</div>
+            </td>
+            <td class="py-3 px-3.5">
+              <div class="font-bold text-teal-800">PA: ${s.PA || '-'}</div>
+              <div class="text-[11px] text-slate-500">Pengurus: ${s.Pengurus || '-'}</div>
+            </td>
             <td class="py-3 px-3.5 text-right font-semibold text-slate-800">${Number(s.Yuran || 0).toFixed(2)}</td>
-            <td class="py-3 px-3.5 text-right text-teal-700 font-semibold">${Number(s.Dibayar || 0).toFixed(2)}</td>
+            <td class="py-3 px-3.5 text-right text-teal-700 font-bold">${Number(s.Dibayar || 0).toFixed(2)}</td>
             <td class="py-3 px-3.5 text-right font-extrabold ${baki > 0 ? 'text-rose-600' : 'text-slate-400'}">${baki.toFixed(2)}</td>
-            <td class="py-3 px-3.5 text-slate-700 font-medium">${tarikhBayar}</td>
-            <td class="py-3 px-3.5 text-slate-500">${catatanBayaran}</td>
+            <td class="py-3 px-3.5 max-w-[220px] whitespace-normal">
+              <div class="text-[11px] text-slate-700 font-medium">${tarikhBayar || '-'}</div>
+              ${catatanBayaran ? `<div class="text-[10px] text-slate-500 italic mt-0.5">${catatanBayaran}</div>` : ''}
+            </td>
             <td class="py-3 px-3.5">
               ${baki > 0
                 ? `<button onclick="openPayModal(${s.rowIndex}, '${safeName}', ${baki})" class="bg-amber-200 hover:bg-amber-300 text-amber-950 border border-amber-300 px-2.5 py-1 rounded-lg font-bold transition">Bayar Baki</button>`
@@ -1125,6 +1222,71 @@
       }).join('');
     }
 
+    // ==================== VIEW 3: FOLLOW-UP ACTION CARDS ====================
+    function formatWhatsAppLink(phone, studentName, program, baki) {
+      let clean = String(phone || '').replace(/\D/g, '');
+      if (clean.startsWith('0')) clean = '6' + clean;
+      const msg = encodeURIComponent(`Assalamualaikum & Salam Sejahtera. Peringatan mesra berkenaan baki yuran pendaftaran bagi pelatih *${studentName}* (${program}) berjumlah *RM ${Number(baki).toFixed(2)}*. Terima kasih.`);
+      return `https://wa.me/${clean}?text=${msg}`;
+    }
+
+    function renderFollowupCards(list) {
+      const dueList = list.filter(s => Number(s.Baki || 0) > 0);
+      document.getElementById('followupSummaryBadge').textContent = `${dueList.length} Rekod Berbaki`;
+
+      const grid = document.getElementById('followupCardsGrid');
+      if (!dueList.length) {
+        grid.innerHTML = `
+          <div class="col-span-full bg-[#e1f5ee] border border-[#bce6d7] rounded-2xl p-8 text-center">
+            <p class="text-sm font-bold text-teal-900">Tiada baki yuran tertunggak bagi tapisan semasa.</p>
+            <p class="text-xs text-teal-700 mt-1">Semua pelatih dalam senarai ini telah melangsaikan bayaran penuh.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = dueList.map(s => {
+        const baki = Number(s.Baki || 0);
+        const safeName = String(s.NamaPelatih || '').replace(/'/g, "\\'");
+        const waPelajar = formatWhatsAppLink(s.TelPelajar, s.NamaPelatih, s.Program, baki);
+        const waBapa = formatWhatsAppLink(s.TelBapa, s.NamaPelatih, s.Program, baki);
+
+        return `
+          <div class="bg-[#f8f7fc] border border-[#dad3ec] rounded-2xl p-4 shadow-xs flex flex-col justify-between space-y-3.5">
+            <div>
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <h3 class="text-sm font-extrabold text-slate-800">${s.NamaPelatih}</h3>
+                  <p class="text-[11px] font-semibold text-indigo-700 mt-0.5">${s.Program}</p>
+                </div>
+                <span class="bg-rose-100 text-rose-800 border border-rose-200 px-2.5 py-1 rounded-lg text-xs font-extrabold shrink-0">
+                  Baki RM ${baki.toFixed(2)}
+                </span>
+              </div>
+              <div class="mt-3 pt-2.5 border-t border-[#e6e1f2] grid grid-cols-2 gap-2 text-[11px] text-slate-600">
+                <div><span class="text-slate-400">Pusat:</span> <strong class="text-slate-700">${s.PusatBertauliah}</strong></div>
+                <div><span class="text-slate-400">Intake:</span> <strong class="text-slate-700">${s.BulanIntake}</strong></div>
+                <div class="col-span-2"><span class="text-slate-400">Penasihat Akademik:</span> <strong class="text-teal-800">${s.PA}</strong></div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-[#e6e1f2] text-xs font-bold">
+              <button onclick="openPayModal(${s.rowIndex}, '${safeName}', ${baki})" class="flex-1 bg-teal-600 hover:bg-teal-700 text-white py-2 px-3 rounded-xl transition">
+                Terima Bayaran
+              </button>
+              <a href="${waPelajar}" target="_blank" class="bg-emerald-100 hover:bg-emerald-200 text-emerald-900 border border-emerald-300 py-2 px-2.5 rounded-xl transition" title="WhatsApp Pelajar">
+                WA Pelajar
+              </a>
+              <a href="${waBapa}" target="_blank" class="bg-sky-100 hover:bg-sky-200 text-sky-900 border border-sky-300 py-2 px-2.5 rounded-xl transition" title="WhatsApp Bapa">
+                WA Waris
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ==================== EDIT, DELETE & PAYMENT MODALS ====================
     function openEditModal(rowIndex) {
       const s = allStudents.find(item => item.rowIndex === rowIndex);
       if (!s) return;
