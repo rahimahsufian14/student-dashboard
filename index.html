@@ -410,15 +410,19 @@
         </div>
         <div>
           <label class="font-bold uppercase text-slate-600">Yuran (RM) *</label>
-          <input required type="number" step="0.01" id="editYuran" class="w-full border rounded-lg p-2 mt-1" />
+          <input required type="number" step="0.01" id="editYuran" oninput="calcEditBalance()" class="w-full border rounded-lg p-2 mt-1" />
         </div>
         <div>
-          <label class="font-bold uppercase text-slate-600">Dibayar (RM) *</label>
-          <input required type="number" step="0.01" id="editDibayar" class="w-full border rounded-lg p-2 mt-1" />
+          <label class="font-bold uppercase text-slate-600">Jumlah Dibayar (RM) *</label>
+          <input required type="number" step="0.01" id="editDibayar" oninput="calcEditBalance()" class="w-full border rounded-lg p-2 mt-1" />
         </div>
-        <div>
-          <label class="font-bold uppercase text-slate-600">Tarikh Bayar</label>
-          <input id="editTarikhBayar" placeholder="cth. RM600.00 (2026-02-20)" class="w-full border rounded-lg p-2 mt-1" />
+        <div class="p-2 bg-slate-50 border rounded-lg">
+          <span class="text-slate-500 block">Baki Terkini (Auto):</span>
+          <span id="editBakiPreview" class="text-sm font-bold text-rose-600">RM 0.00</span>
+        </div>
+        <div class="sm:col-span-3">
+          <label class="font-bold uppercase text-slate-600">Tarikh Bayar (Rekod Ansuran)</label>
+          <input id="editTarikhBayar" placeholder="cth. RM300.00 (2026-04-20) | RM300.00 (2026-05-05)" class="w-full border rounded-lg p-2 mt-1" />
         </div>
         <div class="sm:col-span-3">
           <label class="font-bold uppercase text-slate-600">Catatan Bayaran</label>
@@ -458,6 +462,15 @@
       const el = document.getElementById('liveBalancePreview');
       el.textContent = `RM ${baki.toFixed(2)}`;
       el.className = baki > 0 ? 'text-base font-bold text-rose-600' : 'text-base font-bold text-emerald-600';
+    }
+
+    function calcEditBalance() {
+      const yuran = Number(document.getElementById('editYuran').value || 0);
+      const dibayar = Number(document.getElementById('editDibayar').value || 0);
+      const baki = Math.max(0, yuran - dibayar);
+      const el = document.getElementById('editBakiPreview');
+      el.textContent = `RM ${baki.toFixed(2)}`;
+      el.className = baki > 0 ? 'text-sm font-bold text-rose-600' : 'text-sm font-bold text-emerald-600';
     }
 
     function toggleSection(sectionId, btnId, label) {
@@ -744,6 +757,7 @@
       document.getElementById('editTarikhBayar').value = s.TarikhBayar || '';
       document.getElementById('editCatatanBayaran').value = s.CatatanBayaran || '';
 
+      calcEditBalance();
       document.getElementById('editModal').classList.remove('hidden');
     }
 
