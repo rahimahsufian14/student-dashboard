@@ -213,7 +213,7 @@
             <input required type="number" step="0.01" id="inputYuran" name="Yuran" value="1600" oninput="calcLiveBalance()" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white" />
           </div>
           <div>
-            <label class="text-xs font-bold uppercase text-slate-600">Dibayar Awal (RM) *</label>
+            <label class="text-xs font-bold uppercase text-slate-600">Dibayar (RM) *</label>
             <input required type="number" step="0.01" id="inputDibayar" name="Dibayar" value="1000" oninput="calcLiveBalance()" class="w-full border border-slate-300 rounded-lg p-2 mt-1 bg-white" />
           </div>
           <div>
@@ -237,7 +237,7 @@
       </form>
     </section>
 
-    <!-- FILTERS & MASTER RECORD TABLE (100% SEPADAN DENGAN SPREADSHEET) -->
+    <!-- FILTERS & MASTER RECORD TABLE -->
     <div class="space-y-4">
       <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
         <input type="text" id="filterSearch" oninput="applyFilters()" placeholder="Cari nama pelatih atau pusat..." class="border rounded-lg px-3 py-2 text-sm" />
@@ -296,10 +296,11 @@
               <th class="p-3">Tarikh Bayar</th>
               <th class="p-3">Catatan Bayaran</th>
               <th class="p-3">Status</th>
+              <th class="p-3 text-center">Tindakan</th>
             </tr>
           </thead>
           <tbody id="tableBody" class="divide-y divide-slate-200">
-            <tr><td colspan="16" class="p-6 text-center text-slate-500">Memuatkan data dari Google Sheets...</td></tr>
+            <tr><td colspan="17" class="p-6 text-center text-slate-500">Memuatkan data dari Google Sheets...</td></tr>
           </tbody>
         </table>
       </div>
@@ -329,6 +330,108 @@
     </div>
   </div>
 
+  <!-- Edit Student Modal -->
+  <div id="editModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 overflow-y-auto">
+    <div class="bg-white rounded-xl max-w-3xl w-full p-6 space-y-4 my-8">
+      <div class="flex justify-between items-center border-b pb-2">
+        <h2 class="text-lg font-bold text-slate-900">✏️ Edit Rekod Pelajar</h2>
+        <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-600 font-bold text-lg">✕</button>
+      </div>
+      <form onsubmit="submitEdit(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+        <input type="hidden" id="editRowIndex" />
+        <div class="sm:col-span-2">
+          <label class="font-bold uppercase text-slate-600">Nama Pelatih *</label>
+          <input required id="editNamaPelatih" class="w-full border rounded-lg p-2 mt-1" />
+        </div>
+        <div>
+          <label class="font-bold uppercase text-slate-600">Tel Pelajar *</label>
+          <input required id="editTelPelajar" class="w-full border rounded-lg p-2 mt-1" />
+        </div>
+        <div>
+          <label class="font-bold uppercase text-slate-600">Tel Bapa *</label>
+          <input required id="editTelBapa" class="w-full border rounded-lg p-2 mt-1" />
+        </div>
+        <div>
+          <label class="font-bold uppercase text-slate-600">Tel Ibu *</label>
+          <input required id="editTelIbu" class="w-full border rounded-lg p-2 mt-1" />
+        </div>
+        <div>
+          <label class="font-bold uppercase text-slate-600">Pusat Bertauliah *</label>
+          <select required id="editPusatBertauliah" class="w-full border rounded-lg p-2 mt-1 bg-white">
+            <option value="Ambitious College">Ambitious College</option>
+            <option value="Jv Skill">Jv Skill</option>
+            <option value="Adelphi College">Adelphi College</option>
+            <option value="Iman Motor Academy">Iman Motor Academy</option>
+            <option value="Dual Training Institute">Dual Training Institute</option>
+            <option value="Silverspoon International College">Silverspoon International College</option>
+            <option value="Kolej Dayatech">Kolej Dayatech</option>
+            <option value="Noble School of Engineering">Noble School of Engineering</option>
+            <option value="Noble School City Campus">Noble School City Campus</option>
+            <option value="Malaysia Technical Skill Academy">Malaysia Technical Skill Academy</option>
+          </select>
+        </div>
+        <div class="sm:col-span-2">
+          <label class="font-bold uppercase text-slate-600">Program *</label>
+          <select required id="editProgram" class="w-full border rounded-lg p-2 mt-1 bg-white">
+            <option value="SKM Seni Pembuatan Pastri & Kek">SKM Seni Pembuatan Pastri & Kek</option>
+            <option value="SKM Teknologi Automotif">SKM Teknologi Automotif</option>
+            <option value="SKM Teknologi Automasi Industri">SKM Teknologi Automasi Industri</option>
+            <option value="SKM Pemasangan & Wiring Elektrik">SKM Pemasangan & Wiring Elektrik</option>
+            <option value="SKM Kimpalan Arka & Gas">SKM Kimpalan Arka & Gas</option>
+            <option value="SKM Teknologi Kenderaan Elektrik">SKM Teknologi Kenderaan Elektrik</option>
+            <option value="SKM Pengajian Awal Kanak-Kanak">SKM Pengajian Awal Kanak-Kanak</option>
+            <option value="SKM Pendidikan Prasekolah">SKM Pendidikan Prasekolah</option>
+            <option value="SKM Seni Kulinari">SKM Seni Kulinari</option>
+            <option value="SKM Pembuatan Roti & Pastri">SKM Pembuatan Roti & Pastri</option>
+            <option value="SKM Penyejukan & Penyamanan Udara (RAC)">SKM Penyejukan & Penyamanan Udara (RAC)</option>
+            <option value="SKM Terapi Kecantikan">SKM Terapi Kecantikan</option>
+          </select>
+        </div>
+        <div>
+          <label class="font-bold uppercase text-slate-600">Tarikh Daftar *</label>
+          <input required type="date" id="editTarikhDaftar" class="w-full border rounded-lg p-2 mt-1" />
+        </div>
+        <div>
+          <label class="font-bold uppercase text-slate-600">Bulan Intake *</label>
+          <select required id="editBulanIntake" class="w-full border rounded-lg p-2 mt-1 bg-white">
+            <option>January</option><option>February</option><option>March</option>
+            <option>April</option><option>May</option><option>June</option>
+            <option>July</option><option>August</option><option>September</option>
+            <option>October</option><option>November</option><option>December</option>
+          </select>
+        </div>
+        <div>
+          <label class="font-bold uppercase text-slate-600">PA *</label>
+          <input required id="editPA" class="w-full border rounded-lg p-2 mt-1" />
+        </div>
+        <div>
+          <label class="font-bold uppercase text-slate-600">Pengurus *</label>
+          <input required id="editPengurus" class="w-full border rounded-lg p-2 mt-1" />
+        </div>
+        <div>
+          <label class="font-bold uppercase text-slate-600">Yuran (RM) *</label>
+          <input required type="number" step="0.01" id="editYuran" class="w-full border rounded-lg p-2 mt-1" />
+        </div>
+        <div>
+          <label class="font-bold uppercase text-slate-600">Dibayar (RM) *</label>
+          <input required type="number" step="0.01" id="editDibayar" class="w-full border rounded-lg p-2 mt-1" />
+        </div>
+        <div>
+          <label class="font-bold uppercase text-slate-600">Tarikh Bayar</label>
+          <input id="editTarikhBayar" placeholder="cth. RM600.00 (2026-02-20)" class="w-full border rounded-lg p-2 mt-1" />
+        </div>
+        <div class="sm:col-span-3">
+          <label class="font-bold uppercase text-slate-600">Catatan Bayaran</label>
+          <input id="editCatatanBayaran" class="w-full border rounded-lg p-2 mt-1" />
+        </div>
+        <div class="sm:col-span-3 flex justify-end gap-2 pt-3 border-t">
+          <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')" class="px-4 py-2 border rounded-lg font-semibold">Batal</button>
+          <button type="submit" id="editSaveBtn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg">Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
     // PASTE URL GOOGLE APPS SCRIPT (/exec) ANDA DI SINI:
     const API_URL = 'https://script.google.com/macros/s/AKfycbxaejQRcYTkFNIONboMnyS8arvH5xMYi1ZWz9UkC1RiAE7kVSjDLSVelRFqWBmSlYTk/exec';
@@ -349,9 +452,9 @@
 
     function calcLiveBalance() {
       const yuran = Number(document.getElementById('inputYuran').value || 0);
-      const dibayarAwal = Number(document.getElementById('inputDibayar').value || 0);
+      const dibayar = Number(document.getElementById('inputDibayar').value || 0);
       const bayarTunggakan = Number(document.getElementById('inputBayarTunggakan').value || 0);
-      const baki = Math.max(0, yuran - (dibayarAwal + bayarTunggakan));
+      const baki = Math.max(0, yuran - (dibayar + bayarTunggakan));
       const el = document.getElementById('liveBalancePreview');
       el.textContent = `RM ${baki.toFixed(2)}`;
       el.className = baki > 0 ? 'text-base font-bold text-rose-600' : 'text-base font-bold text-emerald-600';
@@ -388,11 +491,7 @@
 
       try {
         await fetch(API_URL, { method: 'POST', body: JSON.stringify(formData) });
-        
-        const toast = document.getElementById('toastMsg');
-        toast.textContent = `✓ Berjaya simpan "${formData.NamaPelatih}" (${formData.Program}) ke dalam rekod!`;
-        toast.classList.remove('hidden');
-        setTimeout(() => toast.classList.add('hidden'), 5000);
+        showToast(`✓ Berjaya simpan "${formData.NamaPelatih}" (${formData.Program}) ke dalam rekod!`);
 
         form.reset();
         if (keepDefaults) {
@@ -416,9 +515,16 @@
       btn.textContent = '✓ Simpan & Seterusnya';
     }
 
+    function showToast(msg) {
+      const toast = document.getElementById('toastMsg');
+      toast.textContent = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 5000);
+    }
+
     async function fetchStudents() {
       const tbody = document.getElementById('tableBody');
-      tbody.innerHTML = '<tr><td colspan="16" class="p-6 text-center text-slate-500">Menyegerak data dengan Google Sheets...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="17" class="p-6 text-center text-slate-500">Menyegerak data dengan Google Sheets...</td></tr>';
       try {
         const res = await fetch(API_URL);
         const json = await res.json();
@@ -426,7 +532,7 @@
         populateDropdowns();
         applyFilters();
       } catch (err) {
-        tbody.innerHTML = '<tr><td colspan="16" class="p-6 text-center text-rose-600">Ralat sambungan. Pastikan API_URL sudah dimasukkan dengan betul.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="17" class="p-6 text-center text-rose-600">Ralat sambungan. Pastikan API_URL sudah dimasukkan dengan betul.</td></tr>';
       }
     }
 
@@ -573,7 +679,7 @@
     function renderTable(list) {
       const tbody = document.getElementById('tableBody');
       if (!list.length) {
-        tbody.innerHTML = '<tr><td colspan="16" class="p-6 text-center text-slate-500">Tiada rekod pelajar ditemui.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="17" class="p-6 text-center text-slate-500">Tiada rekod pelajar ditemui.</td></tr>';
         return;
       }
 
@@ -609,9 +715,89 @@
                 : `<span class="bg-emerald-100 text-emerald-800 px-2 py-1 rounded font-semibold">Selesai</span>`
               }
             </td>
+            <td class="p-3 text-center space-x-1">
+              <button onclick="openEditModal(${s.rowIndex})" class="bg-sky-600 hover:bg-sky-700 text-white px-2 py-1 rounded font-semibold">Edit</button>
+              <button onclick="deleteStudent(${s.rowIndex}, '${safeName}')" class="bg-rose-600 hover:bg-rose-700 text-white px-2 py-1 rounded font-semibold">Delete</button>
+            </td>
           </tr>
         `;
       }).join('');
+    }
+
+    function openEditModal(rowIndex) {
+      const s = allStudents.find(item => item.rowIndex === rowIndex);
+      if (!s) return;
+
+      document.getElementById('editRowIndex').value = s.rowIndex;
+      document.getElementById('editNamaPelatih').value = s.NamaPelatih || '';
+      document.getElementById('editTelPelajar').value = String(s.TelPelajar || '').replace(/^'/, '');
+      document.getElementById('editTelBapa').value = String(s.TelBapa || '').replace(/^'/, '');
+      document.getElementById('editTelIbu').value = String(s.TelIbu || '').replace(/^'/, '');
+      document.getElementById('editPusatBertauliah').value = s.PusatBertauliah || '';
+      document.getElementById('editProgram').value = s.Program || '';
+      document.getElementById('editTarikhDaftar').value = s.TarikhDaftar ? String(s.TarikhDaftar).split('T')[0] : '';
+      document.getElementById('editBulanIntake').value = s.BulanIntake || 'January';
+      document.getElementById('editPA').value = s.PA || '';
+      document.getElementById('editPengurus').value = s.Pengurus || '';
+      document.getElementById('editYuran').value = s.Yuran || 0;
+      document.getElementById('editDibayar').value = s.Dibayar || 0;
+      document.getElementById('editTarikhBayar').value = s.TarikhBayar || '';
+      document.getElementById('editCatatanBayaran').value = s.CatatanBayaran || '';
+
+      document.getElementById('editModal').classList.remove('hidden');
+    }
+
+    async function submitEdit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('editSaveBtn');
+      btn.disabled = true; btn.textContent = 'Menyimpan...';
+
+      const payload = {
+        action: 'edit',
+        rowIndex: document.getElementById('editRowIndex').value,
+        NamaPelatih: document.getElementById('editNamaPelatih').value,
+        TelPelajar: document.getElementById('editTelPelajar').value,
+        TelBapa: document.getElementById('editTelBapa').value,
+        TelIbu: document.getElementById('editTelIbu').value,
+        PusatBertauliah: document.getElementById('editPusatBertauliah').value,
+        Program: document.getElementById('editProgram').value,
+        TarikhDaftar: document.getElementById('editTarikhDaftar').value,
+        BulanIntake: document.getElementById('editBulanIntake').value,
+        PA: document.getElementById('editPA').value,
+        Pengurus: document.getElementById('editPengurus').value,
+        Yuran: document.getElementById('editYuran').value,
+        Dibayar: document.getElementById('editDibayar').value,
+        TarikhBayar: document.getElementById('editTarikhBayar').value,
+        CatatanBayaran: document.getElementById('editCatatanBayaran').value
+      };
+
+      try {
+        await fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) });
+        document.getElementById('editModal').classList.add('hidden');
+        showToast(`✓ Rekod "${payload.NamaPelatih}" berjaya dikemaskini!`);
+        fetchStudents();
+      } catch (err) {
+        alert('Ralat semasa mengemaskini rekod.');
+      }
+
+      btn.disabled = false; btn.textContent = 'Simpan Perubahan';
+    }
+
+    async function deleteStudent(rowIndex, name) {
+      if (!confirm(`Adakah anda pasti mahu memadam rekod pelajar "${name}"? Tindakan ini tidak boleh dikembalikan.`)) {
+        return;
+      }
+
+      try {
+        await fetch(API_URL, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'delete', rowIndex: rowIndex })
+        });
+        showToast(`🗑️ Rekod "${name}" telah dipadam.`);
+        fetchStudents();
+      } catch (err) {
+        alert('Ralat semasa memadam rekod.');
+      }
     }
 
     function openPayModal(rowIndex, name, balance) {
