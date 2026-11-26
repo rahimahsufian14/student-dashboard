@@ -392,19 +392,19 @@
       </section>
 
       <!-- ==================== VIEW 2: ANALYTICS & BREAKDOWN ==================== -->
-      <section id="viewAnalytics" class="hidden bg-[#f5f3fa] rounded-2xl border border-[#dad3ec] shadow-xs overflow-hidden">
-        <div class="px-6 py-4 bg-[#ebe6f6] border-b border-[#dad3ec] flex flex-wrap justify-between items-center gap-3">
+      <section id="viewAnalytics" class="hidden bg-white rounded-2xl border border-stone-200 shadow-xs overflow-hidden">
+        <div class="px-6 py-4 bg-[#f5efe8] border-b border-stone-200 flex flex-wrap justify-between items-center gap-3">
           <div class="flex items-center gap-2.5">
-            <span class="w-2 h-6 rounded-full bg-sky-500"></span>
+            <span class="w-2 h-6 rounded-full bg-amber-800"></span>
             <div>
-              <h2 class="text-sm sm:text-base font-bold text-slate-800">Analisis & Pecahan Data Pendaftaran</h2>
-              <p class="text-xs text-slate-600">Analisis dinamik mengikut penapis yang dipilih di atas.</p>
+              <h2 class="text-sm sm:text-base font-bold text-stone-800">Analisis & Pecahan Data Pendaftaran</h2>
+              <p class="text-xs text-stone-500">Analisis dinamik mengikut penapis yang dipilih di atas.</p>
             </div>
           </div>
           <div class="flex flex-wrap items-center gap-2 text-xs">
-            <div class="flex items-center gap-1.5 bg-[#f7f5fc] border border-[#cfc7e6] rounded-xl px-3 py-1.5">
-              <span class="font-semibold text-slate-500">Pecahan:</span>
-              <select id="chartGroupBy" onchange="updateChart()" class="font-bold text-slate-800 bg-transparent focus:outline-none cursor-pointer">
+            <div class="flex items-center gap-1.5 bg-white border border-stone-300 rounded-xl px-3 py-1.5">
+              <span class="font-semibold text-stone-500">Pecahan:</span>
+              <select id="chartGroupBy" onchange="updateChart()" class="font-bold text-stone-800 bg-transparent focus:outline-none cursor-pointer">
                 <option value="PA">Penasihat Akademik</option>
                 <option value="Program">Program Pilihan</option>
                 <option value="PusatBertauliah">Pusat Bertauliah</option>
@@ -414,9 +414,9 @@
               </select>
             </div>
 
-            <div class="flex items-center gap-1.5 bg-[#f7f5fc] border border-[#cfc7e6] rounded-xl px-3 py-1.5">
-              <span class="font-semibold text-slate-500">Metrik:</span>
-              <select id="chartMetric" onchange="updateChart()" class="font-bold text-slate-800 bg-transparent focus:outline-none cursor-pointer">
+            <div class="flex items-center gap-1.5 bg-white border border-stone-300 rounded-xl px-3 py-1.5">
+              <span class="font-semibold text-stone-500">Metrik:</span>
+              <select id="chartMetric" onchange="updateChart()" class="font-bold text-stone-800 bg-transparent focus:outline-none cursor-pointer">
                 <option value="count">Bilangan Pelajar (Orang)</option>
                 <option value="fee">Jumlah Yuran (RM)</option>
                 <option value="paid">Jumlah Dibayar (RM)</option>
@@ -433,9 +433,9 @@
             </div>
           </div>
 
-          <div class="lg:col-span-8 overflow-x-auto rounded-xl border border-[#dad3ec] bg-[#f8f7fc]">
+          <div class="lg:col-span-8 overflow-x-auto rounded-xl border border-stone-200 bg-white">
             <table class="w-full text-left border-collapse text-xs">
-              <thead class="bg-[#ebe6f6] text-slate-700 uppercase tracking-wider border-b border-[#dad3ec]">
+              <thead class="bg-[#faf7f4] text-stone-600 uppercase tracking-wider border-b border-stone-200">
                 <tr>
                   <th class="py-3 px-3.5 font-bold" id="breakdownColTitle">Kategori</th>
                   <th class="py-3 px-3.5 text-right font-bold">Pelajar</th>
@@ -445,8 +445,8 @@
                   <th class="py-3 px-3.5 text-right font-bold">Baki (RM)</th>
                 </tr>
               </thead>
-              <tbody id="chartBreakdownBody" class="divide-y divide-[#e6e1f2]">
-                <tr><td colspan="6" class="p-6 text-center text-slate-500">Tiada data untuk dipaparkan.</td></tr>
+              <tbody id="chartBreakdownBody" class="divide-y divide-stone-100">
+                <tr><td colspan="6" class="p-6 text-center text-stone-500">Tiada data untuk dipaparkan.</td></tr>
               </tbody>
             </table>
           </div>
@@ -455,12 +455,12 @@
 
       <!-- ==================== VIEW 3: FOLLOW-UP & OUTSTANDING CARDS ==================== -->
       <section id="viewFollowup" class="hidden space-y-4">
-        <div class="bg-[#fbe8ec] border border-[#f2c8d1] rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+        <div class="bg-[#f5efe8] border border-stone-200 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h2 class="text-sm sm:text-base font-bold text-rose-950">Senarai Tindakan Susulan Baki Yuran</h2>
-            <p class="text-xs text-rose-800/80">Klik butang WhatsApp untuk menghantar peringatan mesra terus kepada pelajar atau waris.</p>
+            <h2 class="text-sm sm:text-base font-bold text-stone-800">Senarai Tindakan Susulan Baki Yuran</h2>
+            <p class="text-xs text-stone-600">Klik butang WhatsApp untuk menghantar peringatan mesra terus kepada pelajar atau waris.</p>
           </div>
-          <span id="followupSummaryBadge" class="text-xs font-extrabold bg-rose-200 text-rose-900 px-3.5 py-1.5 rounded-xl">0 Rekod Berbaki</span>
+          <span id="followupSummaryBadge" class="text-xs font-extrabold bg-amber-100 text-amber-950 border border-amber-200 px-3.5 py-1.5 rounded-xl">0 Rekod Berbaki</span>
         </div>
 
         <div id="followupCardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
@@ -470,57 +470,57 @@
   </div>
 
   <!-- ==================== SLIDE-OVER DRAWER: REGISTER NEW STUDENT ==================== -->
-  <div id="registerDrawerBackdrop" onclick="closeRegisterDrawer()" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-40 transition-opacity"></div>
-  <aside id="registerDrawer" class="fixed top-0 right-0 h-full w-full max-w-2xl bg-[#f6f4fb] border-l border-[#d4cde8] shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
-    <div class="px-6 py-4 bg-[#e4f2ee] border-b border-[#c5e2da] flex items-center justify-between shrink-0">
+  <div id="registerDrawerBackdrop" onclick="closeRegisterDrawer()" class="hidden fixed inset-0 bg-stone-900/40 backdrop-blur-xs z-40 transition-opacity"></div>
+  <aside id="registerDrawer" class="fixed top-0 right-0 h-full w-full max-w-2xl bg-[#fbf9f6] border-l border-stone-200 shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
+    <div class="px-6 py-4 bg-[#f5efe8] border-b border-stone-200 flex items-center justify-between shrink-0">
       <div class="flex items-center gap-2.5">
-        <span class="w-2 h-6 rounded-full bg-teal-600"></span>
+        <span class="w-2 h-6 rounded-full bg-amber-800"></span>
         <div>
-          <h2 class="text-base font-extrabold text-slate-800">Daftar Pelatih Baharu</h2>
-          <p class="text-[11px] text-slate-600">Isi butiran pelatih, penasihat akademik & rekod yuran pendaftaran.</p>
+          <h2 class="text-base font-extrabold text-stone-800">Daftar Pelatih Baharu</h2>
+          <p class="text-[11px] text-stone-600">Isi butiran pelatih, penasihat akademik & rekod yuran pendaftaran.</p>
         </div>
       </div>
-      <button type="button" onclick="closeRegisterDrawer()" class="w-8 h-8 rounded-xl bg-white/80 hover:bg-white text-slate-600 hover:text-slate-900 font-bold flex items-center justify-center border border-[#c5e2da] transition">✕</button>
+      <button type="button" onclick="closeRegisterDrawer()" class="w-8 h-8 rounded-xl bg-white hover:bg-stone-100 text-stone-600 hover:text-stone-900 font-bold flex items-center justify-center border border-stone-300 transition">✕</button>
     </div>
 
     <div class="p-6 overflow-y-auto flex-1 space-y-5">
-      <div class="flex items-center justify-between bg-[#efecf8] px-3.5 py-2.5 rounded-xl border border-[#dcd5ee]">
-        <span class="text-xs font-semibold text-slate-700">Mod Pendaftaran Berkelompok</span>
-        <label class="inline-flex items-center gap-2 cursor-pointer text-xs font-bold text-teal-800">
-          <input type="checkbox" id="keepBatchDefaults" checked class="w-4 h-4 accent-teal-600 rounded" />
+      <div class="flex items-center justify-between bg-[#f5efe8] px-3.5 py-2.5 rounded-xl border border-stone-200">
+        <span class="text-xs font-semibold text-stone-700">Mod Pendaftaran Berkelompok</span>
+        <label class="inline-flex items-center gap-2 cursor-pointer text-xs font-bold text-amber-900">
+          <input type="checkbox" id="keepBatchDefaults" checked class="w-4 h-4 accent-amber-800 rounded" />
           <span>Kekalkan Pusat, Program, Intake & Penasihat Akademik</span>
         </label>
       </div>
 
       <form id="keyInForm" onsubmit="submitRegistration(event)" class="space-y-4 text-xs">
-        <div class="bg-[#efecf8]/80 p-4 rounded-2xl border border-[#dcd5ee] space-y-3">
-          <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider text-indigo-800 bg-indigo-100 border border-indigo-200 px-2.5 py-0.5 rounded-md">A. Maklumat Pelatih & Waris</span>
+        <div class="bg-white p-4 rounded-2xl border border-stone-200 space-y-3">
+          <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider text-amber-900 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-md">A. Maklumat Pelatih & Waris</span>
           <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">1. Nama Penuh Pelatih <span class="text-rose-600">*</span></label>
-            <input required id="inputNamaPelatih" name="NamaPelatih" placeholder="cth. Ahmad Bin Ali" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3.5 py-2.5 outline-none" />
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">1. Nama Penuh Pelatih <span class="text-rose-600">*</span></label>
+            <input required id="inputNamaPelatih" name="NamaPelatih" placeholder="cth. Ahmad Bin Ali" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3.5 py-2.5 outline-none" />
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">2. No. Telefon Pelajar <span class="text-rose-600">*</span></label>
-              <input required name="TelPelajar" placeholder="0123456789" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">2. No. Telefon Pelajar <span class="text-rose-600">*</span></label>
+              <input required name="TelPelajar" placeholder="0123456789" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
             </div>
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">3. No. Telefon Bapa <span class="text-rose-600">*</span></label>
-              <input required name="TelBapa" placeholder="0198765432" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">3. No. Telefon Bapa <span class="text-rose-600">*</span></label>
+              <input required name="TelBapa" placeholder="0198765432" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
             </div>
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">4. No. Telefon Ibu <span class="text-rose-600">*</span></label>
-              <input required name="TelIbu" placeholder="0176543210" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">4. No. Telefon Ibu <span class="text-rose-600">*</span></label>
+              <input required name="TelIbu" placeholder="0176543210" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
             </div>
           </div>
         </div>
 
-        <div class="bg-[#efecf8]/80 p-4 rounded-2xl border border-[#dcd5ee] space-y-3">
-          <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider text-sky-800 bg-sky-100 border border-sky-200 px-2.5 py-0.5 rounded-md">B. Pengajian & Penasihat Akademik</span>
+        <div class="bg-white p-4 rounded-2xl border border-stone-200 space-y-3">
+          <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider text-stone-700 bg-stone-100 border border-stone-200 px-2.5 py-0.5 rounded-md">B. Pengajian & Penasihat Akademik</span>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">5. Pusat Bertauliah <span class="text-rose-600">*</span></label>
-              <select required id="inputPusatBertauliah" name="PusatBertauliah" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none">
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">5. Pusat Bertauliah <span class="text-rose-600">*</span></label>
+              <select required id="inputPusatBertauliah" name="PusatBertauliah" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none">
                 <option value="Ambitious College">Ambitious College</option>
                 <option value="Jv Skill">Jv Skill</option>
                 <option value="Adelphi College">Adelphi College</option>
@@ -534,8 +534,8 @@
               </select>
             </div>
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">6. Program SKM <span class="text-rose-600">*</span></label>
-              <select required id="inputProgram" name="Program" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none">
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">6. Program SKM <span class="text-rose-600">*</span></label>
+              <select required id="inputProgram" name="Program" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none">
                 <option value="SKM Seni Pembuatan Pastri & Kek">SKM Seni Pembuatan Pastri & Kek</option>
                 <option value="SKM Teknologi Automotif">SKM Teknologi Automotif</option>
                 <option value="SKM Teknologi Automasi Industri">SKM Teknologi Automasi Industri</option>
@@ -551,12 +551,12 @@
               </select>
             </div>
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">7. Tarikh Daftar <span class="text-rose-600">*</span></label>
-              <input required type="date" id="inputTarikhDaftar" name="TarikhDaftar" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">7. Tarikh Daftar <span class="text-rose-600">*</span></label>
+              <input required type="date" id="inputTarikhDaftar" name="TarikhDaftar" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
             </div>
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">8. Bulan Intake <span class="text-rose-600">*</span></label>
-              <select required id="inputBulanIntake" name="BulanIntake" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none">
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">8. Bulan Intake <span class="text-rose-600">*</span></label>
+              <select required id="inputBulanIntake" name="BulanIntake" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none">
                 <option value="Januari">Januari</option>
                 <option value="Februari">Februari</option>
                 <option value="Mac">Mac</option>
@@ -572,53 +572,53 @@
               </select>
             </div>
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">9. Penasihat Akademik <span class="text-rose-600">*</span></label>
-              <input required id="inputPA" name="PA" placeholder="cth. Cik Nadhirah" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">9. Penasihat Akademik <span class="text-rose-600">*</span></label>
+              <input required id="inputPA" name="PA" placeholder="cth. Cik Nadhirah" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
             </div>
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">10. Pengurus <span class="text-rose-600">*</span></label>
-              <input required id="inputPengurus" name="Pengurus" placeholder="cth. En. Hafiz" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">10. Pengurus <span class="text-rose-600">*</span></label>
+              <input required id="inputPengurus" name="Pengurus" placeholder="cth. En. Hafiz" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
             </div>
           </div>
           <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">11. Catatan Bayaran</label>
-            <input name="CatatanBayaran" placeholder="Pilihan (cth. Ansuran pertama)" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">11. Catatan Bayaran</label>
+            <input name="CatatanBayaran" placeholder="Pilihan (cth. Ansuran pertama)" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
           </div>
         </div>
 
-        <div class="bg-[#e7f3ef] p-4 rounded-2xl border border-[#c3e0d7] space-y-3">
-          <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider text-teal-900 bg-teal-200/70 border border-teal-300 px-2.5 py-0.5 rounded-md">C. Rekod Yuran & Bayaran</span>
+        <div class="bg-[#f5efe8] p-4 rounded-2xl border border-stone-200 space-y-3">
+          <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider text-amber-950 bg-amber-200/70 border border-amber-300 px-2.5 py-0.5 rounded-md">C. Rekod Yuran & Bayaran</span>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-teal-900/80 mb-1">Yuran (RM) <span class="text-rose-600">*</span></label>
-              <input required type="number" step="50" min="0" id="inputYuran" name="Yuran" value="1600" oninput="calcLiveBalance()" class="w-full bg-white border border-[#b6d8ce] focus:border-teal-600 text-slate-800 rounded-xl px-3 py-2 font-bold outline-none" />
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-700 mb-1">Yuran (RM) <span class="text-rose-600">*</span></label>
+              <input required type="number" step="50" min="0" id="inputYuran" name="Yuran" value="1600" oninput="calcLiveBalance()" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 font-bold outline-none" />
             </div>
             <div>
               <div class="flex justify-between items-center mb-1">
-                <label class="text-[11px] font-bold uppercase tracking-wider text-teal-900/80">Dibayar (RM) <span class="text-rose-600">*</span></label>
-                <button type="button" onclick="setFullPayment()" class="text-[10px] bg-teal-200 hover:bg-teal-300 text-teal-950 px-2 py-0.5 rounded-md font-bold transition">Bayar Penuh</button>
+                <label class="text-[11px] font-bold uppercase tracking-wider text-stone-700">Dibayar (RM) <span class="text-rose-600">*</span></label>
+                <button type="button" onclick="setFullPayment()" class="text-[10px] bg-amber-200/80 hover:bg-amber-300 text-amber-950 px-2 py-0.5 rounded-md font-bold transition">Bayar Penuh</button>
               </div>
-              <input required type="number" step="50" min="0" id="inputDibayar" name="Dibayar" value="1000" oninput="calcLiveBalance()" class="w-full bg-white border border-[#b6d8ce] focus:border-teal-600 text-slate-800 rounded-xl px-3 py-2 font-bold outline-none" />
+              <input required type="number" step="50" min="0" id="inputDibayar" name="Dibayar" value="1000" oninput="calcLiveBalance()" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 font-bold outline-none" />
             </div>
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-teal-900/80 mb-1">Bayar Tunggakan (RM)</label>
-              <input type="number" step="50" min="0" id="inputBayarTunggakan" name="BayarTunggakan" placeholder="0" oninput="calcLiveBalance()" class="w-full bg-white border border-[#b6d8ce] focus:border-teal-600 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-700 mb-1">Bayar Tunggakan (RM)</label>
+              <input type="number" step="50" min="0" id="inputBayarTunggakan" name="BayarTunggakan" placeholder="0" oninput="calcLiveBalance()" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
             </div>
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-teal-900/80 mb-1">Tarikh Bayar</label>
-              <input type="date" id="inputTarikhBayar" name="TarikhBayar" class="w-full bg-white border border-[#b6d8ce] focus:border-teal-600 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-700 mb-1">Tarikh Bayar</label>
+              <input type="date" id="inputTarikhBayar" name="TarikhBayar" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
             </div>
           </div>
 
-          <div class="px-4 py-2.5 bg-white border border-[#b6d8ce] rounded-xl flex items-center justify-between">
-            <span class="text-xs font-bold text-slate-600">Baki Semasa Selepas Pendaftaran:</span>
+          <div class="px-4 py-2.5 bg-white border border-stone-200 rounded-xl flex items-center justify-between">
+            <span class="text-xs font-bold text-stone-600">Baki Semasa Selepas Pendaftaran:</span>
             <span id="liveBalancePreview" class="text-base font-extrabold text-rose-600">RM 600.00</span>
           </div>
         </div>
 
         <div class="pt-2 flex gap-2.5">
-          <button type="button" onclick="closeRegisterDrawer()" class="w-1/3 py-3 border border-[#cfc7e6] hover:bg-[#eae5f6] text-slate-700 font-bold rounded-xl transition">Batal</button>
-          <button type="submit" id="submitBtn" class="w-2/3 py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl shadow-sm transition flex items-center justify-center gap-2">
+          <button type="button" onclick="closeRegisterDrawer()" class="w-1/3 py-3 border border-stone-300 hover:bg-stone-100 text-stone-700 font-bold rounded-xl transition">Batal</button>
+          <button type="submit" id="submitBtn" class="w-2/3 py-3 bg-amber-800 hover:bg-amber-900 text-white font-bold rounded-xl shadow-sm transition flex items-center justify-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             <span>Simpan Rekod Pelatih</span>
           </button>
