@@ -628,59 +628,59 @@
   </aside>
 
   <!-- Settle Balance Modal -->
-  <div id="payModal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-    <div class="bg-[#f6f4fb] rounded-2xl max-w-md w-full p-6 shadow-xl border border-[#d4cde8] space-y-4">
-      <div class="flex justify-between items-center border-b border-[#e3def2] pb-3">
-        <h2 class="text-base font-bold text-slate-800">Rekod Bayaran Tunggakan</h2>
-        <button type="button" onclick="document.getElementById('payModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-700 font-bold">✕</button>
+  <div id="payModal" class="hidden fixed inset-0 bg-stone-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+    <div class="bg-[#fbf9f6] rounded-2xl max-w-md w-full p-6 shadow-xl border border-stone-200 space-y-4">
+      <div class="flex justify-between items-center border-b border-stone-200 pb-3">
+        <h2 class="text-base font-bold text-stone-800">Rekod Bayaran Tunggakan</h2>
+        <button type="button" onclick="document.getElementById('payModal').classList.add('hidden')" class="text-stone-400 hover:text-stone-700 font-bold">✕</button>
       </div>
-      <p id="payStudentInfo" class="text-xs font-semibold text-amber-900 bg-amber-100 border border-amber-300 p-3 rounded-xl"></p>
+      <p id="payStudentInfo" class="text-xs font-semibold text-amber-950 bg-amber-50 border border-amber-200 p-3 rounded-xl"></p>
       <form onsubmit="submitPayment(event)" class="space-y-3.5 text-xs sm:text-sm">
         <input type="hidden" id="payRowIndex" />
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Jumlah Bayaran Diterima (RM) *</label>
-          <input required type="number" step="50" min="0" id="payAmount" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3.5 py-2.5 font-bold outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Jumlah Bayaran Diterima (RM) *</label>
+          <input required type="number" step="50" min="0" id="payAmount" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3.5 py-2.5 font-bold outline-none" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Tarikh Bayar *</label>
-          <input required type="date" id="payDate" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3.5 py-2.5 outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Tarikh Bayar *</label>
+          <input required type="date" id="payDate" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3.5 py-2.5 outline-none" />
         </div>
-        <div class="flex justify-end gap-2 pt-3 border-t border-[#e3def2]">
-          <button type="button" onclick="document.getElementById('payModal').classList.add('hidden')" class="px-4 py-2 border border-[#cfc7e6] hover:bg-[#eae5f6] text-slate-700 rounded-xl font-semibold text-xs">Batal</button>
-          <button type="submit" id="payBtn" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-xl text-xs shadow-xs">Kemaskini Baki</button>
+        <div class="flex justify-end gap-2 pt-3 border-t border-stone-200">
+          <button type="button" onclick="document.getElementById('payModal').classList.add('hidden')" class="px-4 py-2 border border-stone-300 hover:bg-stone-100 text-stone-700 rounded-xl font-semibold text-xs">Batal</button>
+          <button type="submit" id="payBtn" class="px-4 py-2 bg-amber-800 hover:bg-amber-900 text-white font-semibold rounded-xl text-xs shadow-xs">Kemaskini Baki</button>
         </div>
       </form>
     </div>
   </div>
 
   <!-- Edit Student Modal -->
-  <div id="editModal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50 overflow-y-auto">
-    <div class="bg-[#f6f4fb] rounded-2xl max-w-3xl w-full p-6 shadow-xl border border-[#d4cde8] space-y-4 my-8">
-      <div class="flex justify-between items-center border-b border-[#e3def2] pb-3">
-        <h2 class="text-base font-bold text-slate-800">Edit Rekod Pelatih</h2>
-        <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-700 font-bold text-lg">✕</button>
+  <div id="editModal" class="hidden fixed inset-0 bg-stone-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50 overflow-y-auto">
+    <div class="bg-[#fbf9f6] rounded-2xl max-w-3xl w-full p-6 shadow-xl border border-stone-200 space-y-4 my-8">
+      <div class="flex justify-between items-center border-b border-stone-200 pb-3">
+        <h2 class="text-base font-bold text-stone-800">Edit Rekod Pelatih</h2>
+        <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')" class="text-stone-400 hover:text-stone-700 font-bold text-lg">✕</button>
       </div>
       <form onsubmit="submitEdit(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 text-xs">
         <input type="hidden" id="editRowIndex" />
         <div class="sm:col-span-2">
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Nama Pelatih *</label>
-          <input required id="editNamaPelatih" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Nama Pelatih *</label>
+          <input required id="editNamaPelatih" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">No. Telefon Pelajar *</label>
-          <input required id="editTelPelajar" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">No. Telefon Pelajar *</label>
+          <input required id="editTelPelajar" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">No. Telefon Bapa *</label>
-          <input required id="editTelBapa" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">No. Telefon Bapa *</label>
+          <input required id="editTelBapa" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">No. Telefon Ibu *</label>
-          <input required id="editTelIbu" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">No. Telefon Ibu *</label>
+          <input required id="editTelIbu" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Pusat Bertauliah *</label>
-          <select required id="editPusatBertauliah" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none">
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Pusat Bertauliah *</label>
+          <select required id="editPusatBertauliah" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none">
             <option value="Ambitious College">Ambitious College</option>
             <option value="Jv Skill">Jv Skill</option>
             <option value="Adelphi College">Adelphi College</option>
@@ -694,8 +694,8 @@
           </select>
         </div>
         <div class="sm:col-span-2">
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Program *</label>
-          <select required id="editProgram" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none">
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Program *</label>
+          <select required id="editProgram" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none">
             <option value="SKM Seni Pembuatan Pastri & Kek">SKM Seni Pembuatan Pastri & Kek</option>
             <option value="SKM Teknologi Automotif">SKM Teknologi Automotif</option>
             <option value="SKM Teknologi Automasi Industri">SKM Teknologi Automasi Industri</option>
@@ -711,12 +711,12 @@
           </select>
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Tarikh Daftar *</label>
-          <input required type="date" id="editTarikhDaftar" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Tarikh Daftar *</label>
+          <input required type="date" id="editTarikhDaftar" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Bulan Intake *</label>
-          <select required id="editBulanIntake" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none">
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Bulan Intake *</label>
+          <select required id="editBulanIntake" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none">
             <option value="Januari">Januari</option>
             <option value="Februari">Februari</option>
             <option value="Mac">Mac</option>
@@ -732,36 +732,36 @@
           </select>
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Penasihat Akademik *</label>
-          <input required id="editPA" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Penasihat Akademik *</label>
+          <input required id="editPA" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Pengurus *</label>
-          <input required id="editPengurus" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Pengurus *</label>
+          <input required id="editPengurus" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Yuran (RM) *</label>
-          <input required type="number" step="50" min="0" id="editYuran" oninput="calcEditBalance()" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 font-bold outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Yuran (RM) *</label>
+          <input required type="number" step="50" min="0" id="editYuran" oninput="calcEditBalance()" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 font-bold outline-none" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Jumlah Dibayar (RM) *</label>
-          <input required type="number" step="50" min="0" id="editDibayar" oninput="calcEditBalance()" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 font-bold outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Jumlah Dibayar (RM) *</label>
+          <input required type="number" step="50" min="0" id="editDibayar" oninput="calcEditBalance()" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 font-bold outline-none" />
         </div>
-        <div class="px-3 py-2 bg-[#e7f3ef] border border-[#c3e0d7] rounded-xl flex flex-col justify-center">
-          <span class="text-[10px] uppercase font-bold tracking-wider text-teal-800">Baki Terkini</span>
+        <div class="px-3 py-2 bg-[#f5efe8] border border-stone-200 rounded-xl flex flex-col justify-center">
+          <span class="text-[10px] uppercase font-bold tracking-wider text-stone-600">Baki Terkini</span>
           <span id="editBakiPreview" class="text-sm font-extrabold text-rose-600">RM 0.00</span>
         </div>
         <div class="sm:col-span-3">
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Tarikh Bayar (Rekod Ansuran)</label>
-          <input id="editTarikhBayar" placeholder="cth. RM300.00 (2026-04-20) | RM300.00 (2026-05-05)" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Tarikh Bayar (Rekod Ansuran)</label>
+          <input id="editTarikhBayar" placeholder="cth. RM300.00 (2026-04-20) | RM300.00 (2026-05-05)" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div class="sm:col-span-3">
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Catatan Bayaran</label>
-          <input id="editCatatanBayaran" class="w-full bg-white border border-[#cfc7e6] focus:border-teal-500 text-slate-800 rounded-xl px-3 py-2 outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Catatan Bayaran</label>
+          <input id="editCatatanBayaran" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
         </div>
-        <div class="sm:col-span-3 flex justify-end gap-2 pt-3 border-t border-[#e3def2]">
-          <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')" class="px-4 py-2 border border-[#cfc7e6] hover:bg-[#eae5f6] text-slate-700 rounded-xl font-semibold">Batal</button>
-          <button type="submit" id="editSaveBtn" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-xl shadow-xs">Simpan Perubahan</button>
+        <div class="sm:col-span-3 flex justify-end gap-2 pt-3 border-t border-stone-200">
+          <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')" class="px-4 py-2 border border-stone-300 hover:bg-stone-100 text-stone-700 rounded-xl font-semibold">Batal</button>
+          <button type="submit" id="editSaveBtn" class="px-4 py-2 bg-amber-800 hover:bg-amber-900 text-white font-semibold rounded-xl shadow-xs">Simpan Perubahan</button>
         </div>
       </form>
     </div>
@@ -777,55 +777,9 @@
     let pieChartInstance = null;
 
     const CHART_COLORS = [
-      '#38bdf8', '#34d399', '#f59e0b', '#818cf8', '#fb7185',
-      '#2dd4bf', '#a78bfa', '#fb923c', '#60a5fa', '#84cc16'
+      '#92400e', '#d97706', '#78716c', '#b45309', '#a8a29e',
+      '#f59e0b', '#57534e', '#fbbf24', '#44403c', '#fcd34d'
     ];
-
-    // ==================== CRYPTOGRAPHIC SECURITY (SHA-256) ====================
-    async function sha256Hex(plainText) {
-      const encoder = new TextEncoder();
-      const data = encoder.encode(plainText);
-      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    }
-
-    function togglePasswordVisibility(inputId) {
-      const inp = document.getElementById(inputId);
-      inp.type = inp.type === 'password' ? 'text' : 'password';
-    }
-
-    function evaluatePasswordStrength(inputId, barId, textId) {
-      const pw = document.getElementById(inputId).value;
-      const bar = document.getElementById(barId);
-      const txt = document.getElementById(textId);
-
-      let score = 0;
-      if (pw.length >= 8) score++;
-      if (/[A-Z]/.test(pw)) score++;
-      if (/[a-z]/.test(pw)) score++;
-      if (/[0-9]/.test(pw)) score++;
-      if (/[^A-Za-z0-9]/.test(pw)) score++;
-
-      const widths = ['0%', '25%', '45%', '70%', '90%', '100%'];
-      const colors = ['bg-rose-500', 'bg-rose-500', 'bg-amber-500', 'bg-sky-500', 'bg-teal-500', 'bg-emerald-600'];
-      const labels = [
-        'Min. 8 aksara, 1 huruf besar, 1 huruf kecil & 1 nombor.',
-        'Lemah — Tambah huruf besar, nombor dan min. 8 aksara.',
-        'Sederhana — Hampir memenuhi kriteria keselamatan.',
-        'Baik — Tambah nombor atau simbol untuk tahap maksimum.',
-        'Kukuh — Kata laluan selamat!',
-        'Sangat Kukuh — Tahap keselamatan optimum!'
-      ];
-
-      bar.style.width = widths[score];
-      bar.className = `h-full ${colors[score]} transition-all duration-300`;
-      txt.textContent = labels[score];
-    }
-
-    function isStrongPassword(pw) {
-      return pw.length >= 8 && /[A-Z]/.test(pw) && /[a-z]/.test(pw) && /[0-9]/.test(pw);
-    }
 
     // ==================== AUTHENTICATION & GMAIL OTP LOGIC ====================
     window.addEventListener('DOMContentLoaded', () => {
