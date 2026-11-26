@@ -36,10 +36,10 @@
         <h1 class="text-xl font-extrabold text-slate-800 tracking-tight">Portal Pengurusan Pelatih</h1>
         <p class="text-xs text-slate-500 mt-1 flex items-center justify-center gap-1.5">
           <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span>Dilindungi Penyulitan SHA-256 & Salted Hash</span>
+          <span>Dilindungi SHA-256 & Pengesahan OTP Gmail</span>
         </p>
 
-        <div class="grid grid-cols-2 gap-1.5 bg-[#e6e1f4] p-1 rounded-xl border border-[#d5cee9] mt-5 text-xs font-bold">
+        <div id="authTabSwitcher" class="grid grid-cols-2 gap-1.5 bg-[#e6e1f4] p-1 rounded-xl border border-[#d5cee9] mt-5 text-xs font-bold">
           <button type="button" id="tabLoginBtn" onclick="switchAuthTab('login')" class="py-2 rounded-lg bg-teal-600 text-white shadow-sm transition">
             Log Masuk
           </button>
@@ -58,7 +58,12 @@
           <input required id="loginUsername" autocomplete="username" placeholder="Masukkan ID admin anda" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 text-slate-800 rounded-xl px-4 py-3 outline-none transition" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1.5">Kata Laluan</label>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600">Kata Laluan</label>
+            <button type="button" onclick="switchAuthTab('forgot')" class="text-[11px] font-bold text-indigo-600 hover:text-indigo-800 underline underline-offset-2 transition">
+              Lupa Kata Laluan?
+            </button>
+          </div>
           <div class="relative">
             <input required type="password" id="loginPassword" autocomplete="current-password" placeholder="••••••••" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 text-slate-800 rounded-xl pl-4 pr-11 py-3 outline-none transition" />
             <button type="button" onclick="togglePasswordVisibility('loginPassword')" title="Papar/Sembunyi Kata Laluan" class="absolute right-3 top-3 text-slate-500 hover:text-slate-800">
@@ -72,35 +77,38 @@
       </form>
 
       <!-- SIGN UP FORM -->
-      <form id="signupForm" onsubmit="handleSignup(event)" class="hidden p-8 space-y-4 text-xs sm:text-sm">
+      <form id="signupForm" onsubmit="handleSignup(event)" class="hidden p-8 space-y-3.5 text-xs sm:text-sm">
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1.5">Nama Penuh Pentadbir</label>
-          <input required id="signupFullName" placeholder="cth. Encik Razak Bin Ahmad" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-800 rounded-xl px-4 py-2.5 outline-none transition" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Nama Penuh Pentadbir</label>
+          <input required id="signupFullName" placeholder="cth. Encik Razak Bin Ahmad" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-indigo-500 text-slate-800 rounded-xl px-4 py-2.5 outline-none transition" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1.5">ID Pengguna (Username)</label>
-          <input required id="signupUsername" placeholder="cth. admin_razak" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-800 rounded-xl px-4 py-2.5 outline-none transition" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">ID Pengguna (Username)</label>
+          <input required id="signupUsername" placeholder="cth. admin_razak" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-indigo-500 text-slate-800 rounded-xl px-4 py-2.5 outline-none transition" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1.5">Kata Laluan Kukuh</label>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Alamat Gmail (Untuk Pengesahan OTP)</label>
+          <input required type="email" id="signupEmail" placeholder="cth. razak.admin@gmail.com" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-indigo-500 text-slate-800 rounded-xl px-4 py-2.5 outline-none transition" />
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Kata Laluan Kukuh</label>
           <div class="relative">
-            <input required type="password" minlength="8" id="signupPassword" oninput="evaluatePasswordStrength()" placeholder="Min. 8 aksara (Huruf Besar, Kecil & Nombor)" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-800 rounded-xl pl-4 pr-11 py-2.5 outline-none transition" />
+            <input required type="password" minlength="8" id="signupPassword" oninput="evaluatePasswordStrength('signupPassword', 'pwStrengthBar', 'pwStrengthText')" placeholder="Min. 8 aksara (Huruf Besar, Kecil & Nombor)" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-indigo-500 text-slate-800 rounded-xl pl-4 pr-11 py-2.5 outline-none transition" />
             <button type="button" onclick="togglePasswordVisibility('signupPassword')" class="absolute right-3 top-2.5 text-slate-500 hover:text-slate-800">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
           </div>
-          <!-- Password Strength Meter -->
-          <div class="mt-2 space-y-1">
+          <div class="mt-1.5 space-y-1">
             <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
               <div id="pwStrengthBar" class="h-full bg-rose-500 transition-all duration-300" style="width: 0%"></div>
             </div>
-            <p id="pwStrengthText" class="text-[11px] text-slate-500">Syarat: Sekurang-kurangnya 8 aksara, 1 huruf besar, 1 huruf kecil & 1 nombor.</p>
+            <p id="pwStrengthText" class="text-[11px] text-slate-500">Min. 8 aksara, 1 huruf besar, 1 huruf kecil & 1 nombor.</p>
           </div>
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1.5">Sahkan Kata Laluan</label>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Sahkan Kata Laluan</label>
           <div class="relative">
-            <input required type="password" minlength="8" id="signupConfirmPassword" placeholder="Ulang kata laluan anda" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 text-slate-800 rounded-xl pl-4 pr-11 py-2.5 outline-none transition" />
+            <input required type="password" minlength="8" id="signupConfirmPassword" placeholder="Ulang kata laluan anda" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-indigo-500 text-slate-800 rounded-xl pl-4 pr-11 py-2.5 outline-none transition" />
             <button type="button" onclick="togglePasswordVisibility('signupConfirmPassword')" class="absolute right-3 top-2.5 text-slate-500 hover:text-slate-800">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
@@ -110,6 +118,61 @@
           Daftar Akaun Admin Baharu
         </button>
       </form>
+
+      <!-- FORGOT PASSWORD (GMAIL OTP) FLOW -->
+      <div id="forgotContainer" class="hidden p-8 space-y-4 text-xs sm:text-sm">
+        <div class="flex items-center justify-between border-b border-[#e3def2] pb-2.5">
+          <h2 class="text-sm font-extrabold text-slate-800">Tetapan Semula Melalui Gmail</h2>
+          <button type="button" onclick="switchAuthTab('login')" class="text-xs font-bold text-slate-500 hover:text-slate-800">← Kembali</button>
+        </div>
+
+        <!-- Step 1: Request OTP -->
+        <form id="requestOtpForm" onsubmit="handleRequestOtp(event)" class="space-y-4">
+          <p class="text-xs text-slate-600 leading-relaxed">Masukkan <strong>ID Pengguna</strong> atau <strong>Alamat Gmail</strong> berdaftar anda. Kami akan menghantar kod pengesahan 6-digit (OTP) ke Gmail anda.</p>
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1.5">ID Pengguna / Alamat Gmail</label>
+            <input required id="forgotIdentifier" placeholder="cth. admin_razak atau razak@gmail.com" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-indigo-500 text-slate-800 rounded-xl px-4 py-3 outline-none transition" />
+          </div>
+          <button type="submit" id="requestOtpBtn" class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-md shadow-indigo-600/20 transition">
+            Hantar Kod OTP ke Gmail
+          </button>
+        </form>
+
+        <!-- Step 2: Verify OTP & Set New Password -->
+        <form id="resetPasswordForm" onsubmit="handleResetPassword(event)" class="hidden space-y-3.5">
+          <input type="hidden" id="resetVerifiedUsername" />
+          <div class="p-3 rounded-xl bg-teal-50 border border-teal-200 text-teal-900 text-xs">
+            Kod OTP 6-digit telah dihantar ke <strong id="resetMaskedEmailLabel">Gmail anda</strong>. Sila semak peti masuk (*Inbox* / *Spam*).
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Kod Pengesahan 6-Digit (OTP)</label>
+            <input required maxlength="6" pattern="[0-9]{6}" id="resetOtpCode" placeholder="123456" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-teal-500 text-slate-800 rounded-xl px-4 py-2.5 text-center font-mono text-base font-extrabold tracking-[0.4em] outline-none" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Kata Laluan Baharu</label>
+            <div class="relative">
+              <input required type="password" minlength="8" id="resetNewPassword" oninput="evaluatePasswordStrength('resetNewPassword', 'resetPwBar', 'resetPwText')" placeholder="Min. 8 aksara (Huruf Besar, Kecil & Nombor)" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-teal-500 text-slate-800 rounded-xl pl-4 pr-11 py-2.5 outline-none" />
+              <button type="button" onclick="togglePasswordVisibility('resetNewPassword')" class="absolute right-3 top-2.5 text-slate-500 hover:text-slate-800">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <div class="mt-1.5 space-y-1">
+              <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                <div id="resetPwBar" class="h-full bg-rose-500 transition-all duration-300" style="width: 0%"></div>
+              </div>
+              <p id="resetPwText" class="text-[11px] text-slate-500">Min. 8 aksara, 1 huruf besar, 1 huruf kecil & 1 nombor.</p>
+            </div>
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Sahkan Kata Laluan Baharu</label>
+            <input required type="password" minlength="8" id="resetConfirmPassword" placeholder="Ulang kata laluan baharu" class="w-full bg-[#efecf8] border border-[#cfc8e4] focus:border-teal-500 text-slate-800 rounded-xl px-4 py-2.5 outline-none" />
+          </div>
+          <div class="flex gap-2 pt-1">
+            <button type="button" onclick="resetForgotStep()" class="w-1/3 py-2.5 border border-[#cfc8e4] hover:bg-[#eae5f6] text-slate-700 font-bold rounded-xl text-xs transition">Hantar Semula</button>
+            <button type="submit" id="resetSubmitBtn" class="w-2/3 py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl shadow-sm text-xs transition">Simpan Kata Laluan</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 
@@ -712,7 +775,7 @@
   <script>
     // PASTE URL GOOGLE APPS SCRIPT (/exec) ANDA DI SINI:
     const API_URL = 'https://script.google.com/macros/s/AKfycbxaejQRcYTkFNIONboMnyS8arvH5xMYi1ZWz9UkC1RiAE7kVSjDLSVelRFqWBmSlYTk/exec';
-    const SESSION_KEY = 'skm_admin_session_v2';
+    const SESSION_KEY = 'skm_admin_session_v3';
 
     let allStudents = [];
     let currentFiltered = [];
@@ -737,10 +800,10 @@
       inp.type = inp.type === 'password' ? 'text' : 'password';
     }
 
-    function evaluatePasswordStrength() {
-      const pw = document.getElementById('signupPassword').value;
-      const bar = document.getElementById('pwStrengthBar');
-      const txt = document.getElementById('pwStrengthText');
+    function evaluatePasswordStrength(inputId, barId, textId) {
+      const pw = document.getElementById(inputId).value;
+      const bar = document.getElementById(barId);
+      const txt = document.getElementById(textId);
 
       let score = 0;
       if (pw.length >= 8) score++;
@@ -752,10 +815,10 @@
       const widths = ['0%', '25%', '45%', '70%', '90%', '100%'];
       const colors = ['bg-rose-500', 'bg-rose-500', 'bg-amber-500', 'bg-sky-500', 'bg-teal-500', 'bg-emerald-600'];
       const labels = [
-        'Syarat: Sekurang-kurangnya 8 aksara, 1 huruf besar, 1 huruf kecil & 1 nombor.',
-        'Lemah — Tambah huruf besar, nombor dan panjang sekurang-kurangnya 8 aksara.',
+        'Min. 8 aksara, 1 huruf besar, 1 huruf kecil & 1 nombor.',
+        'Lemah — Tambah huruf besar, nombor dan min. 8 aksara.',
         'Sederhana — Hampir memenuhi kriteria keselamatan.',
-        'Baik — Masukkan nombor atau simbol untuk tahap maksimum.',
+        'Baik — Tambah nombor atau simbol untuk tahap maksimum.',
         'Kukuh — Kata laluan selamat!',
         'Sangat Kukuh — Tahap keselamatan optimum!'
       ];
@@ -767,6 +830,249 @@
 
     function isStrongPassword(pw) {
       return pw.length >= 8 && /[A-Z]/.test(pw) && /[a-z]/.test(pw) && /[0-9]/.test(pw);
+    }
+
+    // ==================== AUTHENTICATION & GMAIL OTP LOGIC ====================
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('inputTarikhDaftar').value = new Date().toISOString().split('T')[0];
+      calcLiveBalance();
+      checkAdminSession();
+    });
+
+    function checkAdminSession() {
+      const saved = sessionStorage.getItem(SESSION_KEY);
+      if (saved) {
+        try {
+          const user = JSON.parse(saved);
+          unlockDashboard(user);
+          return;
+        } catch (e) {
+          sessionStorage.removeItem(SESSION_KEY);
+        }
+      }
+      document.getElementById('authScreen').classList.remove('hidden');
+      document.getElementById('dashboardApp').classList.add('hidden');
+    }
+
+    function unlockDashboard(user) {
+      document.getElementById('authScreen').classList.add('hidden');
+      document.getElementById('dashboardApp').classList.remove('hidden');
+      document.getElementById('loggedInAdminLabel').textContent = (user.fullName || user.username || 'ADMIN').toUpperCase();
+      fetchStudents();
+    }
+
+    function logoutAdmin() {
+      sessionStorage.removeItem(SESSION_KEY);
+      document.getElementById('dashboardApp').classList.add('hidden');
+      document.getElementById('authScreen').classList.remove('hidden');
+      document.getElementById('loginForm').reset();
+    }
+
+    function switchAuthTab(mode) {
+      const loginForm = document.getElementById('loginForm');
+      const signupForm = document.getElementById('signupForm');
+      const forgotContainer = document.getElementById('forgotContainer');
+      const tabSwitcher = document.getElementById('authTabSwitcher');
+      const tabLoginBtn = document.getElementById('tabLoginBtn');
+      const tabSignupBtn = document.getElementById('tabSignupBtn');
+      document.getElementById('authAlert').classList.add('hidden');
+
+      loginForm.classList.add('hidden');
+      signupForm.classList.add('hidden');
+      forgotContainer.classList.add('hidden');
+
+      if (mode === 'login') {
+        tabSwitcher.classList.remove('hidden');
+        loginForm.classList.remove('hidden');
+        tabLoginBtn.className = 'py-2 rounded-lg bg-teal-600 text-white shadow-sm transition';
+        tabSignupBtn.className = 'py-2 rounded-lg text-slate-600 hover:text-slate-900 transition';
+      } else if (mode === 'signup') {
+        tabSwitcher.classList.remove('hidden');
+        signupForm.classList.remove('hidden');
+        tabSignupBtn.className = 'py-2 rounded-lg bg-indigo-500 text-white shadow-sm transition';
+        tabLoginBtn.className = 'py-2 rounded-lg text-slate-600 hover:text-slate-900 transition';
+      } else if (mode === 'forgot') {
+        tabSwitcher.classList.add('hidden');
+        forgotContainer.classList.remove('hidden');
+        resetForgotStep();
+      }
+    }
+
+    function resetForgotStep() {
+      document.getElementById('requestOtpForm').classList.remove('hidden');
+      document.getElementById('resetPasswordForm').classList.add('hidden');
+      document.getElementById('authAlert').classList.add('hidden');
+    }
+
+    function showAuthAlert(message, isError = true) {
+      const box = document.getElementById('authAlert');
+      box.textContent = message;
+      box.className = isError
+        ? 'mx-8 mt-5 p-3 rounded-xl text-xs font-semibold bg-rose-100 border border-rose-300 text-rose-800'
+        : 'mx-8 mt-5 p-3 rounded-xl text-xs font-semibold bg-teal-100 border border-teal-300 text-teal-800';
+      box.classList.remove('hidden');
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const btn = document.getElementById('loginSubmitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Menyulitkan & Mengesahkan...';
+
+      const cleanUsername = document.getElementById('loginUsername').value.trim().toLowerCase();
+      const rawPassword = document.getElementById('loginPassword').value;
+      const passwordHash = await sha256Hex(`${cleanUsername}:${rawPassword}`);
+
+      try {
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'login', username: cleanUsername, passwordHash: passwordHash })
+        });
+        const json = await res.json();
+        if (json.status === 'success') {
+          sessionStorage.setItem(SESSION_KEY, JSON.stringify(json.user));
+          unlockDashboard(json.user);
+        } else {
+          showAuthAlert(json.message || 'Log masuk gagal.', true);
+        }
+      } catch (err) {
+        showAuthAlert('Ralat sambungan ke pelayan. Pastikan API_URL & deployment baharu sudah aktif.', true);
+      }
+
+      btn.disabled = false;
+      btn.textContent = 'Log Masuk Secara Selamat';
+    }
+
+    async function handleSignup(e) {
+      e.preventDefault();
+      const pw = document.getElementById('signupPassword').value;
+      const confirmPw = document.getElementById('signupConfirmPassword').value;
+      const cleanUsername = document.getElementById('signupUsername').value.trim().toLowerCase();
+      const cleanEmail = document.getElementById('signupEmail').value.trim().toLowerCase();
+
+      if (!isStrongPassword(pw)) {
+        showAuthAlert('Kata laluan mesti sekurang-kurangnya 8 aksara serta mengandungi huruf besar, huruf kecil, dan nombor.', true);
+        return;
+      }
+
+      if (pw !== confirmPw) {
+        showAuthAlert('Kata laluan dan pengesahan kata laluan tidak sepadan.', true);
+        return;
+      }
+
+      const btn = document.getElementById('signupSubmitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Menyulitkan & Mendaftar...';
+
+      const passwordHash = await sha256Hex(`${cleanUsername}:${pw}`);
+
+      try {
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          body: JSON.stringify({
+            action: 'signup',
+            fullName: document.getElementById('signupFullName').value.trim(),
+            username: cleanUsername,
+            email: cleanEmail,
+            passwordHash: passwordHash
+          })
+        });
+        const json = await res.json();
+        if (json.status === 'success') {
+          sessionStorage.setItem(SESSION_KEY, JSON.stringify(json.user));
+          unlockDashboard(json.user);
+        } else {
+          showAuthAlert(json.message || 'Pendaftaran admin gagal.', true);
+        }
+      } catch (err) {
+        showAuthAlert('Ralat sambungan ke pelayan. Pastikan API_URL & deployment baharu sudah aktif.', true);
+      }
+
+      btn.disabled = false;
+      btn.textContent = 'Daftar Akaun Admin Baharu';
+    }
+
+    async function handleRequestOtp(e) {
+      e.preventDefault();
+      const btn = document.getElementById('requestOtpBtn');
+      btn.disabled = true;
+      btn.textContent = 'Menghantar OTP ke Gmail...';
+
+      const identifier = document.getElementById('forgotIdentifier').value.trim();
+
+      try {
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'requestOtp', identifier: identifier })
+        });
+        const json = await res.json();
+
+        if (json.status === 'success') {
+          document.getElementById('authAlert').classList.add('hidden');
+          document.getElementById('resetVerifiedUsername').value = json.username;
+          document.getElementById('resetMaskedEmailLabel').textContent = json.maskedEmail;
+          document.getElementById('requestOtpForm').classList.add('hidden');
+          document.getElementById('resetPasswordForm').classList.remove('hidden');
+        } else {
+          showAuthAlert(json.message || 'Gagal menghantar OTP.', true);
+        }
+      } catch (err) {
+        showAuthAlert('Ralat sambungan ke pelayan. Pastikan kebenaran MailApp di Apps Script telah diluluskan.', true);
+      }
+
+      btn.disabled = false;
+      btn.textContent = 'Hantar Kod OTP ke Gmail';
+    }
+
+    async function handleResetPassword(e) {
+      e.preventDefault();
+      const username = document.getElementById('resetVerifiedUsername').value.trim().toLowerCase();
+      const otp = document.getElementById('resetOtpCode').value.trim();
+      const newPw = document.getElementById('resetNewPassword').value;
+      const confirmPw = document.getElementById('resetConfirmPassword').value;
+
+      if (!isStrongPassword(newPw)) {
+        showAuthAlert('Kata laluan baharu mesti sekurang-kurangnya 8 aksara serta mengandungi huruf besar, huruf kecil, dan nombor.', true);
+        return;
+      }
+
+      if (newPw !== confirmPw) {
+        showAuthAlert('Pengesahan kata laluan baharu tidak sepadan.', true);
+        return;
+      }
+
+      const btn = document.getElementById('resetSubmitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Mengesahkan OTP...';
+
+      const newPasswordHash = await sha256Hex(`${username}:${newPw}`);
+
+      try {
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          body: JSON.stringify({
+            action: 'resetPassword',
+            username: username,
+            otp: otp,
+            newPasswordHash: newPasswordHash
+          })
+        });
+        const json = await res.json();
+
+        if (json.status === 'success') {
+          document.getElementById('resetPasswordForm').reset();
+          switchAuthTab('login');
+          document.getElementById('loginUsername').value = username;
+          showAuthAlert(json.message, false);
+        } else {
+          showAuthAlert(json.message || 'Pengesahan OTP gagal.', true);
+        }
+      } catch (err) {
+        showAuthAlert('Ralat sambungan semasa menetapkan semula kata laluan.', true);
+      }
+
+      btn.disabled = false;
+      btn.textContent = 'Simpan Kata Laluan';
     }
 
     // ==================== WORKSPACE & DRAWER CONTROLS ====================
@@ -817,150 +1123,6 @@
       pills['Paid'].className = status === 'Paid' ? 'px-3 py-1.5 rounded-lg bg-teal-600 text-white transition' : 'px-3 py-1.5 rounded-lg bg-teal-100 text-teal-800 hover:bg-teal-200 transition';
       pills['Outstanding'].className = status === 'Outstanding' ? 'px-3 py-1.5 rounded-lg bg-rose-600 text-white transition' : 'px-3 py-1.5 rounded-lg bg-rose-100 text-rose-800 hover:bg-rose-200 transition';
       applyFilters();
-    }
-
-    // ==================== AUTHENTICATION LOGIC ====================
-    window.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('inputTarikhDaftar').value = new Date().toISOString().split('T')[0];
-      calcLiveBalance();
-      checkAdminSession();
-    });
-
-    function checkAdminSession() {
-      const saved = sessionStorage.getItem(SESSION_KEY);
-      if (saved) {
-        try {
-          const user = JSON.parse(saved);
-          unlockDashboard(user);
-          return;
-        } catch (e) {
-          sessionStorage.removeItem(SESSION_KEY);
-        }
-      }
-      document.getElementById('authScreen').classList.remove('hidden');
-      document.getElementById('dashboardApp').classList.add('hidden');
-    }
-
-    function unlockDashboard(user) {
-      document.getElementById('authScreen').classList.add('hidden');
-      document.getElementById('dashboardApp').classList.remove('hidden');
-      document.getElementById('loggedInAdminLabel').textContent = (user.fullName || user.username || 'ADMIN').toUpperCase();
-      fetchStudents();
-    }
-
-    function logoutAdmin() {
-      sessionStorage.removeItem(SESSION_KEY);
-      document.getElementById('dashboardApp').classList.add('hidden');
-      document.getElementById('authScreen').classList.remove('hidden');
-      document.getElementById('loginForm').reset();
-    }
-
-    function switchAuthTab(mode) {
-      const loginForm = document.getElementById('loginForm');
-      const signupForm = document.getElementById('signupForm');
-      const tabLoginBtn = document.getElementById('tabLoginBtn');
-      const tabSignupBtn = document.getElementById('tabSignupBtn');
-      document.getElementById('authAlert').classList.add('hidden');
-
-      if (mode === 'login') {
-        loginForm.classList.remove('hidden');
-        signupForm.classList.add('hidden');
-        tabLoginBtn.className = 'py-2 rounded-lg bg-teal-600 text-white shadow-sm transition';
-        tabSignupBtn.className = 'py-2 rounded-lg text-slate-600 hover:text-slate-900 transition';
-      } else {
-        loginForm.classList.add('hidden');
-        signupForm.classList.remove('hidden');
-        tabSignupBtn.className = 'py-2 rounded-lg bg-indigo-500 text-white shadow-sm transition';
-        tabLoginBtn.className = 'py-2 rounded-lg text-slate-600 hover:text-slate-900 transition';
-      }
-    }
-
-    function showAuthAlert(message, isError = true) {
-      const box = document.getElementById('authAlert');
-      box.textContent = message;
-      box.className = isError
-        ? 'mx-8 mt-5 p-3 rounded-xl text-xs font-semibold bg-rose-100 border border-rose-300 text-rose-800'
-        : 'mx-8 mt-5 p-3 rounded-xl text-xs font-semibold bg-teal-100 border border-teal-300 text-teal-800';
-      box.classList.remove('hidden');
-    }
-
-    async function handleLogin(e) {
-      e.preventDefault();
-      const btn = document.getElementById('loginSubmitBtn');
-      btn.disabled = true;
-      btn.textContent = 'Menyulitkan & Mengesahkan...';
-
-      const cleanUsername = document.getElementById('loginUsername').value.trim().toLowerCase();
-      const rawPassword = document.getElementById('loginPassword').value;
-      const passwordHash = await sha256Hex(`${cleanUsername}:${rawPassword}`);
-
-      const payload = {
-        action: 'login',
-        username: cleanUsername,
-        passwordHash: passwordHash
-      };
-
-      try {
-        const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) });
-        const json = await res.json();
-        if (json.status === 'success') {
-          sessionStorage.setItem(SESSION_KEY, JSON.stringify(json.user));
-          unlockDashboard(json.user);
-        } else {
-          showAuthAlert(json.message || 'Log masuk gagal.', true);
-        }
-      } catch (err) {
-        showAuthAlert('Ralat sambungan ke pelayan. Pastikan API_URL & deployment baharu sudah aktif.', true);
-      }
-
-      btn.disabled = false;
-      btn.textContent = 'Log Masuk Secara Selamat';
-    }
-
-    async function handleSignup(e) {
-      e.preventDefault();
-      const pw = document.getElementById('signupPassword').value;
-      const confirmPw = document.getElementById('signupConfirmPassword').value;
-      const cleanUsername = document.getElementById('signupUsername').value.trim().toLowerCase();
-
-      if (!isStrongPassword(pw)) {
-        showAuthAlert('Kata laluan mesti sekurang-kurangnya 8 aksara serta mengandungi huruf besar, huruf kecil, dan nombor.', true);
-        return;
-      }
-
-      if (pw !== confirmPw) {
-        showAuthAlert('Kata laluan dan pengesahan kata laluan tidak sepadan.', true);
-        return;
-      }
-
-      const btn = document.getElementById('signupSubmitBtn');
-      btn.disabled = true;
-      btn.textContent = 'Menyulitkan & Mendaftar...';
-
-      const passwordHash = await sha256Hex(`${cleanUsername}:${pw}`);
-
-      const payload = {
-        action: 'signup',
-        fullName: document.getElementById('signupFullName').value.trim(),
-        username: cleanUsername,
-        passwordHash: passwordHash
-      };
-
-      try {
-        const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) });
-        const json = await res.json();
-        if (json.status === 'success') {
-          sessionStorage.setItem(SESSION_KEY, JSON.stringify(json.user));
-          unlockDashboard(json.user);
-        } else {
-          showAuthAlert(json.message || 'Pendaftaran admin gagal.', true);
-        }
-      } catch (err) {
-        showAuthAlert('Ralat sambungan ke pelayan. Pastikan API_URL & deployment baharu sudah aktif.', true);
-      }
-
-      btn.disabled = false;
-      btn.textContent = 'Daftar Akaun Admin Baharu';
     }
 
     // ==================== DASHBOARD & FEE LOGIC ====================
