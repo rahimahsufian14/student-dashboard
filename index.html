@@ -931,7 +931,7 @@
       e.preventDefault();
       const btn = document.getElementById('loginSubmitBtn');
       btn.disabled = true;
-      btn.textContent = 'Menyulitkan & Mengesahkan...';
+      btn.textContent = 'Mengesahkan...';
 
       const cleanUsername = document.getElementById('loginUsername').value.trim().toLowerCase();
       const rawPassword = document.getElementById('loginPassword').value;
@@ -976,7 +976,7 @@
 
       const btn = document.getElementById('signupSubmitBtn');
       btn.disabled = true;
-      btn.textContent = 'Menyulitkan & Mendaftar...';
+      btn.textContent = 'Mendaftar...';
 
       const passwordHash = await sha256Hex(`${cleanUsername}:${pw}`);
 
