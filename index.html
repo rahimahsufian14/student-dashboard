@@ -13,31 +13,50 @@
   <style>
     body {
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: #fbf9f6;
-      color: #292524;
+      background-color: #f1f5f9;
+      background-image:
+        radial-gradient(at 0% 0%, rgba(186, 230, 253, 0.55) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(199, 210, 254, 0.50) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(224, 242, 254, 0.45) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(226, 232, 240, 0.65) 0px, transparent 50%);
+      background-attachment: fixed;
+      color: #0f172a;
+    }
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.76);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.92);
+      box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.03);
+    }
+    .glass-subtle {
+      background: rgba(255, 255, 255, 0.58);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
     }
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #f5f0ea; }
-    ::-webkit-scrollbar-thumb { background: #d6ccc2; border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #b0a396; }
+    ::-webkit-scrollbar-track { background: rgba(241, 245, 249, 0.6); }
+    ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.5); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(100, 116, 139, 0.7); }
   </style>
 </head>
-<body class="min-h-screen antialiased selection:bg-amber-200 selection:text-amber-950">
+<body class="min-h-screen antialiased selection:bg-sky-200 selection:text-slate-950">
 
   <!-- ==================== SECURE ADMIN AUTH SCREEN ==================== -->
-  <div id="authScreen" class="min-h-screen flex items-center justify-center p-4 bg-[#f5efe8]">
-    <div class="w-full max-w-md bg-white border border-stone-200 rounded-2xl shadow-lg shadow-stone-300/50 overflow-hidden">
-      <div class="px-8 pt-8 pb-6 text-center border-b border-stone-100 bg-[#fdfbf9]">
-        <div class="w-24 h-24 mx-auto rounded-2xl bg-white p-2.5 flex items-center justify-center shadow-sm border border-stone-200 mb-4">
+  <div id="authScreen" class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md glass-panel rounded-3xl overflow-hidden">
+      <div class="px-8 pt-8 pb-6 text-center border-b border-white/80 bg-white/40">
+        <div class="w-24 h-24 mx-auto rounded-2xl bg-white/95 p-2.5 flex items-center justify-center shadow-md shadow-slate-900/5 border border-white mb-4">
           <img src="./logomagma.png" alt="Logo Magma" class="w-full h-full object-contain" />
         </div>
-        <h1 class="text-lg font-extrabold text-stone-800 tracking-tight">Sistem Pengurusan Pendaftaran Pelatih & Rekod Yuran</h1>
+        <h1 class="text-lg font-extrabold text-slate-900 tracking-tight leading-snug">Sistem Pengurusan Pendaftaran Pelatih & Rekod Yuran</h1>
 
-        <div id="authTabSwitcher" class="grid grid-cols-2 gap-1 bg-stone-200/75 p-1 rounded-xl mt-5 text-xs font-bold">
-          <button type="button" id="tabLoginBtn" onclick="switchAuthTab('login')" class="py-2 rounded-lg bg-amber-800 text-white shadow-xs transition">
+        <div id="authTabSwitcher" class="grid grid-cols-2 gap-1 bg-slate-200/60 backdrop-blur-xs p-1 rounded-xl mt-5 text-xs font-bold border border-white/70">
+          <button type="button" id="tabLoginBtn" onclick="switchAuthTab('login')" class="py-2 rounded-lg bg-gradient-to-r from-slate-900 to-blue-950 text-white shadow-sm transition">
             Log Masuk
           </button>
-          <button type="button" id="tabSignupBtn" onclick="switchAuthTab('signup')" class="py-2 rounded-lg text-stone-600 hover:text-stone-900 transition">
+          <button type="button" id="tabSignupBtn" onclick="switchAuthTab('signup')" class="py-2 rounded-lg text-slate-600 hover:text-slate-900 transition">
             Daftar Admin
           </button>
         </div>
@@ -48,24 +67,24 @@
       <!-- LOGIN FORM -->
       <form id="loginForm" onsubmit="handleLogin(event)" class="p-8 space-y-4 text-xs sm:text-sm">
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1.5">ID Pengguna (Username)</label>
-          <input required id="loginUsername" autocomplete="username" placeholder="Masukkan ID admin anda" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 focus:ring-2 focus:ring-amber-700/15 text-stone-800 rounded-xl px-4 py-3 outline-none transition" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1.5">ID Pengguna (Username)</label>
+          <input required id="loginUsername" autocomplete="username" placeholder="Masukkan ID admin anda" class="w-full bg-white/80 border border-slate-200/90 focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 text-slate-900 rounded-xl px-4 py-3 outline-none transition" />
         </div>
         <div>
           <div class="flex items-center justify-between mb-1.5">
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600">Kata Laluan</label>
-            <button type="button" onclick="switchAuthTab('forgot')" class="text-[11px] font-semibold text-amber-800 hover:text-amber-950 underline underline-offset-2 transition">
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600">Kata Laluan</label>
+            <button type="button" onclick="switchAuthTab('forgot')" class="text-[11px] font-semibold text-blue-700 hover:text-blue-950 underline underline-offset-2 transition">
               Lupa Kata Laluan?
             </button>
           </div>
           <div class="relative">
-            <input required type="password" id="loginPassword" autocomplete="current-password" placeholder="••••••••" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 focus:ring-2 focus:ring-amber-700/15 text-stone-800 rounded-xl pl-4 pr-11 py-3 outline-none transition" />
-            <button type="button" onclick="togglePasswordVisibility('loginPassword')" title="Papar/Sembunyi Kata Laluan" class="absolute right-3 top-3 text-stone-400 hover:text-stone-700">
+            <input required type="password" id="loginPassword" autocomplete="current-password" placeholder="••••••••" class="w-full bg-white/80 border border-slate-200/90 focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 text-slate-900 rounded-xl pl-4 pr-11 py-3 outline-none transition" />
+            <button type="button" onclick="togglePasswordVisibility('loginPassword')" title="Papar/Sembunyi Kata Laluan" class="absolute right-3 top-3 text-slate-400 hover:text-slate-700">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
           </div>
         </div>
-        <button type="submit" id="loginSubmitBtn" class="w-full py-3 px-4 bg-amber-800 hover:bg-amber-900 text-white font-bold rounded-xl shadow-sm transition mt-2">
+        <button type="submit" id="loginSubmitBtn" class="w-full py-3 px-4 bg-gradient-to-r from-slate-900 to-blue-950 hover:from-slate-800 hover:to-blue-900 text-white font-bold rounded-xl shadow-md shadow-slate-900/15 transition mt-2">
           Log Masuk
         </button>
       </form>
@@ -73,61 +92,61 @@
       <!-- SIGN UP FORM -->
       <form id="signupForm" onsubmit="handleSignup(event)" class="hidden p-8 space-y-3.5 text-xs sm:text-sm">
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Nama Penuh Admin</label>
-          <input required id="signupFullName" placeholder="cth. Encik Razak Bin Ahmad" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-4 py-2.5 outline-none transition" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Nama Penuh Admin</label>
+          <input required id="signupFullName" placeholder="cth. Encik Razak Bin Ahmad" class="w-full bg-white/80 border border-slate-200/90 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-4 py-2.5 outline-none transition" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">ID Pengguna (Username)</label>
-          <input required id="signupUsername" placeholder="cth. admin_razak" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-4 py-2.5 outline-none transition" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">ID Pengguna (Username)</label>
+          <input required id="signupUsername" placeholder="cth. admin_razak" class="w-full bg-white/80 border border-slate-200/90 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-4 py-2.5 outline-none transition" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Alamat Gmail</label>
-          <input required type="email" id="signupEmail" placeholder="cth. razak.admin@gmail.com" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-4 py-2.5 outline-none transition" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Alamat Gmail</label>
+          <input required type="email" id="signupEmail" placeholder="cth. razak.admin@gmail.com" class="w-full bg-white/80 border border-slate-200/90 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-4 py-2.5 outline-none transition" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Kata Laluan Kukuh</label>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Kata Laluan Kukuh</label>
           <div class="relative">
-            <input required type="password" minlength="8" id="signupPassword" oninput="evaluatePasswordStrength('signupPassword', 'pwStrengthBar', 'pwStrengthText')" placeholder="Min. 8 aksara (Huruf Besar, Kecil & Nombor)" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl pl-4 pr-11 py-2.5 outline-none transition" />
-            <button type="button" onclick="togglePasswordVisibility('signupPassword')" class="absolute right-3 top-2.5 text-stone-400 hover:text-stone-700">
+            <input required type="password" minlength="8" id="signupPassword" oninput="evaluatePasswordStrength('signupPassword', 'pwStrengthBar', 'pwStrengthText')" placeholder="Min. 8 aksara (Huruf Besar, Kecil & Nombor)" class="w-full bg-white/80 border border-slate-200/90 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl pl-4 pr-11 py-2.5 outline-none transition" />
+            <button type="button" onclick="togglePasswordVisibility('signupPassword')" class="absolute right-3 top-2.5 text-slate-400 hover:text-slate-700">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
           </div>
           <div class="mt-1.5 space-y-1">
-            <div class="w-full bg-stone-200 h-1.5 rounded-full overflow-hidden">
+            <div class="w-full bg-slate-200/80 h-1.5 rounded-full overflow-hidden">
               <div id="pwStrengthBar" class="h-full bg-rose-500 transition-all duration-300" style="width: 0%"></div>
             </div>
-            <p id="pwStrengthText" class="text-[11px] text-stone-500">Min. 8 aksara, 1 huruf besar, 1 huruf kecil & 1 nombor.</p>
+            <p id="pwStrengthText" class="text-[11px] text-slate-500">Min. 8 aksara, 1 huruf besar, 1 huruf kecil & 1 nombor.</p>
           </div>
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Sahkan Kata Laluan</label>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Sahkan Kata Laluan</label>
           <div class="relative">
-            <input required type="password" minlength="8" id="signupConfirmPassword" placeholder="Ulang kata laluan anda" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl pl-4 pr-11 py-2.5 outline-none transition" />
-            <button type="button" onclick="togglePasswordVisibility('signupConfirmPassword')" class="absolute right-3 top-2.5 text-stone-400 hover:text-stone-700">
+            <input required type="password" minlength="8" id="signupConfirmPassword" placeholder="Ulang kata laluan anda" class="w-full bg-white/80 border border-slate-200/90 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl pl-4 pr-11 py-2.5 outline-none transition" />
+            <button type="button" onclick="togglePasswordVisibility('signupConfirmPassword')" class="absolute right-3 top-2.5 text-slate-400 hover:text-slate-700">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
           </div>
         </div>
-        <button type="submit" id="signupSubmitBtn" class="w-full py-3 px-4 bg-amber-800 hover:bg-amber-900 text-white font-bold rounded-xl shadow-sm transition mt-2">
+        <button type="submit" id="signupSubmitBtn" class="w-full py-3 px-4 bg-gradient-to-r from-slate-900 to-blue-950 hover:from-slate-800 hover:to-blue-900 text-white font-bold rounded-xl shadow-md shadow-slate-900/15 transition mt-2">
           Daftar Akaun Admin Baharu
         </button>
       </form>
 
       <!-- FORGOT PASSWORD (GMAIL OTP) FLOW -->
       <div id="forgotContainer" class="hidden p-8 space-y-4 text-xs sm:text-sm">
-        <div class="flex items-center justify-between border-b border-stone-200 pb-2.5">
-          <h2 class="text-sm font-extrabold text-stone-800">Tetapan Semula Melalui Gmail</h2>
-          <button type="button" onclick="switchAuthTab('login')" class="text-xs font-bold text-stone-500 hover:text-stone-800">← Kembali</button>
+        <div class="flex items-center justify-between border-b border-slate-200/70 pb-2.5">
+          <h2 class="text-sm font-extrabold text-slate-900">Tetapan Semula Melalui Gmail</h2>
+          <button type="button" onclick="switchAuthTab('login')" class="text-xs font-bold text-slate-500 hover:text-slate-900">← Kembali</button>
         </div>
 
         <!-- Step 1: Request OTP -->
         <form id="requestOtpForm" onsubmit="handleRequestOtp(event)" class="space-y-4">
-          <p class="text-xs text-stone-600 leading-relaxed">Masukkan <strong>ID Pengguna</strong> atau <strong>Alamat Gmail</strong> berdaftar anda. Kami akan menghantar kod pengesahan 6-digit (OTP) ke Gmail anda.</p>
+          <p class="text-xs text-slate-600 leading-relaxed">Masukkan <strong>ID Pengguna</strong> atau <strong>Alamat Gmail</strong> berdaftar anda. Kami akan menghantar kod pengesahan 6-digit (OTP) ke Gmail anda.</p>
           <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1.5">ID Pengguna / Alamat Gmail</label>
-            <input required id="forgotIdentifier" placeholder="cth. admin_razak atau razak@gmail.com" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-4 py-3 outline-none transition" />
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1.5">ID Pengguna / Alamat Gmail</label>
+            <input required id="forgotIdentifier" placeholder="cth. admin_razak atau razak@gmail.com" class="w-full bg-white/80 border border-slate-200/90 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-4 py-3 outline-none transition" />
           </div>
-          <button type="submit" id="requestOtpBtn" class="w-full py-3 px-4 bg-amber-800 hover:bg-amber-900 text-white font-bold rounded-xl shadow-sm transition">
+          <button type="submit" id="requestOtpBtn" class="w-full py-3 px-4 bg-gradient-to-r from-slate-900 to-blue-950 hover:from-slate-800 hover:to-blue-900 text-white font-bold rounded-xl shadow-md shadow-slate-900/15 transition">
             Hantar Kod OTP ke Gmail
           </button>
         </form>
@@ -135,40 +154,40 @@
         <!-- Step 2: Verify OTP & Set New Password -->
         <form id="resetPasswordForm" onsubmit="handleResetPassword(event)" class="hidden space-y-3.5">
           <input type="hidden" id="resetVerifiedUsername" />
-          <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-stone-800 text-xs">
-            Kod OTP 6-digit telah dihantar ke <strong id="resetMaskedEmailLabel" class="text-amber-900">Gmail anda</strong>. Sila semak peti masuk (*Inbox* / *Spam*).
+          <div class="p-3 rounded-xl bg-sky-50/90 border border-sky-200 text-slate-800 text-xs">
+            Kod OTP 6-digit telah dihantar ke <strong id="resetMaskedEmailLabel" class="text-blue-900">Gmail anda</strong>. Sila semak peti masuk (*Inbox* / *Spam*).
           </div>
           <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Kod Pengesahan 6-Digit (OTP)</label>
-            <input required maxlength="6" pattern="[0-9]{6}" id="resetOtpCode" placeholder="123456" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-4 py-2.5 text-center font-mono text-base font-extrabold tracking-[0.4em] outline-none" />
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Kod Pengesahan 6-Digit (OTP)</label>
+            <input required maxlength="6" pattern="[0-9]{6}" id="resetOtpCode" placeholder="123456" class="w-full bg-white/80 border border-slate-200/90 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-4 py-2.5 text-center font-mono text-base font-extrabold tracking-[0.4em] outline-none" />
           </div>
           <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Kata Laluan Baharu</label>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Kata Laluan Baharu</label>
             <div class="relative">
-              <input required type="password" minlength="8" id="resetNewPassword" oninput="evaluatePasswordStrength('resetNewPassword', 'resetPwBar', 'resetPwText')" placeholder="Min. 8 aksara (Huruf Besar, Kecil & Nombor)" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl pl-4 pr-11 py-2.5 outline-none" />
-              <button type="button" onclick="togglePasswordVisibility('resetNewPassword')" class="absolute right-3 top-2.5 text-stone-400 hover:text-stone-700">
+              <input required type="password" minlength="8" id="resetNewPassword" oninput="evaluatePasswordStrength('resetNewPassword', 'resetPwBar', 'resetPwText')" placeholder="Min. 8 aksara (Huruf Besar, Kecil & Nombor)" class="w-full bg-white/80 border border-slate-200/90 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl pl-4 pr-11 py-2.5 outline-none" />
+              <button type="button" onclick="togglePasswordVisibility('resetNewPassword')" class="absolute right-3 top-2.5 text-slate-400 hover:text-slate-700">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
               </button>
             </div>
             <div class="mt-1.5 space-y-1">
-              <div class="w-full bg-stone-200 h-1.5 rounded-full overflow-visible">
+              <div class="w-full bg-slate-200/80 h-1.5 rounded-full overflow-hidden">
                 <div id="resetPwBar" class="h-full bg-rose-500 transition-all duration-300" style="width: 0%"></div>
               </div>
-              <p id="resetPwText" class="text-[11px] text-stone-500">Min. 8 aksara, 1 huruf besar, 1 huruf kecil & 1 nombor.</p>
+              <p id="resetPwText" class="text-[11px] text-slate-500">Min. 8 aksara, 1 huruf besar, 1 huruf kecil & 1 nombor.</p>
             </div>
           </div>
           <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Sahkan Kata Laluan Baharu</label>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Sahkan Kata Laluan Baharu</label>
             <div class="relative">
-              <input required type="password" minlength="8" id="resetConfirmPassword" placeholder="Ulang kata laluan baharu" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl pl-4 pr-11 py-2.5 outline-none" />
-              <button type="button" onclick="togglePasswordVisibility('resetConfirmPassword')" class="absolute right-3 top-2.5 text-stone-400 hover:text-stone-700">
+              <input required type="password" minlength="8" id="resetConfirmPassword" placeholder="Ulang kata laluan baharu" class="w-full bg-white/80 border border-slate-200/90 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl pl-4 pr-11 py-2.5 outline-none" />
+              <button type="button" onclick="togglePasswordVisibility('resetConfirmPassword')" class="absolute right-3 top-2.5 text-slate-400 hover:text-slate-700">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
               </button>
             </div>
           </div>
           <div class="flex gap-2 pt-1">
-            <button type="button" onclick="resetForgotStep()" class="w-1/3 py-2.5 border border-stone-300 hover:bg-stone-100 text-stone-700 font-bold rounded-xl text-xs transition">Hantar Semula</button>
-            <button type="submit" id="resetSubmitBtn" class="w-2/3 py-2.5 bg-amber-800 hover:bg-amber-900 text-white font-bold rounded-xl shadow-sm text-xs transition">Simpan Kata Laluan</button>
+            <button type="button" onclick="resetForgotStep()" class="w-1/3 py-2.5 bg-white/80 hover:bg-white border border-slate-200 text-slate-700 font-bold rounded-xl text-xs transition">Hantar Semula</button>
+            <button type="submit" id="resetSubmitBtn" class="w-2/3 py-2.5 bg-gradient-to-r from-slate-900 to-blue-950 hover:from-slate-800 hover:to-blue-900 text-white font-bold rounded-xl shadow-sm text-xs transition">Simpan Kata Laluan</button>
           </div>
         </form>
       </div>
@@ -178,18 +197,18 @@
   <!-- ==================== MAIN DASHBOARD APP ==================== -->
   <div id="dashboardApp" class="hidden">
 
-    <!-- Compact Top Command Header -->
-    <header class="sticky top-0 z-30 bg-[#fdfbf9]/95 backdrop-blur-md border-b border-stone-200">
+    <!-- Frosted Top Command Header -->
+    <header class="sticky top-0 z-30 bg-white/75 backdrop-blur-xl border-b border-white/90 shadow-xs">
       <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap justify-between items-center gap-3">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-white p-1 flex items-center justify-center shadow-xs border border-stone-200 shrink-0">
+          <div class="w-10 h-10 rounded-xl bg-white p-1 flex items-center justify-center shadow-xs border border-slate-200/70 shrink-0">
             <img src="./logomagma.png" alt="Logo Magma" class="w-full h-full object-contain" />
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <h1 class="text-sm sm:text-base font-extrabold tracking-tight text-stone-800">Sistem Pengurusan Pendaftaran Pelatih & Rekod Yuran</h1>
-              <span class="hidden md:inline-flex items-center gap-1.5 text-[10px] bg-amber-50 text-amber-900 border border-amber-200 px-2.5 py-0.5 rounded-full font-bold">
-                <span class="w-1.5 h-1.5 rounded-full bg-amber-700"></span>
+              <h1 class="text-sm sm:text-base font-extrabold tracking-tight text-slate-900">Sistem Pengurusan Pendaftaran Pelatih & Rekod Yuran</h1>
+              <span class="hidden md:inline-flex items-center gap-1.5 text-[10px] bg-sky-50/90 text-blue-950 border border-sky-200/80 px-2.5 py-0.5 rounded-full font-bold">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
                 <span id="loggedInAdminLabel">Admin</span>
               </span>
             </div>
@@ -197,19 +216,19 @@
         </div>
 
         <div class="flex items-center gap-2">
-          <button onclick="openRegisterDrawer()" class="inline-flex items-center gap-1.5 bg-amber-800 hover:bg-amber-900 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-xs transition">
+          <button onclick="openRegisterDrawer()" class="inline-flex items-center gap-1.5 bg-gradient-to-r from-slate-900 to-blue-950 hover:from-slate-800 hover:to-blue-900 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-sm shadow-slate-900/15 transition">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
             <span>Daftar Pelatih</span>
           </button>
-          <button onclick="exportCSV()" class="inline-flex items-center gap-1.5 bg-white hover:bg-stone-50 text-stone-700 border border-stone-300 px-3 py-2 rounded-xl text-xs font-semibold transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-stone-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          <button onclick="exportCSV()" class="inline-flex items-center gap-1.5 bg-white/80 hover:bg-white text-slate-700 border border-white shadow-2xs px-3 py-2 rounded-xl text-xs font-semibold transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
             <span class="hidden sm:inline">Export CSV</span>
           </button>
-          <button onclick="fetchStudents()" title="Sync Data" class="inline-flex items-center gap-1.5 bg-white hover:bg-stone-50 text-stone-700 border border-stone-300 px-3 py-2 rounded-xl text-xs font-semibold transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-amber-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+          <button onclick="fetchStudents()" title="Sync Data" class="inline-flex items-center gap-1.5 bg-white/80 hover:bg-white text-slate-700 border border-white shadow-2xs px-3 py-2 rounded-xl text-xs font-semibold transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-blue-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
             <span class="hidden md:inline">Refresh</span>
           </button>
-          <button onclick="logoutAdmin()" title="Log Keluar" class="inline-flex items-center gap-1.5 bg-white hover:bg-rose-50 text-rose-700 border border-stone-300 hover:border-rose-200 px-3 py-2 rounded-xl text-xs font-semibold transition">
+          <button onclick="logoutAdmin()" title="Log Keluar" class="inline-flex items-center gap-1.5 bg-white/80 hover:bg-rose-50 text-rose-700 border border-white hover:border-rose-200 shadow-2xs px-3 py-2 rounded-xl text-xs font-semibold transition">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
             <span class="hidden sm:inline">Keluar</span>
           </button>
@@ -219,94 +238,94 @@
 
     <main class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-5 space-y-5">
 
-      <div id="toastMsg" class="hidden p-3.5 rounded-2xl bg-amber-50 border border-amber-300 text-amber-950 text-xs sm:text-sm font-semibold flex items-center justify-between shadow-xs"></div>
+      <div id="toastMsg" class="hidden p-3.5 rounded-2xl glass-panel border-sky-300 text-slate-900 text-xs sm:text-sm font-semibold flex items-center justify-between"></div>
 
-      <!-- Compact Executive KPI Strip -->
+      <!-- Frosted Executive KPI Strip -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-        <div class="bg-white px-5 py-4 rounded-2xl border border-stone-200 shadow-xs flex items-center justify-between">
+        <div class="glass-panel px-5 py-4 rounded-2xl flex items-center justify-between">
           <div>
-            <p class="text-[11px] font-bold uppercase tracking-wider text-stone-500">Jumlah Pelatih</p>
-            <p id="kpiStudents" class="text-2xl font-extrabold text-stone-800 mt-0.5">0</p>
-            <p class="text-[11px] text-stone-400 mt-0.5">Mengikut penapis semasa</p>
+            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Jumlah Pelatih</p>
+            <p id="kpiStudents" class="text-2xl font-extrabold text-slate-900 mt-0.5">0</p>
+            <p class="text-[11px] text-slate-400 mt-0.5">Mengikut penapis semasa</p>
           </div>
-          <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-800 border border-amber-200/70 flex items-center justify-center shrink-0">
+          <div class="w-10 h-10 rounded-xl bg-sky-100/80 text-blue-800 border border-white flex items-center justify-center shrink-0">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
         </div>
 
-        <div class="bg-white px-5 py-4 rounded-2xl border border-stone-200 shadow-xs flex items-center justify-between">
+        <div class="glass-panel px-5 py-4 rounded-2xl flex items-center justify-between">
           <div>
-            <p class="text-[11px] font-bold uppercase tracking-wider text-stone-500">Yuran Sepatutnya</p>
-            <p id="kpiTotalFee" class="text-2xl font-extrabold text-stone-800 mt-0.5">RM 0.00</p>
-            <p class="text-[11px] text-stone-400 mt-0.5">Nilai keseluruhan pendaftaran</p>
+            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Yuran Sepatutnya</p>
+            <p id="kpiTotalFee" class="text-2xl font-extrabold text-slate-900 mt-0.5">RM 0.00</p>
+            <p class="text-[11px] text-slate-400 mt-0.5">Nilai keseluruhan pendaftaran</p>
           </div>
-          <div class="w-10 h-10 rounded-xl bg-stone-100 text-stone-700 border border-stone-200 flex items-center justify-center shrink-0">
+          <div class="w-10 h-10 rounded-xl bg-indigo-100/80 text-indigo-800 border border-white flex items-center justify-center shrink-0">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
           </div>
         </div>
 
-        <div class="bg-white px-5 py-4 rounded-2xl border border-stone-200 shadow-xs">
+        <div class="glass-panel px-5 py-4 rounded-2xl">
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-[11px] font-bold uppercase tracking-wider text-stone-500">Yuran Diterima</p>
-              <p id="kpiCollected" class="text-2xl font-extrabold text-emerald-800 mt-0.5">RM 0.00</p>
+              <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Yuran Diterima</p>
+              <p id="kpiCollected" class="text-2xl font-extrabold text-emerald-700 mt-0.5">RM 0.00</p>
             </div>
-            <span id="collectionRateBadge" class="text-xs font-extrabold bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-1 rounded-lg">0%</span>
+            <span id="collectionRateBadge" class="text-xs font-extrabold bg-emerald-100/80 text-emerald-900 border border-white px-2.5 py-1 rounded-lg">0%</span>
           </div>
-          <div class="w-full bg-stone-100 h-1.5 rounded-full mt-2.5 overflow-hidden">
+          <div class="w-full bg-slate-200/70 h-1.5 rounded-full mt-2.5 overflow-hidden">
             <div id="collectionRateBar" class="bg-emerald-600 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
           </div>
         </div>
 
-        <div class="bg-white px-5 py-4 rounded-2xl border border-stone-200 shadow-xs flex items-center justify-between">
+        <div class="glass-panel px-5 py-4 rounded-2xl flex items-center justify-between">
           <div>
-            <p class="text-[11px] font-bold uppercase tracking-wider text-stone-500">Baki Tertunggak</p>
-            <p id="kpiBalance" class="text-2xl font-extrabold text-rose-700 mt-0.5">RM 0.00</p>
-            <p id="kpiUnpaidCount" class="text-[11px] text-stone-500 font-medium mt-0.5">0 pelatih berbaki</p>
+            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Baki Tertunggak</p>
+            <p id="kpiBalance" class="text-2xl font-extrabold text-rose-600 mt-0.5">RM 0.00</p>
+            <p id="kpiUnpaidCount" class="text-[11px] text-slate-500 font-medium mt-0.5">0 pelatih berbaki</p>
           </div>
-          <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-700 border border-rose-200/70 flex items-center justify-center shrink-0">
+          <div class="w-10 h-10 rounded-xl bg-rose-100/80 text-rose-700 border border-white flex items-center justify-center shrink-0">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
           </div>
         </div>
       </div>
 
-      <!-- WORKSPACE SWITCHER BAR -->
-      <div class="flex flex-wrap items-center justify-between gap-3 bg-[#f5efe8] p-2 rounded-2xl border border-stone-200">
+      <!-- FROSTED WORKSPACE SWITCHER BAR -->
+      <div class="flex flex-wrap items-center justify-between gap-3 glass-subtle p-2 rounded-2xl">
         <div class="flex flex-wrap items-center gap-1.5 text-xs font-bold">
-          <button type="button" id="navTabRecords" onclick="switchWorkspaceTab('records')" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-800 text-white shadow-xs transition">
+          <button type="button" id="navTabRecords" onclick="switchWorkspaceTab('records')" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-slate-900 to-blue-950 text-white shadow-sm transition">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
             <span>Senarai Rekod Pelatih</span>
             <span id="tabBadgeAll" class="bg-white/20 text-white px-2 py-0.5 rounded-full text-[10px]">0</span>
           </button>
 
-          <button type="button" id="navTabAnalytics" onclick="switchWorkspaceTab('analytics')" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-stone-600 hover:bg-stone-200/70 transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-amber-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+          <button type="button" id="navTabAnalytics" onclick="switchWorkspaceTab('analytics')" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-white/80 hover:text-slate-900 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-blue-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
             <span>Analisis & Laporan</span>
           </button>
 
-          <button type="button" id="navTabFollowup" onclick="switchWorkspaceTab('followup')" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-stone-600 hover:bg-stone-200/70 transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-amber-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+          <button type="button" id="navTabFollowup" onclick="switchWorkspaceTab('followup')" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-white/80 hover:text-slate-900 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-rose-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
             <span>Pantauan Tunggakan</span>
-            <span id="tabBadgeDue" class="bg-amber-200/80 text-amber-950 px-2 py-0.5 rounded-full text-[10px]">0</span>
+            <span id="tabBadgeDue" class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded-full text-[10px]">0</span>
           </button>
         </div>
 
         <div class="flex items-center gap-1.5 text-[11px] font-bold px-2">
-          <span class="text-stone-500 hidden xl:inline mr-1">Filter:</span>
-          <button type="button" onclick="quickStatusFilter('')" id="pillAll" class="px-3 py-1.5 rounded-lg bg-stone-800 text-white transition">Semua</button>
-          <button type="button" onclick="quickStatusFilter('Paid')" id="pillPaid" class="px-3 py-1.5 rounded-lg bg-white text-stone-700 border border-stone-300 hover:bg-stone-50 transition">Selesai</button>
-          <button type="button" onclick="quickStatusFilter('Outstanding')" id="pillDue" class="px-3 py-1.5 rounded-lg bg-white text-stone-700 border border-stone-300 hover:bg-stone-50 transition">Ada Baki</button>
+          <span class="text-slate-500 hidden xl:inline mr-1">Filter:</span>
+          <button type="button" onclick="quickStatusFilter('')" id="pillAll" class="px-3 py-1.5 rounded-lg bg-slate-900 text-white shadow-2xs transition">Semua</button>
+          <button type="button" onclick="quickStatusFilter('Paid')" id="pillPaid" class="px-3 py-1.5 rounded-lg bg-white/80 text-slate-700 border border-white hover:bg-white transition">Selesai</button>
+          <button type="button" onclick="quickStatusFilter('Outstanding')" id="pillDue" class="px-3 py-1.5 rounded-lg bg-white/80 text-slate-700 border border-white hover:bg-white transition">Ada Baki</button>
         </div>
       </div>
 
       <!-- SHARED SMART FILTER BAR -->
-      <section class="bg-white p-4 rounded-2xl border border-stone-200 shadow-xs">
+      <section class="glass-panel p-4 rounded-2xl">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2.5 text-xs">
           <div class="relative lg:col-span-2">
-            <input type="text" id="filterSearch" oninput="applyFilters()" placeholder="Cari nama pelatih, no. telefon atau pusat bertauliah..." class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl pl-9 pr-3 py-2.5 outline-none" />
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone-400 absolute left-3 top-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="filterSearch" oninput="applyFilters()" placeholder="Cari nama pelatih, no. telefon atau pusat bertauliah..." class="w-full bg-white/85 border border-white focus:bg-white focus:border-blue-600 text-slate-800 rounded-xl pl-9 pr-3 py-2.5 outline-none shadow-2xs" />
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
           </div>
-          <select id="filterProgram" onchange="applyFilters()" class="bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-700 rounded-xl px-3 py-2.5 outline-none">
+          <select id="filterProgram" onchange="applyFilters()" class="bg-white/85 border border-white focus:bg-white focus:border-blue-600 text-slate-700 rounded-xl px-3 py-2.5 outline-none shadow-2xs">
             <option value="">Semua Program</option>
             <option value="SKM Seni Pembuatan Pastri & Kek">SKM Seni Pembuatan Pastri & Kek</option>
             <option value="SKM Teknologi Automotif">SKM Teknologi Automotif</option>
@@ -321,7 +340,7 @@
             <option value="SKM Penyejukan & Penyamanan Udara (RAC)">SKM Penyejukan & Penyamanan Udara (RAC)</option>
             <option value="SKM Terapi Kecantikan">SKM Terapi Kecantikan</option>
           </select>
-          <select id="filterIntake" onchange="applyFilters()" class="bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-700 rounded-xl px-3 py-2.5 outline-none">
+          <select id="filterIntake" onchange="applyFilters()" class="bg-white/85 border border-white focus:bg-white focus:border-blue-600 text-slate-700 rounded-xl px-3 py-2.5 outline-none shadow-2xs">
             <option value="">Semua Bulan Intake</option>
             <option value="Januari">Januari</option>
             <option value="Februari">Februari</option>
@@ -336,14 +355,14 @@
             <option value="November">November</option>
             <option value="Disember">Disember</option>
           </select>
-          <select id="filterPA" onchange="applyFilters()" class="bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-700 rounded-xl px-3 py-2.5 outline-none">
+          <select id="filterPA" onchange="applyFilters()" class="bg-white/85 border border-white focus:bg-white focus:border-blue-600 text-slate-700 rounded-xl px-3 py-2.5 outline-none shadow-2xs">
             <option value="">Semua Penasihat Akademik</option>
           </select>
           <div class="flex gap-2">
-            <select id="filterManager" onchange="applyFilters()" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-700 rounded-xl px-3 py-2.5 outline-none">
+            <select id="filterManager" onchange="applyFilters()" class="w-full bg-white/85 border border-white focus:bg-white focus:border-blue-600 text-slate-700 rounded-xl px-3 py-2.5 outline-none shadow-2xs">
               <option value="">Semua Pengurus</option>
             </select>
-            <button type="button" onclick="resetFilters()" title="Reset Semua Penapis" class="px-3 bg-[#f5efe8] hover:bg-stone-200 text-stone-700 border border-stone-300 rounded-xl font-bold transition shrink-0">
+            <button type="button" onclick="resetFilters()" title="Reset Semua Penapis" class="px-3 bg-white/90 hover:bg-white text-slate-700 border border-white rounded-xl font-bold shadow-2xs transition shrink-0">
               ↺
             </button>
           </div>
@@ -352,20 +371,20 @@
       </section>
 
       <!-- ==================== VIEW 1: MASTER RECORD TABLE (SEPARATE COLUMNS) ==================== -->
-      <section id="viewRecords" class="bg-white rounded-2xl border border-stone-200 shadow-xs overflow-hidden">
-        <div class="px-5 py-3.5 bg-[#f5efe8] border-b border-stone-200 flex flex-wrap justify-between items-center gap-2">
+      <section id="viewRecords" class="glass-panel rounded-2xl overflow-hidden">
+        <div class="px-5 py-3.5 bg-white/50 border-b border-white/80 flex flex-wrap justify-between items-center gap-2">
           <div class="flex items-center gap-2">
-            <span class="w-2 h-5 rounded-full bg-amber-800"></span>
-            <h2 class="text-sm font-bold text-stone-800">Senarai Rekod Pelatih</h2>
+            <span class="w-2 h-5 rounded-full bg-gradient-to-b from-slate-900 to-blue-800"></span>
+            <h2 class="text-sm font-bold text-slate-900">Senarai Rekod Pelatih</h2>
           </div>
-          <span id="recordCountBadge" class="text-xs font-bold text-amber-900 bg-amber-100/80 border border-amber-200 px-3 py-1 rounded-full">Memuatkan...</span>
+          <span id="recordCountBadge" class="text-xs font-bold text-blue-950 bg-sky-100/80 border border-white px-3 py-1 rounded-full">Memuatkan...</span>
         </div>
 
         <div class="overflow-x-auto max-h-[650px]">
           <table class="w-full text-left border-collapse text-xs whitespace-nowrap">
-            <thead class="bg-[#faf7f4] text-stone-600 uppercase tracking-wider border-b border-stone-200 sticky top-0 z-20">
+            <thead class="bg-slate-100/90 backdrop-blur-md text-slate-600 uppercase tracking-wider border-b border-slate-200/80 sticky top-0 z-20">
               <tr>
-                <th class="py-3.5 px-4 font-bold sticky left-0 bg-[#faf7f4] z-30 border-r border-stone-200">Nama Pelatih</th>
+                <th class="py-3.5 px-4 font-bold sticky left-0 bg-slate-100/95 z-30 border-r border-slate-200/80">Nama Pelatih</th>
                 <th class="py-3.5 px-3.5 font-bold">No. Telefon Pelajar</th>
                 <th class="py-3.5 px-3.5 font-bold">No. Telefon Bapa</th>
                 <th class="py-3.5 px-3.5 font-bold">No. Telefon Ibu</th>
@@ -384,27 +403,27 @@
                 <th class="py-3.5 px-4 text-center font-bold">Tindakan</th>
               </tr>
             </thead>
-            <tbody id="tableBody" class="divide-y divide-stone-100">
-              <tr><td colspan="17" class="p-8 text-center text-stone-500">Memuatkan data dari Google Sheets...</td></tr>
+            <tbody id="tableBody" class="divide-y divide-slate-200/50">
+              <tr><td colspan="17" class="p-8 text-center text-slate-500">Memuatkan data dari Google Sheets...</td></tr>
             </tbody>
           </table>
         </div>
       </section>
 
       <!-- ==================== VIEW 2: ANALYTICS & BREAKDOWN ==================== -->
-      <section id="viewAnalytics" class="hidden bg-white rounded-2xl border border-stone-200 shadow-xs overflow-hidden">
-        <div class="px-6 py-4 bg-[#f5efe8] border-b border-stone-200 flex flex-wrap justify-between items-center gap-3">
+      <section id="viewAnalytics" class="hidden glass-panel rounded-2xl overflow-hidden">
+        <div class="px-6 py-4 bg-white/50 border-b border-white/80 flex flex-wrap justify-between items-center gap-3">
           <div class="flex items-center gap-2.5">
-            <span class="w-2 h-6 rounded-full bg-amber-800"></span>
+            <span class="w-2 h-6 rounded-full bg-gradient-to-b from-slate-900 to-blue-800"></span>
             <div>
-              <h2 class="text-sm sm:text-base font-bold text-stone-800">Analisis & Pecahan Data Pendaftaran</h2>
-              <p class="text-xs text-stone-500">Analisis dinamik mengikut penapis yang dipilih di atas.</p>
+              <h2 class="text-sm sm:text-base font-bold text-slate-900">Analisis & Pecahan Data Pendaftaran</h2>
+              <p class="text-xs text-slate-500">Analisis dinamik mengikut penapis yang dipilih di atas.</p>
             </div>
           </div>
           <div class="flex flex-wrap items-center gap-2 text-xs">
-            <div class="flex items-center gap-1.5 bg-white border border-stone-300 rounded-xl px-3 py-1.5">
-              <span class="font-semibold text-stone-500">Pecahan:</span>
-              <select id="chartGroupBy" onchange="updateChart()" class="font-bold text-stone-800 bg-transparent focus:outline-none cursor-pointer">
+            <div class="flex items-center gap-1.5 bg-white/85 border border-white rounded-xl px-3 py-1.5 shadow-2xs">
+              <span class="font-semibold text-slate-500">Pecahan:</span>
+              <select id="chartGroupBy" onchange="updateChart()" class="font-bold text-slate-800 bg-transparent focus:outline-none cursor-pointer">
                 <option value="PA">Penasihat Akademik</option>
                 <option value="Program">Program Pilihan</option>
                 <option value="PusatBertauliah">Pusat Bertauliah</option>
@@ -414,9 +433,9 @@
               </select>
             </div>
 
-            <div class="flex items-center gap-1.5 bg-white border border-stone-300 rounded-xl px-3 py-1.5">
-              <span class="font-semibold text-stone-500">Metrik:</span>
-              <select id="chartMetric" onchange="updateChart()" class="font-bold text-stone-800 bg-transparent focus:outline-none cursor-pointer">
+            <div class="flex items-center gap-1.5 bg-white/85 border border-white rounded-xl px-3 py-1.5 shadow-2xs">
+              <span class="font-semibold text-slate-500">Metrik:</span>
+              <select id="chartMetric" onchange="updateChart()" class="font-bold text-slate-800 bg-transparent focus:outline-none cursor-pointer">
                 <option value="count">Bilangan Pelajar (Orang)</option>
                 <option value="fee">Jumlah Yuran (RM)</option>
                 <option value="paid">Jumlah Dibayar (RM)</option>
@@ -433,9 +452,9 @@
             </div>
           </div>
 
-          <div class="lg:col-span-8 overflow-x-auto rounded-xl border border-stone-200 bg-white">
+          <div class="lg:col-span-8 overflow-x-auto rounded-xl border border-white bg-white/75 shadow-2xs">
             <table class="w-full text-left border-collapse text-xs">
-              <thead class="bg-[#faf7f4] text-stone-600 uppercase tracking-wider border-b border-stone-200">
+              <thead class="bg-slate-100/80 text-slate-600 uppercase tracking-wider border-b border-slate-200/70">
                 <tr>
                   <th class="py-3 px-3.5 font-bold" id="breakdownColTitle">Kategori</th>
                   <th class="py-3 px-3.5 text-right font-bold">Pelajar</th>
@@ -445,8 +464,8 @@
                   <th class="py-3 px-3.5 text-right font-bold">Baki (RM)</th>
                 </tr>
               </thead>
-              <tbody id="chartBreakdownBody" class="divide-y divide-stone-100">
-                <tr><td colspan="6" class="p-6 text-center text-stone-500">Tiada data untuk dipaparkan.</td></tr>
+              <tbody id="chartBreakdownBody" class="divide-y divide-slate-200/50">
+                <tr><td colspan="6" class="p-6 text-center text-slate-500">Tiada data untuk dipaparkan.</td></tr>
               </tbody>
             </table>
           </div>
@@ -455,12 +474,12 @@
 
       <!-- ==================== VIEW 3: FOLLOW-UP & OUTSTANDING CARDS ==================== -->
       <section id="viewFollowup" class="hidden space-y-4">
-        <div class="bg-[#f5efe8] border border-stone-200 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+        <div class="glass-panel rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h2 class="text-sm sm:text-base font-bold text-stone-800">Senarai Tindakan Susulan Baki Yuran</h2>
-            <p class="text-xs text-stone-600">Klik butang WhatsApp untuk menghantar peringatan mesra terus kepada pelajar atau waris.</p>
+            <h2 class="text-sm sm:text-base font-bold text-slate-900">Senarai Tindakan Susulan Baki Yuran</h2>
+            <p class="text-xs text-slate-600">Klik butang WhatsApp untuk menghantar peringatan mesra terus kepada pelajar atau waris.</p>
           </div>
-          <span id="followupSummaryBadge" class="text-xs font-extrabold bg-amber-100 text-amber-950 border border-amber-200 px-3.5 py-1.5 rounded-xl">0 Rekod Berbaki</span>
+          <span id="followupSummaryBadge" class="text-xs font-extrabold bg-rose-100/90 text-rose-900 border border-white px-3.5 py-1.5 rounded-xl">0 Rekod Berbaki</span>
         </div>
 
         <div id="followupCardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
@@ -470,57 +489,57 @@
   </div>
 
   <!-- ==================== SLIDE-OVER DRAWER: REGISTER NEW STUDENT ==================== -->
-  <div id="registerDrawerBackdrop" onclick="closeRegisterDrawer()" class="hidden fixed inset-0 bg-stone-900/40 backdrop-blur-xs z-40 transition-opacity"></div>
-  <aside id="registerDrawer" class="fixed top-0 right-0 h-full w-full max-w-2xl bg-[#fbf9f6] border-l border-stone-200 shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
-    <div class="px-6 py-4 bg-[#f5efe8] border-b border-stone-200 flex items-center justify-between shrink-0">
+  <div id="registerDrawerBackdrop" onclick="closeRegisterDrawer()" class="hidden fixed inset-0 bg-slate-900/30 backdrop-blur-sm z-40 transition-opacity"></div>
+  <aside id="registerDrawer" class="fixed top-0 right-0 h-full w-full max-w-2xl bg-white/90 backdrop-blur-2xl border-l border-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
+    <div class="px-6 py-4 bg-white/60 border-b border-slate-200/70 flex items-center justify-between shrink-0">
       <div class="flex items-center gap-2.5">
-        <span class="w-2 h-6 rounded-full bg-amber-800"></span>
+        <span class="w-2 h-6 rounded-full bg-gradient-to-b from-slate-900 to-blue-800"></span>
         <div>
-          <h2 class="text-base font-extrabold text-stone-800">Daftar Pelatih Baharu</h2>
-          <p class="text-[11px] text-stone-600">Isi butiran pelatih, penasihat akademik & rekod yuran pendaftaran.</p>
+          <h2 class="text-base font-extrabold text-slate-900">Daftar Pelatih Baharu</h2>
+          <p class="text-[11px] text-slate-500">Isi butiran pelatih, penasihat akademik & rekod yuran pendaftaran.</p>
         </div>
       </div>
-      <button type="button" onclick="closeRegisterDrawer()" class="w-8 h-8 rounded-xl bg-white hover:bg-stone-100 text-stone-600 hover:text-stone-900 font-bold flex items-center justify-center border border-stone-300 transition">✕</button>
+      <button type="button" onclick="closeRegisterDrawer()" class="w-8 h-8 rounded-xl bg-white hover:bg-slate-100 text-slate-600 hover:text-slate-900 font-bold flex items-center justify-center border border-slate-200 transition">✕</button>
     </div>
 
     <div class="p-6 overflow-y-auto flex-1 space-y-5">
-      <div class="flex items-center justify-between bg-[#f5efe8] px-3.5 py-2.5 rounded-xl border border-stone-200">
-        <span class="text-xs font-semibold text-stone-700">Mod Pendaftaran Berkelompok</span>
-        <label class="inline-flex items-center gap-2 cursor-pointer text-xs font-bold text-amber-900">
-          <input type="checkbox" id="keepBatchDefaults" checked class="w-4 h-4 accent-amber-800 rounded" />
+      <div class="flex items-center justify-between bg-sky-50/70 px-3.5 py-2.5 rounded-xl border border-sky-200/70">
+        <span class="text-xs font-semibold text-slate-700">Mod Pendaftaran Berkelompok</span>
+        <label class="inline-flex items-center gap-2 cursor-pointer text-xs font-bold text-blue-950">
+          <input type="checkbox" id="keepBatchDefaults" checked class="w-4 h-4 accent-slate-900 rounded" />
           <span>Kekalkan Pusat, Program, Intake & Penasihat Akademik</span>
         </label>
       </div>
 
       <form id="keyInForm" onsubmit="submitRegistration(event)" class="space-y-4 text-xs">
-        <div class="bg-white p-4 rounded-2xl border border-stone-200 space-y-3">
-          <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider text-amber-900 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-md">A. Maklumat Pelatih & Waris</span>
+        <div class="bg-white/80 p-4 rounded-2xl border border-slate-200/80 space-y-3 shadow-2xs">
+          <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider text-blue-950 bg-sky-100/80 border border-sky-200 px-2.5 py-0.5 rounded-md">A. Maklumat Pelatih & Waris</span>
           <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">1. Nama Penuh Pelatih <span class="text-rose-600">*</span></label>
-            <input required id="inputNamaPelatih" name="NamaPelatih" placeholder="cth. Ahmad Bin Ali" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3.5 py-2.5 outline-none" />
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">1. Nama Penuh Pelatih <span class="text-rose-600">*</span></label>
+            <input required id="inputNamaPelatih" name="NamaPelatih" placeholder="cth. Ahmad Bin Ali" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3.5 py-2.5 outline-none" />
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">2. No. Telefon Pelajar <span class="text-rose-600">*</span></label>
-              <input required name="TelPelajar" placeholder="0123456789" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">2. No. Telefon Pelajar <span class="text-rose-600">*</span></label>
+              <input required name="TelPelajar" placeholder="0123456789" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none" />
             </div>
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">3. No. Telefon Bapa <span class="text-rose-600">*</span></label>
-              <input required name="TelBapa" placeholder="0198765432" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">3. No. Telefon Bapa <span class="text-rose-600">*</span></label>
+              <input required name="TelBapa" placeholder="0198765432" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none" />
             </div>
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">4. No. Telefon Ibu <span class="text-rose-600">*</span></label>
-              <input required name="TelIbu" placeholder="0176543210" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">4. No. Telefon Ibu <span class="text-rose-600">*</span></label>
+              <input required name="TelIbu" placeholder="0176543210" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none" />
             </div>
           </div>
         </div>
 
-        <div class="bg-white p-4 rounded-2xl border border-stone-200 space-y-3">
-          <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider text-stone-700 bg-stone-100 border border-stone-200 px-2.5 py-0.5 rounded-md">B. Pengajian & Penasihat Akademik</span>
+        <div class="bg-white/80 p-4 rounded-2xl border border-slate-200/80 space-y-3 shadow-2xs">
+          <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider text-indigo-950 bg-indigo-100/80 border border-indigo-200 px-2.5 py-0.5 rounded-md">B. Pengajian & Penasihat Akademik</span>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">5. Pusat Bertauliah <span class="text-rose-600">*</span></label>
-              <select required id="inputPusatBertauliah" name="PusatBertauliah" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none">
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">5. Pusat Bertauliah <span class="text-rose-600">*</span></label>
+              <select required id="inputPusatBertauliah" name="PusatBertauliah" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none">
                 <option value="Ambitious College">Ambitious College</option>
                 <option value="Jv Skill">Jv Skill</option>
                 <option value="Adelphi College">Adelphi College</option>
@@ -534,8 +553,8 @@
               </select>
             </div>
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">6. Program SKM <span class="text-rose-600">*</span></label>
-              <select required id="inputProgram" name="Program" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none">
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">6. Program SKM <span class="text-rose-600">*</span></label>
+              <select required id="inputProgram" name="Program" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none">
                 <option value="SKM Seni Pembuatan Pastri & Kek">SKM Seni Pembuatan Pastri & Kek</option>
                 <option value="SKM Teknologi Automotif">SKM Teknologi Automotif</option>
                 <option value="SKM Teknologi Automasi Industri">SKM Teknologi Automasi Industri</option>
@@ -551,12 +570,12 @@
               </select>
             </div>
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">7. Tarikh Daftar <span class="text-rose-600">*</span></label>
-              <input required type="date" id="inputTarikhDaftar" name="TarikhDaftar" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">7. Tarikh Daftar <span class="text-rose-600">*</span></label>
+              <input required type="date" id="inputTarikhDaftar" name="TarikhDaftar" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none" />
             </div>
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">8. Bulan Intake <span class="text-rose-600">*</span></label>
-              <select required id="inputBulanIntake" name="BulanIntake" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none">
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">8. Bulan Intake <span class="text-rose-600">*</span></label>
+              <select required id="inputBulanIntake" name="BulanIntake" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none">
                 <option value="Januari">Januari</option>
                 <option value="Februari">Februari</option>
                 <option value="Mac">Mac</option>
@@ -572,53 +591,53 @@
               </select>
             </div>
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">9. Penasihat Akademik <span class="text-rose-600">*</span></label>
-              <input required id="inputPA" name="PA" placeholder="cth. Cik Nadhirah" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">9. Penasihat Akademik <span class="text-rose-600">*</span></label>
+              <input required id="inputPA" name="PA" placeholder="cth. Cik Nadhirah" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none" />
             </div>
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">10. Pengurus <span class="text-rose-600">*</span></label>
-              <input required id="inputPengurus" name="Pengurus" placeholder="cth. En. Hafiz" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">10. Pengurus <span class="text-rose-600">*</span></label>
+              <input required id="inputPengurus" name="Pengurus" placeholder="cth. En. Hafiz" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none" />
             </div>
           </div>
           <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">11. Catatan Bayaran</label>
-            <input name="CatatanBayaran" placeholder="Pilihan (cth. Ansuran pertama)" class="w-full bg-[#faf7f4] border border-stone-300 focus:bg-white focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">11. Catatan Bayaran</label>
+            <input name="CatatanBayaran" placeholder="Pilihan (cth. Ansuran pertama)" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none" />
           </div>
         </div>
 
-        <div class="bg-[#f5efe8] p-4 rounded-2xl border border-stone-200 space-y-3">
-          <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider text-amber-950 bg-amber-200/70 border border-amber-300 px-2.5 py-0.5 rounded-md">C. Rekod Yuran & Bayaran</span>
+        <div class="bg-sky-50/60 p-4 rounded-2xl border border-sky-200/80 space-y-3 shadow-2xs">
+          <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider text-slate-900 bg-white border border-sky-200 px-2.5 py-0.5 rounded-md">C. Rekod Yuran & Bayaran</span>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-700 mb-1">Yuran (RM) <span class="text-rose-600">*</span></label>
-              <input required type="number" step="50" min="0" id="inputYuran" name="Yuran" value="1600" oninput="calcLiveBalance()" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 font-bold outline-none" />
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">Yuran (RM) <span class="text-rose-600">*</span></label>
+              <input required type="number" step="50" min="0" id="inputYuran" name="Yuran" value="1600" oninput="calcLiveBalance()" class="w-full bg-white border border-slate-200 focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 font-bold outline-none" />
             </div>
             <div>
               <div class="flex justify-between items-center mb-1">
-                <label class="text-[11px] font-bold uppercase tracking-wider text-stone-700">Dibayar (RM) <span class="text-rose-600">*</span></label>
-                <button type="button" onclick="setFullPayment()" class="text-[10px] bg-amber-200/80 hover:bg-amber-300 text-amber-950 px-2 py-0.5 rounded-md font-bold transition">Bayar Penuh</button>
+                <label class="text-[11px] font-bold uppercase tracking-wider text-slate-700">Dibayar (RM) <span class="text-rose-600">*</span></label>
+                <button type="button" onclick="setFullPayment()" class="text-[10px] bg-sky-100 hover:bg-sky-200 text-blue-950 px-2 py-0.5 rounded-md font-bold transition">Bayar Penuh</button>
               </div>
-              <input required type="number" step="50" min="0" id="inputDibayar" name="Dibayar" value="1000" oninput="calcLiveBalance()" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 font-bold outline-none" />
+              <input required type="number" step="50" min="0" id="inputDibayar" name="Dibayar" value="1000" oninput="calcLiveBalance()" class="w-full bg-white border border-slate-200 focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 font-bold outline-none" />
             </div>
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-700 mb-1">Bayar Tunggakan (RM)</label>
-              <input type="number" step="50" min="0" id="inputBayarTunggakan" name="BayarTunggakan" placeholder="0" oninput="calcLiveBalance()" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">Bayar Tunggakan (RM)</label>
+              <input type="number" step="50" min="0" id="inputBayarTunggakan" name="BayarTunggakan" placeholder="0" oninput="calcLiveBalance()" class="w-full bg-white border border-slate-200 focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none" />
             </div>
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-700 mb-1">Tarikh Bayar</label>
-              <input type="date" id="inputTarikhBayar" name="TarikhBayar" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">Tarikh Bayar</label>
+              <input type="date" id="inputTarikhBayar" name="TarikhBayar" class="w-full bg-white border border-slate-200 focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none" />
             </div>
           </div>
 
-          <div class="px-4 py-2.5 bg-white border border-stone-200 rounded-xl flex items-center justify-between">
-            <span class="text-xs font-bold text-stone-600">Baki Semasa Selepas Pendaftaran:</span>
+          <div class="px-4 py-2.5 bg-white/90 border border-sky-200/80 rounded-xl flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-600">Baki Semasa Selepas Pendaftaran:</span>
             <span id="liveBalancePreview" class="text-base font-extrabold text-rose-600">RM 600.00</span>
           </div>
         </div>
 
         <div class="pt-2 flex gap-2.5">
-          <button type="button" onclick="closeRegisterDrawer()" class="w-1/3 py-3 border border-stone-300 hover:bg-stone-100 text-stone-700 font-bold rounded-xl transition">Batal</button>
-          <button type="submit" id="submitBtn" class="w-2/3 py-3 bg-amber-800 hover:bg-amber-900 text-white font-bold rounded-xl shadow-sm transition flex items-center justify-center gap-2">
+          <button type="button" onclick="closeRegisterDrawer()" class="w-1/3 py-3 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-bold rounded-xl transition">Batal</button>
+          <button type="submit" id="submitBtn" class="w-2/3 py-3 bg-gradient-to-r from-slate-900 to-blue-950 hover:from-slate-800 hover:to-blue-900 text-white font-bold rounded-xl shadow-md shadow-slate-900/15 transition flex items-center justify-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             <span>Simpan Rekod Pelatih</span>
           </button>
@@ -628,59 +647,59 @@
   </aside>
 
   <!-- Settle Balance Modal -->
-  <div id="payModal" class="hidden fixed inset-0 bg-stone-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-    <div class="bg-[#fbf9f6] rounded-2xl max-w-md w-full p-6 shadow-xl border border-stone-200 space-y-4">
-      <div class="flex justify-between items-center border-b border-stone-200 pb-3">
-        <h2 class="text-base font-bold text-stone-800">Rekod Bayaran Tunggakan</h2>
-        <button type="button" onclick="document.getElementById('payModal').classList.add('hidden')" class="text-stone-400 hover:text-stone-700 font-bold">✕</button>
+  <div id="payModal" class="hidden fixed inset-0 bg-slate-900/35 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <div class="bg-white/95 backdrop-blur-2xl rounded-2xl max-w-md w-full p-6 shadow-2xl border border-white space-y-4">
+      <div class="flex justify-between items-center border-b border-slate-200/70 pb-3">
+        <h2 class="text-base font-bold text-slate-900">Rekod Bayaran Tunggakan</h2>
+        <button type="button" onclick="document.getElementById('payModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-700 font-bold">✕</button>
       </div>
-      <p id="payStudentInfo" class="text-xs font-semibold text-amber-950 bg-amber-50 border border-amber-200 p-3 rounded-xl"></p>
+      <p id="payStudentInfo" class="text-xs font-semibold text-blue-950 bg-sky-50 border border-sky-200 p-3 rounded-xl"></p>
       <form onsubmit="submitPayment(event)" class="space-y-3.5 text-xs sm:text-sm">
         <input type="hidden" id="payRowIndex" />
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Jumlah Bayaran Diterima (RM) *</label>
-          <input required type="number" step="50" min="0" id="payAmount" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3.5 py-2.5 font-bold outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Jumlah Bayaran Diterima (RM) *</label>
+          <input required type="number" step="50" min="0" id="payAmount" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3.5 py-2.5 font-bold outline-none" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Tarikh Bayar *</label>
-          <input required type="date" id="payDate" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3.5 py-2.5 outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Tarikh Bayar *</label>
+          <input required type="date" id="payDate" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3.5 py-2.5 outline-none" />
         </div>
-        <div class="flex justify-end gap-2 pt-3 border-t border-stone-200">
-          <button type="button" onclick="document.getElementById('payModal').classList.add('hidden')" class="px-4 py-2 border border-stone-300 hover:bg-stone-100 text-stone-700 rounded-xl font-semibold text-xs">Batal</button>
-          <button type="submit" id="payBtn" class="px-4 py-2 bg-amber-800 hover:bg-amber-900 text-white font-semibold rounded-xl text-xs shadow-xs">Kemaskini Baki</button>
+        <div class="flex justify-end gap-2 pt-3 border-t border-slate-200/70">
+          <button type="button" onclick="document.getElementById('payModal').classList.add('hidden')" class="px-4 py-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 rounded-xl font-semibold text-xs">Batal</button>
+          <button type="submit" id="payBtn" class="px-4 py-2 bg-gradient-to-r from-slate-900 to-blue-950 hover:from-slate-800 hover:to-blue-900 text-white font-semibold rounded-xl text-xs shadow-sm">Kemaskini Baki</button>
         </div>
       </form>
     </div>
   </div>
 
   <!-- Edit Student Modal -->
-  <div id="editModal" class="hidden fixed inset-0 bg-stone-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50 overflow-y-auto">
-    <div class="bg-[#fbf9f6] rounded-2xl max-w-3xl w-full p-6 shadow-xl border border-stone-200 space-y-4 my-8">
-      <div class="flex justify-between items-center border-b border-stone-200 pb-3">
-        <h2 class="text-base font-bold text-stone-800">Edit Rekod Pelatih</h2>
-        <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')" class="text-stone-400 hover:text-stone-700 font-bold text-lg">✕</button>
+  <div id="editModal" class="hidden fixed inset-0 bg-slate-900/35 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto">
+    <div class="bg-white/95 backdrop-blur-2xl rounded-2xl max-w-3xl w-full p-6 shadow-2xl border border-white space-y-4 my-8">
+      <div class="flex justify-between items-center border-b border-slate-200/70 pb-3">
+        <h2 class="text-base font-bold text-slate-900">Edit Rekod Pelatih</h2>
+        <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-700 font-bold text-lg">✕</button>
       </div>
       <form onsubmit="submitEdit(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 text-xs">
         <input type="hidden" id="editRowIndex" />
         <div class="sm:col-span-2">
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Nama Pelatih *</label>
-          <input required id="editNamaPelatih" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Nama Pelatih *</label>
+          <input required id="editNamaPelatih" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">No. Telefon Pelajar *</label>
-          <input required id="editTelPelajar" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">No. Telefon Pelajar *</label>
+          <input required id="editTelPelajar" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">No. Telefon Bapa *</label>
-          <input required id="editTelBapa" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">No. Telefon Bapa *</label>
+          <input required id="editTelBapa" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">No. Telefon Ibu *</label>
-          <input required id="editTelIbu" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">No. Telefon Ibu *</label>
+          <input required id="editTelIbu" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Pusat Bertauliah *</label>
-          <select required id="editPusatBertauliah" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none">
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Pusat Bertauliah *</label>
+          <select required id="editPusatBertauliah" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none">
             <option value="Ambitious College">Ambitious College</option>
             <option value="Jv Skill">Jv Skill</option>
             <option value="Adelphi College">Adelphi College</option>
@@ -694,8 +713,8 @@
           </select>
         </div>
         <div class="sm:col-span-2">
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Program *</label>
-          <select required id="editProgram" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none">
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Program *</label>
+          <select required id="editProgram" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none">
             <option value="SKM Seni Pembuatan Pastri & Kek">SKM Seni Pembuatan Pastri & Kek</option>
             <option value="SKM Teknologi Automotif">SKM Teknologi Automotif</option>
             <option value="SKM Teknologi Automasi Industri">SKM Teknologi Automasi Industri</option>
@@ -711,12 +730,12 @@
           </select>
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Tarikh Daftar *</label>
-          <input required type="date" id="editTarikhDaftar" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Tarikh Daftar *</label>
+          <input required type="date" id="editTarikhDaftar" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Bulan Intake *</label>
-          <select required id="editBulanIntake" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none">
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Bulan Intake *</label>
+          <select required id="editBulanIntake" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none">
             <option value="Januari">Januari</option>
             <option value="Februari">Februari</option>
             <option value="Mac">Mac</option>
@@ -732,36 +751,36 @@
           </select>
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Penasihat Akademik *</label>
-          <input required id="editPA" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Penasihat Akademik *</label>
+          <input required id="editPA" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Pengurus *</label>
-          <input required id="editPengurus" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Pengurus *</label>
+          <input required id="editPengurus" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Yuran (RM) *</label>
-          <input required type="number" step="50" min="0" id="editYuran" oninput="calcEditBalance()" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 font-bold outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Yuran (RM) *</label>
+          <input required type="number" step="50" min="0" id="editYuran" oninput="calcEditBalance()" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 font-bold outline-none" />
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Jumlah Dibayar (RM) *</label>
-          <input required type="number" step="50" min="0" id="editDibayar" oninput="calcEditBalance()" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 font-bold outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Jumlah Dibayar (RM) *</label>
+          <input required type="number" step="50" min="0" id="editDibayar" oninput="calcEditBalance()" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 font-bold outline-none" />
         </div>
-        <div class="px-3 py-2 bg-[#f5efe8] border border-stone-200 rounded-xl flex flex-col justify-center">
-          <span class="text-[10px] uppercase font-bold tracking-wider text-stone-600">Baki Terkini</span>
+        <div class="px-3 py-2 bg-sky-50/80 border border-sky-200 rounded-xl flex flex-col justify-center">
+          <span class="text-[10px] uppercase font-bold tracking-wider text-slate-600">Baki Terkini</span>
           <span id="editBakiPreview" class="text-sm font-extrabold text-rose-600">RM 0.00</span>
         </div>
         <div class="sm:col-span-3">
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Tarikh Bayar (Rekod Ansuran)</label>
-          <input id="editTarikhBayar" placeholder="cth. RM300.00 (2026-04-20) | RM300.00 (2026-05-05)" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Tarikh Bayar (Rekod Ansuran)</label>
+          <input id="editTarikhBayar" placeholder="cth. RM300.00 (2026-04-20) | RM300.00 (2026-05-05)" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none" />
         </div>
         <div class="sm:col-span-3">
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-stone-600 mb-1">Catatan Bayaran</label>
-          <input id="editCatatanBayaran" class="w-full bg-white border border-stone-300 focus:border-amber-700 text-stone-800 rounded-xl px-3 py-2 outline-none" />
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Catatan Bayaran</label>
+          <input id="editCatatanBayaran" class="w-full bg-slate-50/70 border border-slate-200 focus:bg-white focus:border-blue-600 text-slate-900 rounded-xl px-3 py-2 outline-none" />
         </div>
-        <div class="sm:col-span-3 flex justify-end gap-2 pt-3 border-t border-stone-200">
-          <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')" class="px-4 py-2 border border-stone-300 hover:bg-stone-100 text-stone-700 rounded-xl font-semibold">Batal</button>
-          <button type="submit" id="editSaveBtn" class="px-4 py-2 bg-amber-800 hover:bg-amber-900 text-white font-semibold rounded-xl shadow-xs">Simpan Perubahan</button>
+        <div class="sm:col-span-3 flex justify-end gap-2 pt-3 border-t border-slate-200/70">
+          <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')" class="px-4 py-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 rounded-xl font-semibold">Batal</button>
+          <button type="submit" id="editSaveBtn" class="px-4 py-2 bg-gradient-to-r from-slate-900 to-blue-950 hover:from-slate-800 hover:to-blue-900 text-white font-semibold rounded-xl shadow-sm">Simpan Perubahan</button>
         </div>
       </form>
     </div>
@@ -777,9 +796,55 @@
     let pieChartInstance = null;
 
     const CHART_COLORS = [
-      '#92400e', '#d97706', '#78716c', '#b45309', '#a8a29e',
-      '#f59e0b', '#57534e', '#fbbf24', '#44403c', '#fcd34d'
+      '#0f172a', '#0284c7', '#4f46e5', '#0d9488', '#64748b',
+      '#38bdf8', '#818cf8', '#2dd4bf', '#334155', '#94a3b8'
     ];
+
+    // ==================== CRYPTOGRAPHIC SECURITY (SHA-256) ====================
+    async function sha256Hex(plainText) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(plainText);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function togglePasswordVisibility(inputId) {
+      const inp = document.getElementById(inputId);
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+    }
+
+    function evaluatePasswordStrength(inputId, barId, textId) {
+      const pw = document.getElementById(inputId).value;
+      const bar = document.getElementById(barId);
+      const txt = document.getElementById(textId);
+
+      let score = 0;
+      if (pw.length >= 8) score++;
+      if (/[A-Z]/.test(pw)) score++;
+      if (/[a-z]/.test(pw)) score++;
+      if (/[0-9]/.test(pw)) score++;
+      if (/[^A-Za-z0-9]/.test(pw)) score++;
+
+      const widths = ['0%', '25%', '45%', '70%', '90%', '100%'];
+      const colors = ['bg-rose-500', 'bg-rose-500', 'bg-amber-500', 'bg-sky-500', 'bg-blue-600', 'bg-emerald-600'];
+      const labels = [
+        'Min. 8 aksara, 1 huruf besar, 1 huruf kecil & 1 nombor.',
+        'Lemah — Tambah huruf besar, nombor dan min. 8 aksara.',
+        'Sederhana — Hampir memenuhi kriteria keselamatan.',
+        'Baik — Tambah nombor atau simbol untuk tahap maksimum.',
+        'Kukuh — Kata laluan selamat!',
+        'Sangat Kukuh — Tahap keselamatan optimum!'
+      ];
+
+      bar.style.width = widths[score];
+      bar.className = `h-full ${colors[score]} transition-all duration-300`;
+      txt.textContent = labels[score];
+    }
+
+    function isStrongPassword(pw) {
+      return pw.length >= 8 && /[A-Z]/.test(pw) && /[a-z]/.test(pw) && /[0-9]/.test(pw);
+    }
 
     // ==================== AUTHENTICATION & GMAIL OTP LOGIC ====================
     window.addEventListener('DOMContentLoaded', () => {
@@ -833,13 +898,13 @@
       if (mode === 'login') {
         tabSwitcher.classList.remove('hidden');
         loginForm.classList.remove('hidden');
-        tabLoginBtn.className = 'py-2 rounded-lg bg-amber-800 text-white shadow-xs transition';
-        tabSignupBtn.className = 'py-2 rounded-lg text-stone-600 hover:text-stone-900 transition';
+        tabLoginBtn.className = 'py-2 rounded-lg bg-gradient-to-r from-slate-900 to-blue-950 text-white shadow-sm transition';
+        tabSignupBtn.className = 'py-2 rounded-lg text-slate-600 hover:text-slate-900 transition';
       } else if (mode === 'signup') {
         tabSwitcher.classList.remove('hidden');
         signupForm.classList.remove('hidden');
-        tabSignupBtn.className = 'py-2 rounded-lg bg-amber-800 text-white shadow-xs transition';
-        tabLoginBtn.className = 'py-2 rounded-lg text-stone-600 hover:text-stone-900 transition';
+        tabSignupBtn.className = 'py-2 rounded-lg bg-gradient-to-r from-slate-900 to-blue-950 text-white shadow-sm transition';
+        tabLoginBtn.className = 'py-2 rounded-lg text-slate-600 hover:text-slate-900 transition';
       } else if (mode === 'forgot') {
         tabSwitcher.classList.add('hidden');
         forgotContainer.classList.remove('hidden');
@@ -857,8 +922,8 @@
       const box = document.getElementById('authAlert');
       box.textContent = message;
       box.className = isError
-        ? 'mx-8 mt-5 p-3 rounded-xl text-xs font-semibold bg-rose-50 border border-rose-200 text-rose-800'
-        : 'mx-8 mt-5 p-3 rounded-xl text-xs font-semibold bg-amber-50 border border-amber-300 text-amber-950';
+        ? 'mx-8 mt-5 p-3 rounded-xl text-xs font-semibold bg-rose-50/95 border border-rose-200 text-rose-800'
+        : 'mx-8 mt-5 p-3 rounded-xl text-xs font-semibold bg-sky-50/95 border border-sky-200 text-blue-950';
       box.classList.remove('hidden');
     }
 
@@ -1024,7 +1089,7 @@
       btn.textContent = 'Simpan Kata Laluan';
     }
 
-// ==================== WORKSPACE & DRAWER CONTROLS ====================
+    // ==================== WORKSPACE & DRAWER CONTROLS ====================
     function switchWorkspaceTab(tab) {
       const views = {
         records: document.getElementById('viewRecords'),
@@ -1040,10 +1105,10 @@
       Object.keys(views).forEach(k => {
         if (k === tab) {
           views[k].classList.remove('hidden');
-          tabs[k].className = 'inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-800 text-white shadow-xs transition';
+          tabs[k].className = 'inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-slate-900 to-blue-950 text-white shadow-sm transition';
         } else {
           views[k].classList.add('hidden');
-          tabs[k].className = 'inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-stone-600 hover:bg-stone-200/70 transition';
+          tabs[k].className = 'inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-white/80 hover:text-slate-900 transition';
         }
       });
 
@@ -1068,9 +1133,9 @@
         'Paid': document.getElementById('pillPaid'),
         'Outstanding': document.getElementById('pillDue')
       };
-      pills[''].className = status === '' ? 'px-3 py-1.5 rounded-lg bg-stone-800 text-white transition' : 'px-3 py-1.5 rounded-lg bg-white text-stone-700 border border-stone-300 hover:bg-stone-50 transition';
-      pills['Paid'].className = status === 'Paid' ? 'px-3 py-1.5 rounded-lg bg-emerald-700 text-white transition' : 'px-3 py-1.5 rounded-lg bg-white text-stone-700 border border-stone-300 hover:bg-stone-50 transition';
-      pills['Outstanding'].className = status === 'Outstanding' ? 'px-3 py-1.5 rounded-lg bg-rose-700 text-white transition' : 'px-3 py-1.5 rounded-lg bg-white text-stone-700 border border-stone-300 hover:bg-stone-50 transition';
+      pills[''].className = status === '' ? 'px-3 py-1.5 rounded-lg bg-slate-900 text-white shadow-2xs transition' : 'px-3 py-1.5 rounded-lg bg-white/80 text-slate-700 border border-white hover:bg-white transition';
+      pills['Paid'].className = status === 'Paid' ? 'px-3 py-1.5 rounded-lg bg-emerald-700 text-white shadow-2xs transition' : 'px-3 py-1.5 rounded-lg bg-white/80 text-slate-700 border border-white hover:bg-white transition';
+      pills['Outstanding'].className = status === 'Outstanding' ? 'px-3 py-1.5 rounded-lg bg-rose-700 text-white shadow-2xs transition' : 'px-3 py-1.5 rounded-lg bg-white/80 text-slate-700 border border-white hover:bg-white transition';
       applyFilters();
     }
 
@@ -1158,7 +1223,7 @@
 
     async function fetchStudents() {
       const tbody = document.getElementById('tableBody');
-      tbody.innerHTML = '<tr><td colspan="17" class="p-8 text-center text-stone-500">Menyegerak data dengan Google Sheets...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="17" class="p-8 text-center text-slate-500">Menyegerak data dengan Google Sheets...</td></tr>';
       try {
         const res = await fetch(API_URL);
         const json = await res.json();
@@ -1278,20 +1343,20 @@
 
       const breakdownBody = document.getElementById('chartBreakdownBody');
       if (!sortedEntries.length) {
-        breakdownBody.innerHTML = '<tr><td colspan="6" class="p-6 text-center text-stone-500">Tiada data untuk dipaparkan.</td></tr>';
+        breakdownBody.innerHTML = '<tr><td colspan="6" class="p-6 text-center text-slate-500">Tiada data untuk dipaparkan.</td></tr>';
       } else {
         breakdownBody.innerHTML = sortedEntries.map(([label, stats], idx) => {
           const pct = totalMetricValue > 0 ? ((stats[metric] / totalMetricValue) * 100).toFixed(1) : '0.0';
           const dotColor = CHART_COLORS[idx % CHART_COLORS.length];
           return `
-            <tr class="hover:bg-[#faf7f4] transition">
-              <td class="py-2.5 px-3.5 font-semibold text-stone-800 flex items-center gap-2.5">
+            <tr class="hover:bg-white transition">
+              <td class="py-2.5 px-3.5 font-semibold text-slate-800 flex items-center gap-2.5">
                 <span class="w-2.5 h-2.5 rounded-full inline-block shrink-0" style="background:${dotColor}"></span>
                 ${label}
               </td>
-              <td class="py-2.5 px-3.5 text-right font-bold text-stone-800">${stats.count}</td>
-              <td class="py-2.5 px-3.5 text-right text-stone-500 font-medium">${pct}%</td>
-              <td class="py-2.5 px-3.5 text-right text-stone-700">${stats.fee.toFixed(2)}</td>
+              <td class="py-2.5 px-3.5 text-right font-bold text-slate-800">${stats.count}</td>
+              <td class="py-2.5 px-3.5 text-right text-slate-500 font-medium">${pct}%</td>
+              <td class="py-2.5 px-3.5 text-right text-slate-700">${stats.fee.toFixed(2)}</td>
               <td class="py-2.5 px-3.5 text-right text-emerald-700 font-semibold">${stats.paid.toFixed(2)}</td>
               <td class="py-2.5 px-3.5 text-right text-rose-600 font-semibold">${stats.balance.toFixed(2)}</td>
             </tr>
@@ -1321,7 +1386,7 @@
           plugins: {
             legend: { display: false },
             tooltip: {
-              backgroundColor: '#292524',
+              backgroundColor: '#0f172a',
               padding: 10,
               cornerRadius: 8,
               callbacks: {
@@ -1338,11 +1403,11 @@
       });
     }
 
-// ==================== SEPARATE COLUMNS MASTER TABLE ====================
+    // ==================== SEPARATE COLUMNS MASTER TABLE ====================
     function renderTable(list) {
       const tbody = document.getElementById('tableBody');
       if (!list.length) {
-        tbody.innerHTML = '<tr><td colspan="17" class="p-8 text-center text-stone-500">Tiada rekod pelajar ditemui.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="17" class="p-8 text-center text-slate-500">Tiada rekod pelajar ditemui.</td></tr>';
         return;
       }
 
@@ -1354,39 +1419,39 @@
         const safeName = String(s.NamaPelatih || '').replace(/'/g, "\\'");
 
         return `
-          <tr class="group bg-white hover:bg-[#faf7f4] transition">
-            <td class="py-3 px-4 font-bold text-stone-800 sticky left-0 bg-white group-hover:bg-[#faf7f4] z-10 border-r border-stone-200">${s.NamaPelatih || '-'}</td>
-            <td class="py-3 px-3.5 text-stone-600 font-mono text-[11px]">${s.TelPelajar || '-'}</td>
-            <td class="py-3 px-3.5 text-stone-600 font-mono text-[11px]">${s.TelBapa || '-'}</td>
-            <td class="py-3 px-3.5 text-stone-600 font-mono text-[11px]">${s.TelIbu || '-'}</td>
-            <td class="py-3 px-3.5 text-stone-700 font-medium">${s.PusatBertauliah || '-'}</td>
+          <tr class="group bg-white/55 hover:bg-white/95 transition">
+            <td class="py-3 px-4 font-bold text-slate-900 sticky left-0 bg-white/90 backdrop-blur-md group-hover:bg-white z-10 border-r border-slate-200/70">${s.NamaPelatih || '-'}</td>
+            <td class="py-3 px-3.5 text-slate-600 font-mono text-[11px]">${s.TelPelajar || '-'}</td>
+            <td class="py-3 px-3.5 text-slate-600 font-mono text-[11px]">${s.TelBapa || '-'}</td>
+            <td class="py-3 px-3.5 text-slate-600 font-mono text-[11px]">${s.TelIbu || '-'}</td>
+            <td class="py-3 px-3.5 text-slate-700 font-medium">${s.PusatBertauliah || '-'}</td>
             <td class="py-3 px-3.5">
-              <span class="px-2.5 py-1 bg-amber-50 text-amber-900 border border-amber-200 rounded-lg font-semibold">${s.Program || '-'}</span>
+              <span class="px-2.5 py-1 bg-sky-50/90 text-blue-950 border border-sky-200/80 rounded-lg font-semibold">${s.Program || '-'}</span>
             </td>
-            <td class="py-3 px-3.5 text-stone-600">${tarikhDaftar}</td>
-            <td class="py-3 px-3.5 font-semibold text-stone-700">${s.BulanIntake || '-'}</td>
-            <td class="py-3 px-3.5 font-semibold text-amber-900">${s.PA || '-'}</td>
-            <td class="py-3 px-3.5 text-stone-600">${s.Pengurus || '-'}</td>
-            <td class="py-3 px-3.5 text-right font-semibold text-stone-800">${Number(s.Yuran || 0).toFixed(2)}</td>
+            <td class="py-3 px-3.5 text-slate-600">${tarikhDaftar}</td>
+            <td class="py-3 px-3.5 font-semibold text-slate-700">${s.BulanIntake || '-'}</td>
+            <td class="py-3 px-3.5 font-semibold text-blue-900">${s.PA || '-'}</td>
+            <td class="py-3 px-3.5 text-slate-600">${s.Pengurus || '-'}</td>
+            <td class="py-3 px-3.5 text-right font-semibold text-slate-900">${Number(s.Yuran || 0).toFixed(2)}</td>
             <td class="py-3 px-3.5 text-right text-emerald-700 font-semibold">${Number(s.Dibayar || 0).toFixed(2)}</td>
-            <td class="py-3 px-3.5 text-right font-extrabold ${baki > 0 ? 'text-rose-600' : 'text-stone-400'}">${baki.toFixed(2)}</td>
-            <td class="py-3 px-3.5 text-stone-700 font-medium">${tarikhBayar}</td>
-            <td class="py-3 px-3.5 text-stone-500">${catatanBayaran}</td>
+            <td class="py-3 px-3.5 text-right font-extrabold ${baki > 0 ? 'text-rose-600' : 'text-slate-400'}">${baki.toFixed(2)}</td>
+            <td class="py-3 px-3.5 text-slate-700 font-medium">${tarikhBayar}</td>
+            <td class="py-3 px-3.5 text-slate-500">${catatanBayaran}</td>
             <td class="py-3 px-3.5">
               ${baki > 0
-                ? `<button onclick="openPayModal(${s.rowIndex}, '${safeName}', ${baki})" class="bg-amber-100 hover:bg-amber-200 text-amber-950 border border-amber-300 px-2.5 py-1 rounded-lg font-bold transition">Bayar Baki</button>`
-                : `<span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-full font-bold">Selesai</span>`
+                ? `<button onclick="openPayModal(${s.rowIndex}, '${safeName}', ${baki})" class="bg-amber-100/90 hover:bg-amber-200 text-amber-950 border border-amber-300/80 px-2.5 py-1 rounded-lg font-bold transition">Bayar Baki</button>`
+                : `<span class="inline-flex items-center gap-1 bg-emerald-50/90 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-full font-bold">Selesai</span>`
               }
             </td>
             <td class="py-3 px-4 text-center">
               <div class="inline-flex items-center justify-center gap-1.5">
-                <button onclick="openEditModal(${s.rowIndex})" title="Edit Rekod" class="p-1.5 bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-300 rounded-lg transition">
+                <button onclick="openEditModal(${s.rowIndex})" title="Edit Rekod" class="p-1.5 bg-white/90 hover:bg-sky-50 text-slate-700 hover:text-blue-800 border border-slate-200 rounded-lg transition shadow-2xs">
                   <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
                     <path d="m15 5 4 4"/>
                   </svg>
                 </button>
-                <button onclick="deleteStudent(${s.rowIndex}, '${safeName}')" title="Padam Rekod" class="p-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg transition">
+                <button onclick="deleteStudent(${s.rowIndex}, '${safeName}')" title="Padam Rekod" class="p-1.5 bg-white/90 hover:bg-rose-50 text-rose-700 border border-slate-200 hover:border-rose-200 rounded-lg transition shadow-2xs">
                   <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 6h18"/>
                     <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
@@ -1417,9 +1482,9 @@
       const grid = document.getElementById('followupCardsGrid');
       if (!dueList.length) {
         grid.innerHTML = `
-          <div class="col-span-full bg-white border border-stone-200 rounded-2xl p-8 text-center">
-            <p class="text-sm font-bold text-stone-800">Tiada baki yuran tertunggak bagi tapisan semasa.</p>
-            <p class="text-xs text-stone-500 mt-1">Semua pelatih dalam senarai ini telah melangsaikan bayaran penuh.</p>
+          <div class="col-span-full glass-panel rounded-2xl p-8 text-center">
+            <p class="text-sm font-bold text-slate-900">Tiada baki yuran tertunggak bagi tapisan semasa.</p>
+            <p class="text-xs text-slate-500 mt-1">Semua pelatih dalam senarai ini telah melangsaikan bayaran penuh.</p>
           </div>
         `;
         return;
@@ -1432,32 +1497,32 @@
         const waBapa = formatWhatsAppLink(s.TelBapa, s.NamaPelatih, s.Program, baki);
 
         return `
-          <div class="bg-white border border-stone-200 rounded-2xl p-4 shadow-xs flex flex-col justify-between space-y-3.5">
+          <div class="glass-panel rounded-2xl p-4 flex flex-col justify-between space-y-3.5">
             <div>
               <div class="flex items-start justify-between gap-2">
                 <div>
-                  <h3 class="text-sm font-extrabold text-stone-800">${s.NamaPelatih}</h3>
-                  <p class="text-[11px] font-semibold text-amber-800 mt-0.5">${s.Program}</p>
+                  <h3 class="text-sm font-extrabold text-slate-900">${s.NamaPelatih}</h3>
+                  <p class="text-[11px] font-semibold text-blue-900 mt-0.5">${s.Program}</p>
                 </div>
-                <span class="bg-rose-50 text-rose-800 border border-rose-200 px-2.5 py-1 rounded-lg text-xs font-extrabold shrink-0">
+                <span class="bg-rose-50/90 text-rose-800 border border-rose-200 px-2.5 py-1 rounded-lg text-xs font-extrabold shrink-0">
                   Baki RM ${baki.toFixed(2)}
                 </span>
               </div>
-              <div class="mt-3 pt-2.5 border-t border-stone-100 grid grid-cols-2 gap-2 text-[11px] text-stone-600">
-                <div><span class="text-stone-400">Pusat:</span> <strong class="text-stone-700">${s.PusatBertauliah}</strong></div>
-                <div><span class="text-stone-400">Intake:</span> <strong class="text-stone-700">${s.BulanIntake}</strong></div>
-                <div class="col-span-2"><span class="text-stone-400">Penasihat Akademik:</span> <strong class="text-amber-900">${s.PA}</strong></div>
+              <div class="mt-3 pt-2.5 border-t border-slate-200/60 grid grid-cols-2 gap-2 text-[11px] text-slate-600">
+                <div><span class="text-slate-400">Pusat:</span> <strong class="text-slate-800">${s.PusatBertauliah}</strong></div>
+                <div><span class="text-slate-400">Intake:</span> <strong class="text-slate-800">${s.BulanIntake}</strong></div>
+                <div class="col-span-2"><span class="text-slate-400">Penasihat Akademik:</span> <strong class="text-blue-900">${s.PA}</strong></div>
               </div>
             </div>
 
-            <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-stone-100 text-xs font-bold">
-              <button onclick="openPayModal(${s.rowIndex}, '${safeName}', ${baki})" class="flex-1 bg-amber-800 hover:bg-amber-900 text-white py-2 px-3 rounded-xl transition">
+            <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-200/60 text-xs font-bold">
+              <button onclick="openPayModal(${s.rowIndex}, '${safeName}', ${baki})" class="flex-1 bg-gradient-to-r from-slate-900 to-blue-950 hover:from-slate-800 hover:to-blue-900 text-white py-2 px-3 rounded-xl shadow-xs transition">
                 Terima Bayaran
               </button>
-              <a href="${waPelajar}" target="_blank" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-200 py-2 px-2.5 rounded-xl transition" title="WhatsApp Pelajar">
+              <a href="${waPelajar}" target="_blank" class="bg-emerald-50/90 hover:bg-emerald-100 text-emerald-900 border border-emerald-200 py-2 px-2.5 rounded-xl transition" title="WhatsApp Pelajar">
                 WA Pelajar
               </a>
-              <a href="${waBapa}" target="_blank" class="bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-300 py-2 px-2.5 rounded-xl transition" title="WhatsApp Bapa">
+              <a href="${waBapa}" target="_blank" class="bg-white/90 hover:bg-white text-slate-800 border border-slate-200 py-2 px-2.5 rounded-xl transition" title="WhatsApp Bapa">
                 WA Waris
               </a>
             </div>
